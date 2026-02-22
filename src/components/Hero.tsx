@@ -29,7 +29,7 @@ export default function Hero() {
             <div className="container relative z-10 mx-auto px-6 mt-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                 {/* 3D Visual Presentation Container */}
-                <div className="relative h-[700px] w-full flex justify-center order-2 lg:order-1 perspective-1000 z-20">
+                <div className="relative h-[500px] md:h-[700px] w-full flex justify-center order-2 lg:order-1 perspective-1000 z-20">
                     {/* Subtle glow behind the 3D can */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-brand-orange/30 blur-[120px] rounded-full z-0 pointer-events-none" />
 

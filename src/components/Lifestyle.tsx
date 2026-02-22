@@ -22,12 +22,18 @@ export default function Lifestyle() {
             <div className="absolute inset-0 bg-black/10 mix-blend-multiply pointer-events-none" />
 
             <div className="container mx-auto px-6 mt-16 relative z-10">
-                <div className="bg-black/90 p-12 rounded-[3rem] border border-black/20 shadow-2xl max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-6">Built For The Hustle</h2>
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="bg-black/90 p-8 md:p-12 rounded-[2.5rem] md:rounded-[3rem] border border-black/20 shadow-2xl max-w-4xl mx-auto text-center"
+                >
+                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4 md:mb-6">Built For The Hustle</h2>
                     <p className="text-xl text-gray-400 font-medium">
                         Whether you're in the gym, on the field, or grinding late at the office, CocoFuse provides the raw electrochemical fuel your body needs. No synthetic garbage. Just natural coconut water and essential vitamins.
                     </p>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

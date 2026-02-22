@@ -6,7 +6,7 @@ import { Zap, Activity, Flame } from "lucide-react";
 
 export default function Mascot() {
     return (
-        <section className="relative py-32 bg-black border-t border-white/5 overflow-hidden">
+        <section className="relative py-20 md:py-32 bg-black border-t border-white/5 overflow-hidden">
 
             {/* Background aesthetics */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-brand-orange/10 to-transparent pointer-events-none" />
@@ -42,39 +42,62 @@ export default function Mascot() {
                 </motion.div>
 
                 {/* Mascot Lore / Vibe Text */}
-                <div>
-                    <div className="flex items-center gap-3 mb-6">
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={{
+                        visible: { transition: { staggerChildren: 0.15 } },
+                        hidden: {}
+                    }}
+                >
+                    <motion.div
+                        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+                        className="flex items-center gap-3 mb-6"
+                    >
                         <Flame className="text-brand-orange w-6 h-6" />
                         <h3 className="text-brand-orange font-bold uppercase tracking-widest text-sm">The Face of the Grind</h3>
-                    </div>
+                    </motion.div>
 
-                    <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-8 leading-[0.9]">
+                    <motion.h2
+                        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+                        className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-8 leading-[0.9]"
+                    >
                         Unleash<br />The Beast.
-                    </h2>
+                    </motion.h2>
 
-                    <div className="space-y-6 text-gray-400 text-lg md:text-xl font-medium">
+                    <motion.div
+                        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+                        className="space-y-6 text-gray-400 text-lg md:text-xl font-medium"
+                    >
                         <p>
                             We didn't just build a drink; we built an identity. The CocoFuse primate represents raw, untamed energy—the kind required to crush early mornings and late nights.
                         </p>
                         <p>
                             Powered entirely by <span className="text-white font-bold">clean coconut water</span> and fortified with <span className="text-brand-yellow font-bold">B-Vitamins</span>, it's the natural fuel your body craves without the crash.
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="mt-12 grid grid-cols-2 gap-6">
-                        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-colors">
+                    <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <motion.div
+                            variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}
+                            className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-colors"
+                        >
                             <Zap className="w-10 h-10 text-brand-yellow mb-4" />
                             <h4 className="text-white font-bold text-xl mb-2">Sustained Energy</h4>
                             <p className="text-sm text-gray-500">No jitters. Just pure, natural electrochemical drive.</p>
-                        </div>
+                        </motion.div>
 
-                        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-colors">
+                        <motion.div
+                            variants={{ hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}
+                            className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-colors"
+                        >
                             <Activity className="w-10 h-10 text-brand-green mb-4" />
                             <h4 className="text-white font-bold text-xl mb-2">Rapid Recovery</h4>
                             <p className="text-sm text-gray-500">Loaded with Potassium & Magnesium for muscle health.</p>
-                        </div>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
 
             </div>
         </section>

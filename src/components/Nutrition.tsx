@@ -19,7 +19,7 @@ export default function Nutrition() {
     ];
 
     return (
-        <section className="py-24 bg-[#0a0a0a] border-t border-brand-orange/20 relative">
+        <section className="py-16 md:py-24 bg-[#0a0a0a] border-t border-brand-orange/20 relative">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row gap-16">
 
