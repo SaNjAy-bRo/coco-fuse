@@ -1,0 +1,46 @@
+import React from "react";
+
+export default function Footer() {
+    return (
+        <footer className="bg-black py-12 border-t border-white/10">
+            <div className="container mx-auto px-6">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
+
+                    <div>
+                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-yellow uppercase tracking-tighter">
+                            COCO<br />FUSE.
+                        </h2>
+                        <p className="mt-2 text-sm text-gray-500">Mango Refresh • Net Qty: 250ml</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+                        <div>
+                            <h4 className="font-bold text-white mb-2 uppercase text-xs tracking-wider">Manufactured By</h4>
+                            <p className="text-gray-400">Pure Foods & Beverages</p>
+                            <p className="text-gray-400">Atc 3, TTC Industrial Area, Mahape MIDC,</p>
+                            <p className="text-gray-400">Navi Mumbai - 400710</p>
+                            <p className="text-brand-orange mt-1 text-xs">FSSAI Lic No: 11525015000189</p>
+                        </div>
+
+                        <div>
+                            <h4 className="font-bold text-white mb-2 uppercase text-xs tracking-wider">Marketed By</h4>
+                            <p className="text-gray-400">RootUp Nutriments & Beverages LLP</p>
+                            <p className="text-gray-400">15-A/1004 Happy Homes Residency,</p>
+                            <p className="text-gray-400">Thane District, Maharashtra - 401107</p>
+                            <p className="text-brand-orange mt-1 text-xs">FSSAI Lic No: 21526020000341</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-xs text-gray-500">
+                    <p>Customer Care: Miket@rootupfnb.com | +91 70216 39310</p>
+                    <div className="flex gap-4 mt-4 md:mt-0 font-bold uppercase tracking-wider text-green-500">
+                        <span>Make in India</span>
+                        <span>100% Veg</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    );
+}
