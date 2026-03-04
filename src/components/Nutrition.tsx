@@ -19,7 +19,7 @@ export default function Nutrition() {
     ];
 
     return (
-        <section className="py-16 md:py-24 bg-[#0a0a0a] border-t border-brand-orange/20 relative">
+        <section id="nutrition" className="py-16 md:py-24 bg-accent-premium border-t border-accent-mango/20 relative">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row gap-16">
 
@@ -28,7 +28,7 @@ export default function Nutrition() {
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="text-4xl md:text-6xl font-black text-brand-orange uppercase mb-6"
+                            className="text-4xl md:text-6xl font-heading font-black text-accent-mango uppercase mb-6"
                         >
                             The Raw Math
                         </motion.h2>
@@ -37,14 +37,14 @@ export default function Nutrition() {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="text-lg text-gray-300 mb-8 leading-relaxed"
+                            className="text-lg font-body text-gray-300 mb-8 leading-relaxed"
                         >
                             Every drop is engineered for peak performance. Pure coconut water infused with essential vitamins and minerals, preserving the natural goodness without the junk.
                         </motion.p>
 
-                        <div className="bg-[#111] p-8 rounded-3xl border border-white/5 shadow-2xl">
-                            <h3 className="text-xl font-bold text-brand-yellow mb-4 uppercase">Ingredients:</h3>
-                            <p className="text-sm text-gray-400">
+                        <div className="bg-black/50 p-8 rounded-3xl border border-white/5 shadow-2xl">
+                            <h3 className="text-xl font-heading font-bold text-primary-blue mb-4 uppercase">Ingredients:</h3>
+                            <p className="text-sm font-body text-gray-400">
                                 Water, Coconut Powder (6%), Acidity Regulator (E330), Minerals (Potassium Chloride, Magnesium Sulphate), Natural Sweetener (INS960), Contains Natural and/or Nature-Identical Flavouring Substances, Natural Preservative Nisin (INS234), Vitamins (B3, B5, B6 and C).
                             </p>
                         </div>
@@ -55,14 +55,14 @@ export default function Nutrition() {
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="bg-[#111] rounded-3xl overflow-hidden border border-brand-green/20"
+                            className="bg-black/50 rounded-3xl overflow-hidden border border-primary-green/20"
                         >
-                            <div className="bg-brand-green/10 p-6 border-b border-brand-green/20">
-                                <h3 className="text-2xl font-black text-white uppercase tracking-wider">Nutritional Information</h3>
-                                <p className="text-brand-green text-sm mt-1">Approx. per 100 ml</p>
+                            <div className="bg-primary-green/10 p-6 border-b border-primary-green/20">
+                                <h3 className="text-2xl font-heading font-black text-white uppercase tracking-wider">Nutritional Information</h3>
+                                <p className="text-primary-green font-body text-sm mt-1">Approx. per 100 ml</p>
                             </div>
 
-                            <div className="p-6">
+                            <div className="p-6 font-body">
                                 <div className="grid grid-cols-3 text-xs font-bold text-gray-500 uppercase tracking-wider mb-4 pb-2 border-b border-white/10">
                                     <span>Nutrient</span>
                                     <span className="text-right">Value</span>
@@ -74,7 +74,7 @@ export default function Nutrition() {
                                         <div key={idx} className="grid grid-cols-3 text-sm border-b border-white/5 pb-2 last:border-0 last:pb-0">
                                             <span className="text-gray-300">{item.label}</span>
                                             <span className="text-right font-medium text-white">{item.value}</span>
-                                            <span className="text-right font-bold text-brand-yellow">{item.rda}</span>
+                                            <span className="text-right font-bold text-accent-mango">{item.rda}</span>
                                         </div>
                                     ))}
                                 </div>

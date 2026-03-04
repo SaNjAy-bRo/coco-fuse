@@ -1,72 +1,62 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 
 export default function Footer() {
     return (
-        <motion.footer
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8 }}
-            className="bg-black py-12 border-t border-white/10 relative z-20"
-        >
-            <div className="container mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
+        <footer className="bg-accent-premium text-primary-white py-20 relative overflow-hidden">
+            {/* Background elements */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-green via-primary-blue to-accent-mango" />
 
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                    >
-                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-yellow uppercase tracking-tighter">
-                            COCO<br />FUSE.
-                        </h2>
-                        <p className="mt-2 text-sm text-gray-500">Mango Refresh • Net Qty: 250ml</p>
-                    </motion.div>
+            <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="mb-12"
+                >
+                    <h2 className="text-4xl md:text-6xl font-heading font-black italic tracking-tighter mb-4">
+                        <span className="text-primary-green">COCO</span>
+                        <span className="text-primary-blue">FUSE</span>
+                    </h2>
+                    <p className="text-xl md:text-2xl font-body font-light text-gray-300 max-w-2xl mx-auto">
+                        The anti-soda. The anti-sugar. <span className="font-semibold text-accent-watermelon">The anti-boring.</span>
+                    </p>
+                </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
-                        className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm"
-                    >
-                        <div>
-                            <h4 className="font-bold text-white mb-2 uppercase text-xs tracking-wider">Manufactured By</h4>
-                            <p className="text-gray-400">Pure Foods & Beverages</p>
-                            <p className="text-gray-400">Atc 3, TTC Industrial Area, Mahape MIDC,</p>
-                            <p className="text-gray-400">Navi Mumbai - 400710</p>
-                            <p className="text-brand-orange mt-1 text-xs">FSSAI Lic No: 11525015000189</p>
-                        </div>
-
-                        <div>
-                            <h4 className="font-bold text-white mb-2 uppercase text-xs tracking-wider">Marketed By</h4>
-                            <p className="text-gray-400">RootUp Nutriments & Beverages LLP</p>
-                            <p className="text-gray-400">15-A/1004 Happy Homes Residency,</p>
-                            <p className="text-gray-400">Thane District, Maharashtra - 401107</p>
-                            <p className="text-brand-orange mt-1 text-xs">FSSAI Lic No: 21526020000341</p>
-                        </div>
-                    </motion.div>
-
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-4xl mb-16 border-t border-white/10 pt-12">
+                    <div className="flex flex-col gap-3">
+                        <h4 className="font-heading font-bold text-lg mb-2 text-primary-green">Product</h4>
+                        <a href="#flavours" className="text-gray-400 hover:text-white transition-colors">Flavours</a>
+                        <a href="#formula" className="text-gray-400 hover:text-white transition-colors">Ingredients</a>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">Nutrition</a>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <h4 className="font-heading font-bold text-lg mb-2 text-primary-blue">Brand</h4>
+                        <a href="#story" className="text-gray-400 hover:text-white transition-colors">Our Story</a>
+                        <a href="#founders" className="text-gray-400 hover:text-white transition-colors">Founders</a>
+                        <a href="#manifesto" className="text-gray-400 hover:text-white transition-colors">Manifesto</a>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <h4 className="font-heading font-bold text-lg mb-2 text-accent-mango">Social</h4>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">Instagram</a>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">TikTok</a>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">Twitter</a>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <h4 className="font-heading font-bold text-lg mb-2 text-accent-watermelon">Legal</h4>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy</a>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">Terms</a>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">Contact</a>
+                    </div>
                 </div>
 
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
-                    className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-xs text-gray-500"
-                >
-                    <p>Customer Care: Miket@rootupfnb.com | +91 70216 39310</p>
-                    <div className="flex gap-4 mt-4 md:mt-0 font-bold uppercase tracking-wider text-green-500">
-                        <span>Make in India</span>
-                        <span>100% Veg</span>
-                    </div>
-                </motion.div>
+                <div className="w-full flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm border-t border-white/5 pt-8">
+                    <p>© {new Date().getFullYear()} CocoFuse. All rights reserved.</p>
+                    <p className="mt-4 md:mt-0">Clean hydration with attitude.</p>
+                </div>
             </div>
-        </motion.footer>
+        </footer>
     );
 }
