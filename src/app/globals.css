@@ -1,18 +1,44 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0a0a0a;
-  --color-foreground: #ffffff;
-  --color-brand-yellow: #facc15;
-  --color-brand-orange: #f97316;
-  --color-brand-green: #4ade80;
-  --font-outfit: var(--font-outfit);
+  --color-primary-green: #7ED956;
+  --color-primary-blue: #3AB6FD;
+  --color-primary-white: #F3F3F1;
+
+  --color-accent-mango: #FFD166;
+  --color-accent-watermelon: #FF6B6B;
+  --color-accent-basil: #06D6A0;
+  --color-accent-premium: #1A1A1A;
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-primary-white);
+    color: #1A1A1A;
     overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #7ED95640;
+    color: #1A1A1A;
+  }
+}
+
+@keyframes gradient {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
   }
 }

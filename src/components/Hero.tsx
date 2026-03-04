@@ -2,82 +2,174 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import Scene from "./Scene";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("./Scene"), { ssr: false });
 
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start start", "end start"],
+        offset: ["start start", "end start"]
     });
 
-    const yBackground = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-    const yText = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-    const opacityText = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-    const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+    // Parallax logic for 200vh sticky section
+    const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]);
+    const textOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+
+    // 3D Can scaling on scroll
+    const canScaleDesktop = useTransform(scrollYProgress, [0, 1], [1, 1.4]);
+    const canXDesktop = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+    const canScaleMobile = useTransform(scrollYProgress, [0, 1], [0.9, 1.2]);
+    const canYMobile = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+
+    // Marquee scrolling
+    const marqueeX1 = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+    const marqueeX2 = useTransform(scrollYProgress, [0, 1], ["-50%", "0%"]);
 
     return (
-        <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black pb-20">
-            {/* Background Parallax */}
-            <motion.div
-                style={{ y: yBackground }}
-                className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
-            >
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-orange/20 via-transparent to-transparent" />
-            </motion.div>
+        <section
+            ref={containerRef}
+            className="relative w-full h-[200vh] bg-primary-white selection:bg-primary-green/30"
+        >
+            <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
 
-            <div className="container relative z-10 mx-auto px-6 mt-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-                {/* 3D Visual Presentation Container */}
-                <div className="relative h-[500px] md:h-[700px] w-full flex justify-center order-2 lg:order-1 perspective-1000 z-20">
-                    {/* Subtle glow behind the 3D can */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-brand-orange/30 blur-[120px] rounded-full z-0 pointer-events-none" />
-
-                    {/* The 3D Canvas */}
-                    <div className="absolute inset-0 z-10 w-full h-full cursor-grab active:cursor-grabbing">
-                        <Scene />
-                    </div>
+                {/* Parallax Background Gradient Blobs */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-accent-mango/20 rounded-full blur-[100px] mix-blend-multiply" />
+                    <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-primary-green/20 rounded-full blur-[120px] mix-blend-multiply" />
+                    <div className="absolute top-[20%] right-[10%] w-[30vw] h-[30vw] bg-primary-blue/20 rounded-full blur-[90px] mix-blend-multiply" />
                 </div>
 
-                {/* Text Content */}
+                {/* Background Kinetic Typography Marquees (Desktop mainly) */}
+                <div className="absolute inset-0 z-0 flex flex-col justify-between py-32 pointer-events-none opacity-5 md:opacity-10 overflow-hidden">
+                    <motion.div style={{ x: marqueeX1 }} className="whitespace-nowrap flex">
+                        <span className="text-[10rem] md:text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8">THE ANTI-SODA THE ANTI-SUGAR THE ANTI-BORING</span>
+                        <span className="text-[10rem] md:text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8">THE ANTI-SODA THE ANTI-SUGAR THE ANTI-BORING</span>
+                    </motion.div>
+                    <motion.div style={{ x: marqueeX2 }} className="whitespace-nowrap flex">
+                        <span className="text-[10rem] md:text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 text-transparent stroke-black stroke-2" style={{ WebkitTextStroke: "2px black" }}>CLEAN FUEL CLEAN FUEL CLEAN FUEL CLEAN FUEL</span>
+                        <span className="text-[10rem] md:text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 text-transparent stroke-black stroke-2" style={{ WebkitTextStroke: "2px black" }}>CLEAN FUEL CLEAN FUEL CLEAN FUEL CLEAN FUEL</span>
+                    </motion.div>
+                </div>
+
+                {/* 3D Can Layer - Absolute positioning to allow text to overlay correctly */}
+                {/* Desktop Can */}
                 <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                    style={{ y: yText, opacity: opacityText }}
-                    className="text-left order-1 lg:order-2"
+                    style={{ scale: canScaleDesktop, x: canXDesktop }}
+                    className="absolute inset-y-0 right-0 z-10 hidden lg:block w-1/2 h-full pointer-events-none"
                 >
-                    <div className="inline-block px-4 py-1.5 rounded-full border border-brand-green/30 bg-brand-green/10 text-brand-green font-bold text-sm tracking-widest uppercase mb-6 shadow-[0_0_15px_rgba(74,222,128,0.2)]">
-                        100% Vegan & Cruelty Free
+                    <Scene />
+                </motion.div>
+
+                {/* Mobile Can */}
+                <motion.div
+                    style={{ scale: canScaleMobile, y: canYMobile }}
+                    className="absolute bottom-[2%] lg:bottom-[-10%] left-0 z-10 w-full h-[60vh] min-[400px]:h-[70vh] lg:hidden pointer-events-none"
+                >
+                    <Scene />
+                </motion.div>
+
+                {/* Main Text Content */}
+                <motion.div
+                    style={{ y: textY, opacity: textOpacity }}
+                    className="container mx-auto px-4 md:px-6 lg:px-12 relative z-20 w-full h-full flex flex-col pt-[110px] sm:pt-[130px] lg:pt-0 lg:justify-center pointer-events-none"
+                >
+                    <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left pointer-events-auto lg:mt-[60px]">
+
+                        {/* Status Pill */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                            className="inline-flex items-center gap-2 px-4 py-2 min-[400px]:px-5 min-[400px]:py-2.5 rounded-full border border-black/10 bg-white/40 shadow-xl backdrop-blur-md mb-6 min-[400px]:mb-8"
+                        >
+                            <span className="relative flex h-2.5 w-2.5 min-[400px]:h-3 min-[400px]:w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-green opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 min-[400px]:h-3 min-[400px]:w-3 bg-primary-green"></span>
+                            </span>
+                            <span className="font-heading font-black text-[10px] min-[400px]:text-xs uppercase tracking-[0.2em] text-accent-premium mt-[2px]">Now Available</span>
+                        </motion.div>
+
+                        {/* Kinetic Headline */}
+                        <div className="flex flex-col gap-0 mb-4 min-[400px]:mb-6 w-full max-w-[100vw] overflow-hidden">
+                            <div className="overflow-hidden mix-blend-difference xl:mix-blend-normal relative z-20">
+                                <motion.h1
+                                    initial={{ y: "110%" }}
+                                    animate={{ y: 0 }}
+                                    transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                                    className="text-[13vw] min-[400px]:text-[4.5rem] sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black uppercase tracking-tighter leading-[0.8] text-white xl:text-accent-premium"
+                                >
+                                    Fun, Clean
+                                </motion.h1>
+                            </div>
+                            <div className="overflow-hidden">
+                                <motion.h1
+                                    initial={{ y: "110%" }}
+                                    animate={{ y: 0 }}
+                                    transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                                    className="text-[14vw] min-[400px]:text-[5rem] sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black uppercase tracking-tighter leading-[0.8] text-transparent bg-clip-text bg-gradient-to-r from-primary-green via-primary-blue to-accent-mango bg-[length:200%_auto] animate-[gradient_4s_linear_infinite]"
+                                >
+                                    Fuel For
+                                </motion.h1>
+                            </div>
+                            <div className="overflow-hidden pb-4 mix-blend-difference xl:mix-blend-normal relative z-20">
+                                <motion.h1
+                                    initial={{ y: "110%" }}
+                                    animate={{ y: 0 }}
+                                    transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                                    className="text-[13vw] min-[400px]:text-[4.5rem] sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black uppercase tracking-tighter leading-[0.8] text-white xl:text-accent-premium"
+                                >
+                                    Real Life.
+                                </motion.h1>
+                            </div>
+                        </div>
+
+                        {/* Subheading */}
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
+                            className="text-base min-[400px]:text-lg md:text-xl font-body text-gray-700 max-w-sm md:max-w-md leading-relaxed mb-8 mix-blend-color-burn"
+                        >
+                            Flavoured coconut water engineered with zero nonsense.
+                            <span className="block font-bold mt-1 min-[400px]:mt-2 text-accent-premium">The anti-sugar. The anti-boring.</span>
+                        </motion.p>
+
+                        {/* CTA Group */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
+                            className="flex flex-col sm:flex-row items-center gap-3 min-[400px]:gap-4 w-[90%] sm:w-auto mx-auto lg:mx-0 relative z-30"
+                        >
+                            <button className="w-full sm:w-auto px-6 py-4 min-[400px]:px-8 min-[400px]:py-5 bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-[11px] min-[400px]:text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl relative overflow-hidden group">
+                                <span className="relative z-10">Shop Flavours</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </button>
+                            <a href="#story" className="w-full sm:w-auto px-6 py-4 min-[400px]:px-8 min-[400px]:py-5 rounded-full border-2 border-accent-premium/20 text-accent-premium font-heading font-bold uppercase tracking-widest text-[11px] min-[400px]:text-sm hover:border-accent-premium/40 hover:bg-white/50 backdrop-blur-sm transition-all text-center flex justify-center items-center gap-2 group bg-white/20">
+                                Our Story
+                                <svg className="w-3.5 h-3.5 min-[400px]:w-4 min-[400px]:h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </a>
+                        </motion.div>
+
                     </div>
+                </motion.div>
 
-                    <h1 className="text-6xl md:text-8xl lg:text-[7rem] leading-[0.9] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-brand-green via-brand-yellow to-brand-orange uppercase drop-shadow-2xl mb-4 py-2">
-                        Coco<br />Fuse<span className="text-white">.</span>
-                    </h1>
-
-                    <p className="text-xl md:text-2xl font-bold tracking-wide text-brand-yellow mb-8 drop-shadow-md">
-                        COCONUT WATER – FRUIT HYDRATION
-                    </p>
-
-                    <h2 className="text-4xl md:text-5xl font-black text-brand-orange uppercase mb-6 drop-shadow-xl">
-                        Mango Refresh
-                    </h2>
-
-                    <p className="max-w-xl text-lg md:text-xl text-gray-300 font-medium leading-relaxed mb-10">
-                        For the hustlers, the creators, the early risers. CocoFuse fuels your grind with clean, coconut-powered hydration.
-                        <br /><br />
-                        <span className="text-white font-bold drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">Stay fueled. Stay fierce.</span>
-                    </p>
-
-                    <div className="flex items-center gap-4 flex-wrap">
-                        <div className="px-6 py-4 bg-black/40 backdrop-blur-md border border-brand-orange/40 rounded-2xl flex items-center gap-3 shadow-[0_0_20px_rgba(249,115,22,0.15)]">
-                            <span className="text-4xl font-black text-brand-orange drop-shadow-md">0%</span>
-                            <span className="text-sm font-bold text-gray-300 uppercase leading-tight">Added<br />Sugar</span>
-                        </div>
-                        <div className="px-6 py-4 bg-black/40 backdrop-blur-md border border-brand-yellow/40 rounded-2xl flex items-center gap-3 shadow-[0_0_20px_rgba(250,204,21,0.15)]">
-                            <span className="text-4xl font-black text-brand-yellow drop-shadow-md">0%</span>
-                            <span className="text-sm font-bold text-gray-300 uppercase leading-tight">Artificial<br />Colors</span>
-                        </div>
+                {/* Vertical Scroll Indicator */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5, duration: 1 }}
+                    className="absolute bottom-4 min-[400px]:bottom-6 lg:bottom-12 left-1/2 lg:left-12 -translate-x-1/2 lg:translate-x-0 z-30 flex flex-col items-center gap-2 min-[400px]:gap-3 mix-blend-difference xl:mix-blend-normal"
+                >
+                    <span className="text-[10px] font-heading font-black uppercase tracking-[0.2em] text-accent-premium/50 [writing-mode:vertical-lr] rotate-180">Scroll</span>
+                    <div className="w-[1px] h-12 bg-accent-premium/20 overflow-hidden">
+                        <motion.div
+                            animate={{ y: ["-100%", "100%"] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                            className="w-full h-1/2 bg-accent-premium"
+                        />
                     </div>
                 </motion.div>
 

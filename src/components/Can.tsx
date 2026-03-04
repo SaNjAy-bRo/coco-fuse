@@ -3,9 +3,10 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
+import { MotionValue } from "framer-motion";
 import * as THREE from "three";
 
-export default function Can({ scrollY }: { scrollY: number }) {
+export default function Can({ scrollY }: { scrollY: MotionValue<number> }) {
     const groupRef = useRef<THREE.Group>(null);
 
     // Load the label texture
@@ -29,15 +30,18 @@ export default function Can({ scrollY }: { scrollY: number }) {
 
     useFrame((state) => {
         if (groupRef.current) {
-            // Rotate the can continuously slowly
-            groupRef.current.rotation.y = state.clock.elapsedTime * 0.2 + (scrollY * Math.PI * 2);
+            // Read perfectly synced scroll progress from Framer Motion
+            const progress = scrollY.get();
+
+            // Rotate the can continuously slowly plus extra rotation based on scroll percentage
+            groupRef.current.rotation.y = state.clock.elapsedTime * 0.2 + (progress * Math.PI * 2);
 
             // Float up and down slightly
             groupRef.current.position.y = Math.sin(state.clock.elapsedTime) * 0.1;
 
             // Tilt based on scroll
-            groupRef.current.rotation.x = Math.sin(scrollY * Math.PI) * 0.2;
-            groupRef.current.rotation.z = Math.cos(scrollY * Math.PI) * 0.1;
+            groupRef.current.rotation.x = Math.sin(progress * Math.PI) * 0.2;
+            groupRef.current.rotation.z = Math.cos(progress * Math.PI) * 0.1;
         }
     });
 
