@@ -3,13 +3,10 @@
 import { Canvas } from "@react-three/fiber";
 import { Environment, Float, ContactShadows } from "@react-three/drei";
 import { Suspense } from "react";
-import { useScroll } from "framer-motion";
+import { MotionValue } from "framer-motion";
 import Can from "./Can";
 
-export default function Scene() {
-    // Rely on framer-motion's seamless scroll hook to read values perfectly in sync with the page
-    const { scrollYProgress } = useScroll();
-
+export default function Scene({ scrollY, vh }: { scrollY?: MotionValue<number>, vh?: number }) {
     return (
         <div className="w-full h-full pointer-events-none">
             <Canvas
@@ -23,13 +20,12 @@ export default function Scene() {
 
                 <Suspense fallback={null}>
                     <Float
-                        speed={2} // Animation speed, defaults to 1
-                        rotationIntensity={1} // XYZ rotation intensity, defaults to 1
-                        floatIntensity={1} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
-                        floatingRange={[-0.1, 0.1]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
+                        speed={2}
+                        rotationIntensity={0} // Locked rotation to fulfill the "should not change angle" request
+                        floatIntensity={0.5}
+                        floatingRange={[-0.05, 0.05]} // Reduced floating bounce
                     >
-                        {/* We pass the MotionValue itself so the Can can read it in useFrame without React state lag */}
-                        <Can scrollY={scrollYProgress} />
+                        <Can scrollY={scrollY} vh={vh} />
                     </Float>
 
                     <Environment preset="city" />

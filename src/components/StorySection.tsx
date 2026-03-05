@@ -15,18 +15,18 @@ export default function StorySection() {
     const yText = useTransform(scrollYProgress, [0.3, 0.5], [50, 0]);
 
     return (
-        <section id="story" ref={containerRef} className="relative w-full h-[150vh] bg-accent-premium text-primary-white overflow-hidden">
+        <section id="story" ref={containerRef} className="relative w-full h-[120vh] md:h-[150vh] bg-accent-premium text-primary-white overflow-hidden">
             <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
 
                 {/* Parallax Mountain Image / Visuals */}
                 <motion.div
                     style={{ y: yImg }}
-                    className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity"
+                    className="absolute inset-0 z-0 opacity-50 mix-blend-luminosity"
                 >
                     <div className="w-full h-full bg-gradient-to-t from-accent-premium via-accent-premium/50 to-transparent absolute inset-0 z-10" />
-                    {/* Placeholder for Mountain Trek visual. Just using a stylized gradient for now until actual asset is provided, 
-                        or we can use a structural colored block that implies the mountain */}
+                    {/* The original Mountain Trek visual with a very subtle juice tint overlaid */}
                     <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent-mango/10 to-accent-watermelon/10 mix-blend-overlay pointer-events-none" />
                 </motion.div>
 
                 {/* Content */}
@@ -35,18 +35,18 @@ export default function StorySection() {
                         style={{ opacity: opacityText, y: yText }}
                         className="max-w-4xl"
                     >
-                        <h2 className="text-5xl md:text-7xl font-heading font-black tracking-tighter mb-8 leading-tight">
+                        <h2 className="text-3xl sm:text-4xl md:text-7xl font-heading font-black tracking-tighter mb-4 md:mb-8 leading-tight">
                             Born on a Mountain. <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon">
                                 Made for Real Life.
                             </span>
                         </h2>
-                        <div className="w-24 h-1 bg-primary-green mx-auto mb-10" />
-                        <p className="text-xl md:text-3xl font-body font-light text-gray-300 leading-relaxed md:leading-relaxed">
-                            The idea sparked at 10,000 feet. Founder Miket was trekking when he realized every hydration drink available was either packed with sugar or tasted like a science experiment.
+                        <div className="w-16 md:w-24 h-1 bg-primary-green mx-auto mb-6 md:mb-10" />
+                        <p className="text-base md:text-xl lg:text-3xl font-body font-light text-gray-300 leading-relaxed md:leading-relaxed">
+                            It didn't start in a boardroom. It started on a mountain. On a long trek, Miket realized everything on the shelf was either sugary, artificial, boring — or all three.
                         </p>
-                        <p className="text-xl md:text-3xl font-body font-light text-gray-300 leading-relaxed md:leading-relaxed mt-6">
-                            We didn't just want a better drink; <span className="font-semibold text-primary-white">we wanted a complete rebellion against boring hydration.</span>
+                        <p className="text-base md:text-xl lg:text-3xl font-body font-light text-gray-300 leading-relaxed md:leading-relaxed mt-4 md:mt-6">
+                            Why does hydration have to be dull? <span className="font-semibold text-primary-white">That question became an idea. And they created a guilt-free fun drink that hydrates without slowing you down.</span>
                         </p>
                     </motion.div>
                 </div>

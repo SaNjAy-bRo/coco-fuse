@@ -19,8 +19,14 @@ export default function Nutrition() {
     ];
 
     return (
-        <section id="nutrition" className="py-16 md:py-24 bg-accent-premium border-t border-accent-mango/20 relative">
-            <div className="container mx-auto px-6">
+        <section id="nutrition" className="py-16 md:py-24 bg-accent-premium border-t border-accent-mango/20 relative overflow-hidden">
+            {/* Dark Mode Juice Glows */}
+            <div className="absolute inset-0 pointer-events-none opacity-30 mix-blend-screen">
+                <div className="absolute top-1/4 left-0 w-[400px] h-[400px] bg-primary-green/20 rounded-full blur-[150px]" />
+                <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-mango/10 rounded-full blur-[150px]" />
+            </div>
+
+            <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col lg:flex-row gap-16">
 
                     <div className="lg:w-1/2">

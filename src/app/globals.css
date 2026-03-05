@@ -1,14 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-green: #7ED956;
-  --color-primary-blue: #3AB6FD;
-  --color-primary-white: #F3F3F1;
+  /* Ultra-Vibrant Festival Palette (NH17 Weekender inspired) */
+  --color-primary-green: #39FF14;
+  /* Neon Green */
+  --color-primary-blue: #00F0FF;
+  /* Electric Cyan */
+  --color-primary-white: #FAFAFA;
+  /* Keeps things crisp, but we'll use backgrounds elsewhere */
+  --color-primary-yellow: #FFE800;
+  /* Solar Yellow */
+  --color-primary-pink: #FF007F;
+  /* Hot Pink */
 
-  --color-accent-mango: #FFD166;
-  --color-accent-watermelon: #FF6B6B;
-  --color-accent-basil: #06D6A0;
-  --color-accent-premium: #1A1A1A;
+  --color-accent-mango: #FFB300;
+  /* Deep Vibrant Orange/Mango */
+  --color-accent-watermelon: #FF3366;
+  /* Punchy Watermelon */
+  --color-accent-basil: #00E676;
+  /* Bright Leaf Green */
+  --color-accent-premium: #0A0A0A;
+  /* Ink Black */
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
@@ -21,13 +33,13 @@
 
   body {
     background-color: var(--color-primary-white);
-    color: #1A1A1A;
+    color: var(--color-accent-premium);
     overflow-x: hidden;
   }
 
   ::selection {
-    background-color: #7ED95640;
-    color: #1A1A1A;
+    background-color: var(--color-primary-green);
+    color: var(--color-accent-premium);
   }
 }
 
@@ -41,4 +53,17 @@
   50% {
     background-position: 100% 50%;
   }
+}
+
+/* Custom Utilities for the vibrant festival gradients */
+.bg-festival-gradient-1 {
+  background: linear-gradient(135deg, var(--color-primary-yellow) 0%, var(--color-accent-watermelon) 100%);
+}
+
+.bg-festival-gradient-2 {
+  background: linear-gradient(135deg, var(--color-primary-blue) 0%, var(--color-primary-pink) 100%);
+}
+
+.bg-festival-gradient-3 {
+  background: linear-gradient(135deg, var(--color-primary-green) 0%, var(--color-primary-blue) 100%);
 }

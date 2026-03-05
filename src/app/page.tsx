@@ -1,7 +1,8 @@
 import Hero from "@/components/Hero";
+import GlobalCanOverlay from "@/components/GlobalCanOverlay";
 import USPSection from "@/components/USPSection";
 import StorySection from "@/components/StorySection";
-import Mascot from "@/components/Mascot";
+import MascotJourney from "@/components/MascotJourney";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import FoundersSection from "@/components/FoundersSection";
 import ManifestoSection from "@/components/ManifestoSection";
@@ -11,16 +12,17 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-primary-white text-accent-premium font-body">
+    <main className="min-h-screen bg-primary-white text-accent-premium font-body relative">
+      <GlobalCanOverlay />
       <Hero />
-      <USPSection />
+      <MascotJourney />
       <StorySection />
-      <Mascot />
-      <ParallaxBanner />
       <FoundersSection />
-      <ManifestoSection />
+      <ParallaxBanner />
+      <USPSection />
       <Nutrition />
       <ProductRange />
+      <ManifestoSection />
       <Footer />
     </main>
   );

@@ -6,10 +6,12 @@ export default function ManifestoSection() {
     return (
         <section id="manifesto" className="py-32 md:py-48 bg-accent-premium relative overflow-hidden flex items-center justify-center">
 
-            {/* Dramatic background noise and glows */}
-            <div className="absolute inset-0 pointer-events-none opacity-50 mix-blend-color-dodge">
-                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary-green/20 rounded-full blur-[150px]" />
-                <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary-blue/20 rounded-full blur-[120px]" />
+            {/* Dramatic background noise and glows (Intensified for Juice Vibe) */}
+            <div className="absolute inset-0 pointer-events-none mix-blend-screen opacity-70">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-watermelon/10 to-accent-mango/20 z-0" />
+                <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary-green/30 rounded-full blur-[150px] animate-pulse" />
+                <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary-blue/30 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-watermelon/20 rounded-full blur-[200px]" />
             </div>
 
             <div className="container mx-auto px-6 relative z-10 text-center">

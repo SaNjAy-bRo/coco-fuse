@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Poppins, Outfit } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
+import CustomCursor from "@/components/CustomCursor";
 
-const outfit = Outfit({
+const bodyFont = Poppins({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body",
+});
+
+const headingFont = Outfit({
+  subsets: ["latin"],
+  weight: ["500", "700", "900"],
+  variable: "--font-heading",
 });
 
 export const metadata: Metadata = {
-  title: "CocoFuse - Mango Refresh",
-  description: "Coconut Water Based Hydration Drink - Fuel your grind with clean, coconut-powered hydration.",
+  title: "CocoFuse | Fun, Clean Fuel for Real Life",
+  description: "Flavoured coconut water with zero nonsense. The anti-soda. The anti-sugar. The anti-boring.",
 };
 
 export default function RootLayout({
@@ -22,10 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${outfit.variable} font-outfit antialiased bg-black text-white`}
+        className={`${bodyFont.variable} ${headingFont.variable} font-body antialiased bg-primary-white text-accent-premium ${"custom-cursor"}`}
       >
-        <Navbar />
-        <SmoothScroll>{children}</SmoothScroll>
+        <CustomCursor />
+        <SmoothScroll>
+          <Navbar />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

@@ -1,55 +1,92 @@
 "use client";
 
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { MotionValue } from "framer-motion";
 import * as THREE from "three";
 
-export default function Can({ scrollY }: { scrollY: MotionValue<number> }) {
+export default function Can({ scrollY, vh = 0 }: { scrollY?: MotionValue<number>, vh?: number }) {
     const groupRef = useRef<THREE.Group>(null);
 
     // Load the label texture
-    const texture = useTexture("/assets/label_full.png");
+    const baseTexture = useTexture("/assets/label_full.png");
 
-    // 1. Center the texture processing origin.
-    texture.center.set(0.5, 0.5);
+    const texture = React.useMemo(() => {
+        const tex = baseTexture.clone();
+        // 1. Center the texture processing origin.
+        tex.center.set(0.5, 0.5);
 
-    // 2. Mathematically spin the texture 180 degrees to fix upside-down.
-    texture.rotation = Math.PI;
+        // 2. Mathematically spin the texture 180 degrees to fix upside-down.
+        tex.rotation = Math.PI;
 
-    // 3. To fix horizontal mirroring, we can dynamically invert the X repeat scale
-    texture.repeat.set(-1, 1);
+        // 3. To fix horizontal mirroring, we can dynamically invert the X repeat scale
+        tex.repeat.set(-1, 1);
 
-    // Ensure accurate color reading and wrapping constraints
-    texture.flipY = false;
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.needsUpdate = true;
+        // Ensure accurate color reading and wrapping constraints
+        tex.flipY = false;
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+        tex.needsUpdate = true;
 
-    useFrame((state) => {
-        if (groupRef.current) {
-            // Read perfectly synced scroll progress from Framer Motion
-            const progress = scrollY.get();
+        return tex;
+    }, [baseTexture]);
 
-            // Rotate the can continuously slowly plus extra rotation based on scroll percentage
-            groupRef.current.rotation.y = state.clock.elapsedTime * 0.2 + (progress * Math.PI * 2);
+    const idleAngle = useRef(0);
+    const lockedTarget = useRef({ active: false, start: 0, target: 0 });
 
-            // Float up and down slightly
-            groupRef.current.position.y = Math.sin(state.clock.elapsedTime) * 0.1;
+    useFrame((state, delta) => {
+        if (groupRef.current && scrollY && vh > 0) {
+            const currentScroll = scrollY.get();
+            const heroEnd = vh * 2;
 
-            // Tilt based on scroll
-            groupRef.current.rotation.x = Math.sin(progress * Math.PI) * 0.2;
-            groupRef.current.rotation.z = Math.cos(progress * Math.PI) * 0.1;
+            const heroProgress = Math.min(Math.max(currentScroll / heroEnd, 0), 1);
+
+            if (heroProgress === 0) {
+                // 1. Free, continuous idle spinning
+                idleAngle.current += delta * 0.4;
+                lockedTarget.current.active = false;
+                groupRef.current.rotation.y = idleAngle.current;
+            } else {
+                // 2. Lock the current angle the exact moment they start scrolling down
+                if (!lockedTarget.current.active) {
+                    lockedTarget.current.active = true;
+                    lockedTarget.current.start = idleAngle.current;
+
+                    // We target the NEXT nearest multiple of 2PI (which is perfectly Front Facing).
+                    const TWO_PI = Math.PI * 2;
+                    const rem = idleAngle.current % TWO_PI;
+                    let nextTarget = idleAngle.current - rem + TWO_PI;
+
+                    // Add an extra spin if it's too close to allow a smooth, elegant deceleration buffer
+                    if (nextTarget - idleAngle.current < Math.PI) {
+                        nextTarget += TWO_PI;
+                    }
+                    lockedTarget.current.target = nextTarget;
+                }
+
+                // 3. Linearly Lerp to the perfect locked angle exactly mirroring their scroll progress!
+                groupRef.current.rotation.y = THREE.MathUtils.lerp(
+                    lockedTarget.current.start,
+                    lockedTarget.current.target,
+                    heroProgress
+                );
+            }
+
+            // Optional tilt only active during the scroll transition
+            const targetRotationX = (1 - heroProgress) * Math.sin(heroProgress * Math.PI) * 0.2;
+            const targetRotationZ = (1 - heroProgress) * Math.cos(heroProgress * Math.PI) * 0.1;
+
+            groupRef.current.rotation.x = targetRotationX;
+            groupRef.current.rotation.z = targetRotationZ;
         }
     });
 
     return (
         <group ref={groupRef}>
-            {/* NO HACKS ON THE MESH! Let the texture matrix adjustments above do the work. */}
-            {/* The initial PI/2 rotates the cylinder so the mascot sits directly front and center. */}
-            <mesh position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+            {/* The previous PI/2 angle exposed the Nutrition Facts to the camera. We reverse it to face the Monkey Logo. */}
+            <mesh position={[0, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>
                 {/* Tin Can Cylinder: radiusTop, radiusBottom, height, radialSegments */}
                 <cylinderGeometry args={[1.2, 1.2, 3.5, 64]} />
                 <meshStandardMaterial

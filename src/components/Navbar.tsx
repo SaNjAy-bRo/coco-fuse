@@ -51,10 +51,12 @@ export default function Navbar() {
         { name: "THE MATH", href: "#nutrition" },
     ];
 
+    const ctaClass = "bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all group relative overflow-hidden";
+
     return (
         <motion.nav
             style={{ width, top, borderRadius }}
-            className="fixed left-1/2 -translate-x-1/2 z-50 bg-primary-white/80 backdrop-blur-2xl border border-gray-200 shadow-sm flex items-center justify-between px-6 lg:px-12 h-20 origin-top"
+            className="fixed left-1/2 -translate-x-1/2 z-[100] bg-primary-white/80 backdrop-blur-2xl border border-gray-200 shadow-sm flex items-center justify-between px-6 lg:px-12 h-20 origin-top"
         >
             {/* Logo */}
             <a href="#" className="flex-shrink-0 relative z-[110] outline-none">
@@ -80,7 +82,7 @@ export default function Navbar() {
 
             {/* CTA & Mobile Toggle */}
             <div className="flex items-center gap-4">
-                <button className="hidden md:block px-6 py-3 bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-xs hover:bg-black hover:scale-105 active:scale-95 transition-all shadow-md hover:shadow-xl group relative overflow-hidden">
+                <button className={`hidden md:block px-6 py-3 shadow-md hover:shadow-xl ${ctaClass}`}>
                     <span className="relative z-10">Get Hydrated</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </button>
@@ -102,7 +104,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -20, scale: 0.95 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute top-[110%] left-0 w-full bg-primary-white/95 backdrop-blur-3xl border border-gray-200 rounded-3xl p-6 shadow-2xl md:hidden overflow-hidden flex flex-col gap-4"
+                        className="absolute top-[110%] left-1/2 -translate-x-1/2 w-[95vw] bg-primary-white/95 backdrop-blur-3xl border border-gray-200 rounded-3xl p-6 shadow-2xl md:hidden overflow-hidden flex flex-col gap-4"
                     >
                         {navLinks.map((link, i) => (
                             <motion.a
@@ -122,7 +124,7 @@ export default function Navbar() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
                             onClick={() => setIsOpen(false)}
-                            className="mt-4 px-6 py-4 w-full bg-accent-premium text-primary-white rounded-2xl font-heading font-black uppercase tracking-widest text-sm shadow-xl hover:scale-[1.02] active:scale-95 transition-all relative overflow-hidden group"
+                            className={`mt-4 w-full py-4 shadow-xl ${ctaClass}`}
                         >
                             <span className="relative z-10">Get Hydrated</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

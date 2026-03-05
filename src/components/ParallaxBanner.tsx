@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, MotionValue } from "framer-motion";
 
 export default function ParallaxBanner() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -100,20 +100,21 @@ export default function ParallaxBanner() {
         <section
             id="vibe"
             ref={containerRef}
-            className="relative bg-accent-premium border-y border-white/5 md:h-[400vh]"
+            className="relative bg-accent-premium border-y border-white/5 h-auto md:h-[400vh]"
         >
-            {/* Parallax Background Glows */}
+            {/* Parallax Background Glows (Intensified for Juice Vibe) */}
             <motion.div
-                className="absolute md:fixed inset-0 w-full h-full md:h-screen pointer-events-none"
+                className="absolute md:fixed inset-0 w-full h-full md:h-screen pointer-events-none mix-blend-screen opacity-60"
                 style={{ y: bgY }}
             >
-                <div className="absolute top-1/4 left-1/4 w-[20rem] h-[20rem] bg-accent-watermelon/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-1/4 right-1/4 w-[20rem] h-[20rem] bg-primary-green/10 rounded-full blur-[120px]" />
+                <div className="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-accent-watermelon/30 rounded-full blur-[150px] animate-pulse" />
+                <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-primary-green/30 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: "1.5s" }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-primary-blue/20 rounded-full blur-[200px]" />
             </motion.div>
 
             {/* Content Container */}
-            <div className="md:sticky top-0 md:h-screen w-full flex flex-col md:flex-row items-center overflow-hidden py-24 md:py-0">
-                <div className="container mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 relative z-10 w-full h-full">
+            <div className="md:sticky top-0 md:h-screen w-full flex flex-col md:flex-row items-center overflow-hidden py-16 md:py-0">
+                <div className="container mx-auto px-5 md:px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 lg:gap-24 relative z-10 w-full h-full">
 
                     {/* Left Side: Sticky Text */}
                     <div className="flex flex-col justify-center h-full relative z-20">
@@ -130,7 +131,7 @@ export default function ParallaxBanner() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ duration: 0.4 }}
-                                    className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter absolute inset-0"
+                                    className="text-4xl sm:text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter absolute inset-0"
                                 >
                                     {cards[activeCard].title}
                                 </motion.h2>
@@ -151,7 +152,7 @@ export default function ParallaxBanner() {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.4 }}
-                                    className="text-xl md:text-2xl font-body text-gray-400 font-medium max-w-lg leading-relaxed absolute inset-0"
+                                    className="text-lg md:text-xl lg:text-2xl font-body text-gray-400 font-medium max-w-lg leading-relaxed absolute inset-0"
                                 >
                                     {cards[activeCard].desc}
                                 </motion.p>
@@ -159,7 +160,7 @@ export default function ParallaxBanner() {
                         </div>
 
                         {/* Mobile Desc */}
-                        <p className="text-lg md:hidden font-body text-gray-400 font-medium leading-relaxed mb-12">
+                        <p className="text-base md:hidden font-body text-gray-400 font-medium leading-relaxed mb-8">
                             A completely new protocol for hydration and focus, built natively from the ground up for zero crashes.
                         </p>
 
@@ -176,30 +177,15 @@ export default function ParallaxBanner() {
 
                     {/* Right Side: Desktop Sliding Image Cards */}
                     <div className="relative md:h-screen flex flex-col md:block items-center justify-center lg:justify-end perspective-1000 gap-16 py-12 md:py-0 w-full pl-0 md:pl-16">
-                        {cards.map((card, idx) => {
-                            const center = idx / (cards.length - 1);
-                            const enter = center - 0.33;
-                            const exit = center + 0.33;
-
-                            const yDesk = useTransform(scrollYProgress, [enter, center, exit], ["100vh", "0vh", "-100vh"]);
-                            const opacityDesk = useTransform(scrollYProgress, [enter + 0.1, center, exit - 0.1], [0, 1, 0]);
-                            const scaleDesk = useTransform(scrollYProgress, [enter + 0.1, center, exit - 0.1], [0.85, 1, 0.85]);
-                            const rotateXDesk = useTransform(scrollYProgress, [enter, center, exit], [20, 0, -20]);
-
-                            return (
-                                <motion.div
-                                    key={idx}
-                                    style={{ y: yDesk, opacity: opacityDesk, scale: scaleDesk, rotateX: rotateXDesk }}
-                                    className={`hidden md:flex absolute inset-y-0 right-0 w-full lg:max-w-[32rem] mx-auto flex-col items-center justify-center pointer-events-none ${card.shadow}`}
-                                >
-                                    <div className="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#050505] shadow-[0_30px_100px_rgba(0,0,0,0.9)] pointer-events-auto flex items-center justify-center">
-                                        {card.art}
-                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#050505_100%)]" />
-                                        <div className="absolute inset-4 border border-white/10 rounded-[2.5rem] pointer-events-none" />
-                                    </div>
-                                </motion.div>
-                            )
-                        })}
+                        {cards.map((card, idx) => (
+                            <DesktopCard
+                                key={idx}
+                                card={card}
+                                idx={idx}
+                                total={cards.length}
+                                scrollYProgress={scrollYProgress}
+                            />
+                        ))}
 
                         {/* Mobile Static Cards */}
                         {cards.map((card, idx) => (
@@ -208,7 +194,7 @@ export default function ParallaxBanner() {
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className={`md:hidden w-full aspect-[4/5] rounded-[2rem] border border-white/10 bg-[#050505] shadow-xl relative overflow-hidden group mb-8 ${card.shadow}`}
+                                className={`md:hidden w-full aspect-square rounded-[1.5rem] border border-white/10 bg-[#050505] shadow-xl relative overflow-hidden group mb-6 ${card.shadow}`}
                             >
                                 {card.art}
                                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_100%)] pointer-events-none" />
@@ -223,4 +209,42 @@ export default function ParallaxBanner() {
             </div>
         </section>
     );
+}
+
+interface DesktopCardProps {
+    card: {
+        title: string;
+        desc: string;
+        color: string;
+        shadow: string;
+        art: React.ReactNode;
+    };
+    idx: number;
+    total: number;
+    scrollYProgress: MotionValue<number>;
+}
+
+const DesktopCard = (props: DesktopCardProps) => {
+    const { card, idx, total, scrollYProgress } = props;
+    const center = idx / (total - 1);
+    const enter = center - 0.33;
+    const exit = center + 0.33;
+
+    const yDesk = useTransform(scrollYProgress, [enter, center, exit], ["100vh", "0vh", "-100vh"]);
+    const opacityDesk = useTransform(scrollYProgress, [enter + 0.1, center, exit - 0.1], [0, 1, 0]);
+    const scaleDesk = useTransform(scrollYProgress, [enter + 0.1, center, exit - 0.1], [0.85, 1, 0.85]);
+    const rotateXDesk = useTransform(scrollYProgress, [enter, center, exit], [20, 0, -20]);
+
+    return (
+        <motion.div
+            style={{ y: yDesk, opacity: opacityDesk, scale: scaleDesk, rotateX: rotateXDesk }}
+            className={`hidden md:flex absolute inset-y-0 right-0 w-full lg:max-w-[32rem] mx-auto flex-col items-center justify-center pointer-events-none ${card.shadow}`}
+        >
+            <div className="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#050505] shadow-[0_30px_100px_rgba(0,0,0,0.9)] pointer-events-auto flex items-center justify-center">
+                {card.art}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#050505_100%)]" />
+                <div className="absolute inset-4 border border-white/10 rounded-[2.5rem] pointer-events-none" />
+            </div>
+        </motion.div>
+    )
 }

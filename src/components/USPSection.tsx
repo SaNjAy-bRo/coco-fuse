@@ -57,7 +57,13 @@ export default function USPSection() {
     };
 
     return (
-        <section id="formula" className="py-24 md:py-32 bg-white relative overflow-hidden">
+        <section id="formula" className="py-24 md:py-32 bg-primary-white relative overflow-hidden">
+            {/* Subtle Juice Splashes */}
+            <div className="absolute inset-0 pointer-events-none opacity-20">
+                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-blue/30 rounded-full blur-[120px] mix-blend-multiply" />
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent-watermelon/20 rounded-full blur-[150px] mix-blend-multiply" />
+            </div>
+
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
                     <motion.div
