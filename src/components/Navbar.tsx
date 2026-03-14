@@ -110,19 +110,25 @@ export default function Navbar() {
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                         className="absolute top-[110%] left-1/2 -translate-x-1/2 w-[95vw] bg-primary-white/95 backdrop-blur-3xl border border-gray-200 rounded-3xl p-6 shadow-2xl md:hidden overflow-hidden flex flex-col gap-4"
                     >
-                        {navLinks.map((link, i) => (
-                            <motion.a
-                                key={link.name}
-                                href={link.href}
-                                onClick={() => setIsOpen(false)}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: i * 0.1 }}
-                                className="text-2xl font-heading font-black tracking-widest text-accent-premium hover:text-primary-blue uppercase transition-colors"
-                            >
-                                {link.name}
-                            </motion.a>
-                        ))}
+                        {navLinks.map((link, i) => {
+                            // On mobile, we want "THE STORY" to go to the full #story section
+                            // rather than just the "origin" heading used for desktop parallax anchoring.
+                            const mobileHref = link.name === "THE STORY" ? "#story" : link.href;
+                            
+                            return (
+                                <motion.a
+                                    key={link.name}
+                                    href={mobileHref}
+                                    onClick={() => setIsOpen(false)}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="text-2xl font-heading font-black tracking-widest text-accent-premium hover:text-primary-blue uppercase transition-colors"
+                                >
+                                    {link.name}
+                                </motion.a>
+                            );
+                        })}
                         <motion.button
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
