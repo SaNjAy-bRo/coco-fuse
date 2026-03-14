@@ -97,7 +97,7 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
 
 export default function FlavorShowcase() {
     return (
-        <section id="flavors" className="py-24 md:py-32 bg-white relative overflow-hidden">
+        <section id="flavours" className="py-24 md:py-32 bg-white relative overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                     <motion.h2 

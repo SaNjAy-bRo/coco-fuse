@@ -46,7 +46,7 @@ export default function Navbar() {
     const borderRadius = useTransform(scrollY, [0, 100], ["0px", "9999px"]);
 
     const navLinks = [
-        { name: "THE STORY", href: "#story" },
+        { name: "THE STORY", href: "#story-origin" },
         { name: "FLAVOURS", href: "#flavours" },
         { name: "THE MATH", href: "#nutrition" },
     ];

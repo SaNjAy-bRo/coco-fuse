@@ -81,6 +81,7 @@ export default function StorySection() {
                     
                     {/* STAGE 1: THE ORIGIN */}
                     <motion.div
+                        id="story-origin"
                         style={{ opacity: opacity1, y: y1 }}
                         className="absolute flex flex-col items-center max-w-6xl w-full"
                     >
