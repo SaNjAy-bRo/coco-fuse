@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 const DrinkMenuIcon = ({ isOpen }: { isOpen: boolean }) => (
     <div className="relative w-10 h-10 flex items-center justify-center bg-accent-premium/5 rounded-full border border-black/10 overflow-hidden group hover:bg-black/5 transition-colors">
@@ -60,9 +61,12 @@ export default function Navbar() {
         >
             {/* Logo */}
             <a href="#" className="flex-shrink-0 relative z-[110] outline-none">
-                <img
+                <Image
                     src="/assets/client_logo.png"
                     alt="CocoFuse"
+                    width={150}
+                    height={48}
+                    priority
                     className="h-10 md:h-12 w-auto object-contain transition-transform hover:scale-105"
                 />
             </a>

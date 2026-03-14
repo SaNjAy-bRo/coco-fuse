@@ -60,7 +60,7 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
                         alpha: true,
                         powerPreference: "high-performance"
                     }}
-                    dpr={[1, 1.5]}
+                    dpr={[1, 2]}
                 >
                     <ambientLight intensity={1.5} />
                     <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} />

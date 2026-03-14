@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function FoundersSection() {
     const founders = [
@@ -86,11 +87,12 @@ export default function FoundersSection() {
                             <div className={`w-48 h-64 md:w-64 md:h-80 rounded-[4rem] ${founder.bg} border-4 ${founder.border} overflow-hidden mb-8 transition-transform duration-500 group-hover:scale-105 group-hover:shadow-2xl relative`}>
                                 {/* Replace with actual portraits later */}
                                 <div className="absolute inset-0">
-                                    <img
-                                        src={founder.image}
-                                        alt={`${founder.name} - Founder`}
-                                        className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-                                    />
+                                        <Image
+                                            src={founder.image}
+                                            alt={founder.name}
+                                            fill
+                                            className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                                        />
                                 </div>
                             </div>
 

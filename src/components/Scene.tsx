@@ -23,7 +23,8 @@ export default function Scene({
         <div className="w-full h-full pointer-events-none">
             <Canvas
                 camera={{ position: [0, 0, 10], fov: 45 }}
-                gl={{ antialias: true, alpha: true }}
+                gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+                dpr={[1, 2]}
             >
                 <ambientLight intensity={1.5} />
                 <directionalLight position={[10, 10, 10]} intensity={2} />

@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 /**
  * StorySection: A cinematic, sticky-scroll narrative experience.
@@ -55,10 +56,12 @@ export default function StorySection() {
                     style={{ y: bgY, scale: bgScale }}
                     className="absolute -top-[10vh] left-0 w-full h-[120vh] z-0"
                 >
-                    <img 
+                    <Image
                         src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop" 
                         alt="High altitude mountains" 
-                        className="w-full h-full object-cover"
+                        fill
+                        priority
+                        className="object-cover"
                     />
                     {/* Atmospheric Overlay */}
                     <div className="absolute inset-0 bg-black/30 z-10" />

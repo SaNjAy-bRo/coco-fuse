@@ -110,36 +110,40 @@ export default function GlobalCanOverlay() {
     return (
         <div className="fixed inset-0 z-50 pointer-events-none">
             {/* Desktop */}
-            <motion.div
-                className="absolute top-0 left-0 w-full h-full hidden lg:flex items-center justify-center pointer-events-none"
-                style={{ x: xDesktop, y: yDesktop, scale: scaleDesktop, opacity: opacityDesktop }}
-            >
-                <div className="w-[34vw] h-[80vw]">
-                    <Scene 
-                        scrollY={scrollY} 
-                        vh={vh} 
-                        labelPath={flavorData.label}
-                        liquidColor={flavorData.liquid}
-                        capColor={flavorData.cap}
-                    />
-                </div>
-            </motion.div>
+            {mounted && window.innerWidth >= 1024 && (
+                <motion.div
+                    className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none"
+                    style={{ x: xDesktop, y: yDesktop, scale: scaleDesktop, opacity: opacityDesktop }}
+                >
+                    <div className="w-[34vw] h-[80vw]">
+                        <Scene 
+                            scrollY={scrollY} 
+                            vh={vh} 
+                            labelPath={flavorData.label}
+                            liquidColor={flavorData.liquid}
+                            capColor={flavorData.cap}
+                        />
+                    </div>
+                </motion.div>
+            )}
 
             {/* MOBILE RENDER */}
-            <motion.div
-                className="absolute top-0 left-0 w-full h-full lg:hidden flex items-center justify-center pointer-events-none"
-                style={{ x: xMobile, y: yMobile, scale: scaleMobile, opacity: opacityMobile }}
-            >
-                <div className="w-[60vw] h-[140vw] max-w-[320px] max-h-[750px] flex items-center justify-center">
-                    <Scene 
-                        scrollY={scrollY} 
-                        vh={vh} 
-                        labelPath={flavorData.label}
-                        liquidColor={flavorData.liquid}
-                        capColor={flavorData.cap}
-                    />
-                </div>
-            </motion.div>
+            {mounted && window.innerWidth < 1024 && (
+                <motion.div
+                    className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none"
+                    style={{ x: xMobile, y: yMobile, scale: scaleMobile, opacity: opacityMobile }}
+                >
+                    <div className="w-[60vw] h-[140vw] max-w-[320px] max-h-[750px] flex items-center justify-center">
+                        <Scene 
+                            scrollY={scrollY} 
+                            vh={vh} 
+                            labelPath={flavorData.label}
+                            liquidColor={flavorData.liquid}
+                            capColor={flavorData.cap}
+                        />
+                    </div>
+                </motion.div>
+            )}
         </div>
     );
 }
