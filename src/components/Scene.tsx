@@ -4,13 +4,25 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, Float, ContactShadows } from "@react-three/drei";
 import { Suspense } from "react";
 import { MotionValue } from "framer-motion";
-import Can from "./Can";
+import Bottle from "./Bottle";
 
-export default function Scene({ scrollY, vh }: { scrollY?: MotionValue<number>, vh?: number }) {
+export default function Scene({ 
+    scrollY, 
+    vh, 
+    labelPath, 
+    liquidColor, 
+    capColor 
+}: { 
+    scrollY?: MotionValue<number>, 
+    vh?: number,
+    labelPath?: string,
+    liquidColor?: string,
+    capColor?: string
+}) {
     return (
         <div className="w-full h-full pointer-events-none">
             <Canvas
-                camera={{ position: [0, 0, 7], fov: 45 }}
+                camera={{ position: [0, 0, 10], fov: 45 }}
                 gl={{ antialias: true, alpha: true }}
             >
                 <ambientLight intensity={1.5} />
@@ -25,7 +37,13 @@ export default function Scene({ scrollY, vh }: { scrollY?: MotionValue<number>, 
                         floatIntensity={0.5}
                         floatingRange={[-0.05, 0.05]} // Reduced floating bounce
                     >
-                        <Can scrollY={scrollY} vh={vh} />
+                        <Bottle 
+                            scrollY={scrollY} 
+                            vh={vh} 
+                            labelPath={labelPath} 
+                            liquidColor={liquidColor} 
+                            capColor={capColor} 
+                        />
                     </Float>
 
                     <Environment preset="city" />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useSpring } from "framer-motion";
 
 export default function ParallaxBanner() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -10,9 +10,11 @@ export default function ParallaxBanner() {
         offset: ["start start", "end end"]
     });
 
+    const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+
     const [activeCard, setActiveCard] = useState(0);
 
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+    const bgY = useTransform(smoothProgress, [0, 1], ["0%", "50%"]);
 
     const cards = [
         {
@@ -20,6 +22,8 @@ export default function ParallaxBanner() {
             desc: "Raw electrochemical drive. We synthesized the perfect ratio of natural potassium from coconuts and B-Vitamins for zero crash energy.",
             color: "from-accent-mango",
             shadow: "shadow-accent-mango/30",
+            textAccent: "text-accent-mango",
+            glow: "bg-accent-mango/20",
             art: (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="absolute w-64 h-64 bg-accent-mango/50 rounded-full blur-[60px] animate-pulse" />
@@ -36,6 +40,8 @@ export default function ParallaxBanner() {
             desc: "Water isn't enough when you're sweating out minerals. CocoFuse drives electrolytes straight into your cells twice as fast as plain water.",
             color: "from-primary-green",
             shadow: "shadow-primary-green/30",
+            textAccent: "text-primary-green",
+            glow: "bg-primary-green/20",
             art: (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="absolute w-64 h-64 bg-primary-green/50 rounded-full blur-[60px] animate-pulse" style={{ animationDelay: "1s" }} />
@@ -54,6 +60,8 @@ export default function ParallaxBanner() {
             desc: "No artificial dyes. No high fructose corn syrup fog. Just clean ingredients that keep your neural pathways firing rapidly.",
             color: "from-primary-blue",
             shadow: "shadow-primary-blue/30",
+            textAccent: "text-primary-blue",
+            glow: "bg-primary-blue/20",
             art: (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="absolute w-64 h-64 bg-primary-blue/50 rounded-full blur-[60px] animate-pulse" style={{ animationDelay: "0.5s" }} />
@@ -72,6 +80,8 @@ export default function ParallaxBanner() {
             desc: "At just ~20 kcal per 100ml, you get maximum output with minimal metabolic drag. Keeps you light, lean, and aggressive.",
             color: "from-accent-watermelon",
             shadow: "shadow-accent-watermelon/30",
+            textAccent: "text-accent-watermelon",
+            glow: "bg-accent-watermelon/20",
             art: (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="absolute w-64 h-64 bg-accent-watermelon/50 rounded-full blur-[60px] animate-pulse" style={{ animationDelay: "1.5s" }} />
@@ -102,15 +112,21 @@ export default function ParallaxBanner() {
             ref={containerRef}
             className="relative bg-accent-premium border-y border-white/5 h-auto md:h-[400vh]"
         >
-            {/* Parallax Background Glows (Intensified for Juice Vibe) */}
-            <motion.div
-                className="absolute md:fixed inset-0 w-full h-full md:h-screen pointer-events-none mix-blend-screen opacity-60"
+            {/* Parallax Background Glows (Removed for cleaner look) */}
+            {/* <motion.div
+                className="absolute md:fixed inset-0 w-full h-full md:h-screen pointer-events-none mix-blend-screen"
                 style={{ y: bgY }}
             >
-                <div className="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-accent-watermelon/30 rounded-full blur-[150px] animate-pulse" />
-                <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-primary-green/30 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: "1.5s" }} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-primary-blue/20 rounded-full blur-[200px]" />
-            </motion.div>
+                <motion.div 
+                    animate={{ backgroundColor: `var(--color-${cards[activeCard].color.replace('from-', '')})` }}
+                    className={`absolute top-1/4 left-1/4 w-[40rem] h-[40rem] rounded-full blur-[180px] opacity-40 transition-colors duration-1000`} 
+                />
+                <motion.div 
+                    animate={{ backgroundColor: `var(--color-${cards[activeCard].color.replace('from-', '')})` }}
+                    className={`absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] rounded-full blur-[150px] opacity-30 transition-colors duration-1000`} 
+                    style={{ animationDelay: "1.5s" }} 
+                />
+            </motion.div> */}
 
             {/* Content Container */}
             <div className="md:sticky top-0 md:h-screen w-full flex flex-col md:flex-row items-center overflow-hidden py-16 md:py-0">
@@ -131,7 +147,7 @@ export default function ParallaxBanner() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ duration: 0.4 }}
-                                    className="text-4xl sm:text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter absolute inset-0"
+                                    className={`text-4xl sm:text-5xl md:text-7xl font-heading font-black uppercase tracking-tighter absolute inset-0 transition-colors duration-700 ${cards[activeCard].textAccent}`}
                                 >
                                     {cards[activeCard].title}
                                 </motion.h2>
@@ -165,11 +181,11 @@ export default function ParallaxBanner() {
                         </p>
 
                         {/* Progress Indicators */}
-                        <div className="hidden md:flex gap-3 mt-12">
+                        <div className="hidden md:flex gap-4 mt-12">
                             {cards.map((_, i) => (
                                 <div
                                     key={i}
-                                    className={`h-1.5 rounded-full transition-all duration-500 ${activeCard === i ? "w-12 bg-white" : "w-4 bg-white/20"}`}
+                                    className={`h-2 rounded-full transition-all duration-700 ${activeCard === i ? `w-16 ${cards[i].glow.replace('/20', '')}` : "w-4 bg-white/10"}`}
                                 />
                             ))}
                         </div>
@@ -183,7 +199,7 @@ export default function ParallaxBanner() {
                                 card={card}
                                 idx={idx}
                                 total={cards.length}
-                                scrollYProgress={scrollYProgress}
+                                smoothProgress={smoothProgress}
                             />
                         ))}
 
@@ -217,33 +233,38 @@ interface DesktopCardProps {
         desc: string;
         color: string;
         shadow: string;
+        textAccent: string;
+        glow: string;
         art: React.ReactNode;
     };
     idx: number;
     total: number;
-    scrollYProgress: MotionValue<number>;
+    smoothProgress: MotionValue<number>;
 }
 
 const DesktopCard = (props: DesktopCardProps) => {
-    const { card, idx, total, scrollYProgress } = props;
+    const { card, idx, total, smoothProgress } = props;
     const center = idx / (total - 1);
     const enter = center - 0.33;
     const exit = center + 0.33;
 
-    const yDesk = useTransform(scrollYProgress, [enter, center, exit], ["100vh", "0vh", "-100vh"]);
-    const opacityDesk = useTransform(scrollYProgress, [enter + 0.1, center, exit - 0.1], [0, 1, 0]);
-    const scaleDesk = useTransform(scrollYProgress, [enter + 0.1, center, exit - 0.1], [0.85, 1, 0.85]);
-    const rotateXDesk = useTransform(scrollYProgress, [enter, center, exit], [20, 0, -20]);
+    const yDesk = useTransform(smoothProgress, [enter, center, exit], ["100vh", "0vh", "-100vh"]);
+    const opacityDesk = useTransform(smoothProgress, [enter + 0.1, center, exit - 0.1], [0, 1, 0]);
+    const scaleDesk = useTransform(smoothProgress, [enter + 0.1, center, exit - 0.1], [0.85, 1, 0.85]);
+    const rotateXDesk = useTransform(smoothProgress, [enter, center, exit], [20, 0, -20]);
 
     return (
         <motion.div
             style={{ y: yDesk, opacity: opacityDesk, scale: scaleDesk, rotateX: rotateXDesk }}
             className={`hidden md:flex absolute inset-y-0 right-0 w-full lg:max-w-[32rem] mx-auto flex-col items-center justify-center pointer-events-none ${card.shadow}`}
         >
-            <div className="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#050505] shadow-[0_30px_100px_rgba(0,0,0,0.9)] pointer-events-auto flex items-center justify-center">
+            <div className={`relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden border-2 bg-black shadow-[0_30px_100px_rgba(0,0,0,0.9)] pointer-events-auto flex items-center justify-center transition-colors duration-700 ${card.glow.replace('bg-', 'border-').replace('/20', '/40')}`}>
                 {card.art}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#050505_100%)]" />
-                <div className="absolute inset-4 border border-white/10 rounded-[2.5rem] pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#000000_100%)]" />
+                <div className="absolute inset-4 border border-white/5 rounded-[2.2rem] pointer-events-none" />
+                
+                {/* Glossy Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none opacity-50" />
             </div>
         </motion.div>
     )

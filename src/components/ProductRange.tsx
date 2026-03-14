@@ -43,7 +43,7 @@ export default function ProductRange() {
         <section id="flavours" className="py-24 md:py-32 bg-primary-white relative overflow-hidden">
             {/* Vibrant Fruit Mash Background */}
             <div className="absolute inset-0 w-full h-full pointer-events-none opacity-30 mix-blend-multiply">
-                <div className="absolute top-0 right-1/3 w-[800px] h-[800px] bg-accent-mango/40 rounded-full blur-[150px]" />
+                {/* <div className="absolute top-0 right-1/3 w-[800px] h-[800px] bg-accent-mango/40 rounded-full blur-[150px]" /> */}
                 <div className="absolute bottom-[-20%] left-[-10%] w-[900px] h-[900px] bg-accent-watermelon/30 rounded-full blur-[150px]" />
                 <div className="absolute top-1/2 left-2/3 w-[600px] h-[600px] bg-primary-green/20 rounded-full blur-[120px]" />
             </div>

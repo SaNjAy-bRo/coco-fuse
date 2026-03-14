@@ -34,12 +34,12 @@ export default function FoundersSection() {
     ];
 
     return (
-        <section id="founders" className="py-24 md:py-32 bg-primary-white relative overflow-hidden">
-            {/* Vibrant Background Blobs */}
-            <div className="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-multiply">
-                <div className="absolute -top-20 -left-20 w-[500px] h-[500px] bg-accent-mango/30 rounded-full blur-[120px]" />
-                <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-green/20 rounded-full blur-[150px]" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-watermelon/10 rounded-full blur-[150px]" />
+        <section id="founders" className="py-24 md:py-32 bg-primary-white relative overflow-hidden" style={{ willChange: "transform" }}>
+            {/* Vibrant Background Blobs (Optimized for performance) */}
+            <div className="absolute inset-0 w-full h-full pointer-events-none opacity-40">
+                <div className="absolute -top-20 -left-20 w-[500px] h-[500px] bg-accent-mango/30 rounded-full blur-[80px]" />
+                <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-green/20 rounded-full blur-[100px]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-watermelon/10 rounded-full blur-[100px]" />
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
@@ -89,7 +89,7 @@ export default function FoundersSection() {
                                     <img
                                         src={founder.image}
                                         alt={`${founder.name} - Founder`}
-                                        className="w-full h-full object-cover mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-500"
+                                        className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
                                     />
                                 </div>
                             </div>

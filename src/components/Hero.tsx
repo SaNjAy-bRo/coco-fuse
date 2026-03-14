@@ -2,8 +2,10 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useFlavor } from "@/context/FlavorContext";
 
 export default function Hero() {
+    const { flavorData } = useFlavor();
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -22,16 +24,18 @@ export default function Hero() {
     const marqueeX1 = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
     const marqueeX2 = useTransform(scrollYProgress, [0, 1], ["-50%", "0%"]);
 
+    const bgClass = flavorData.id === "mango" ? "bg-festival-gradient-1" : 
+                    flavorData.id === "watermelon" ? "bg-watermelon-gradient" : "bg-basil-gradient";
+
     return (
         <section
             ref={containerRef}
-            className="relative w-full h-[200vh] bg-festival-gradient-1 selection:bg-primary-green/30"
+            className={`relative w-full h-[200vh] ${bgClass} transition-colors duration-1000 selection:bg-primary-green/30`}
         >
             <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
 
-                {/* Parallax Background Gradient Blobs - Now ultra-vibrant */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-color-burn">
-                    {/* Floating massive vibrant shapes */}
+                {/* Parallax Background Gradient Blobs - Removed for cleaner look */}
+                {/* <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-color-burn">
                     <motion.div
                         animate={{
                             rotate: 360,
@@ -48,7 +52,7 @@ export default function Hero() {
                         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                         className="absolute bottom-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-festival-gradient-3 rounded-[40%] blur-[120px] opacity-80"
                     />
-                </div>
+                </div> */}
 
                 {/* Background Kinetic Typography Marquees (Desktop mainly) */}
                 <div className="absolute inset-0 z-0 flex-col justify-between py-32 pointer-events-none opacity-20 overflow-hidden mix-blend-overlay hidden md:flex">
@@ -111,7 +115,7 @@ export default function Hero() {
                         </div>
 
                         {/* 2. MIDDLE STACK: The "Can Stage" (Dynamically expands) */}
-                        <div className="w-full lg:hidden flex-1 min-h-[40vh]" />
+                        <div className="w-full lg:hidden flex-1 min-h-[45vh]" />
 
                         {/* 3. BOTTOM STACK: Subheading & CTAs (Desktop - Appears on Scroll) */}
                         <motion.div

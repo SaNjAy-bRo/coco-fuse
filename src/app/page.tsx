@@ -1,13 +1,16 @@
 import Hero from "@/components/Hero";
 import GlobalCanOverlay from "@/components/GlobalCanOverlay";
 import USPSection from "@/components/USPSection";
-import StorySection from "@/components/StorySection";
 import MascotJourney from "@/components/MascotJourney";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import FoundersSection from "@/components/FoundersSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import Nutrition from "@/components/Nutrition";
-import ProductRange from "@/components/ProductRange";
+import CTASection from "@/components/CTASection";
+import FlavorShowcase from "@/components/FlavorShowcase";
+import MoodSelector from "@/components/MoodSelector";
+import StorySection from "@/components/StorySection";
+import Transformation from "@/components/Transformation";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -16,12 +19,14 @@ export default function Home() {
       <GlobalCanOverlay />
       <Hero />
       <MascotJourney />
+      <FlavorShowcase />
+      <MoodSelector />
       <StorySection />
       <FoundersSection />
       <ParallaxBanner />
       <USPSection />
       <Nutrition />
-      <ProductRange />
+      <CTASection />
       <ManifestoSection />
       <Footer />
     </main>

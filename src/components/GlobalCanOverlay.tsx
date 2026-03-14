@@ -3,10 +3,12 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { useFlavor } from "@/context/FlavorContext";
 
 const Scene = dynamic(() => import("./Scene"), { ssr: false });
 
 export default function GlobalCanOverlay() {
+    const { flavorData } = useFlavor();
     const { scrollY } = useScroll();
     const [mounted, setMounted] = useState(false);
     const [vh, setVh] = useState(() => typeof window !== "undefined" ? window.innerHeight : 0);
@@ -53,7 +55,7 @@ export default function GlobalCanOverlay() {
     // DESKTOP PATH (untouched from web view)
     // ═══════════════════════════════════════
     const scaleDesktop = useTransform(scrollY, scrollMap,
-        [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+        [0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80]
     );
     const xDesktop = useTransform(scrollY, scrollMap, [
         "23.5vw", // Hero idle
@@ -67,10 +69,11 @@ export default function GlobalCanOverlay() {
         "23.5vw"  // Exit
     ]);
     const yDesktop = useTransform(scrollY, scrollMap, [
-        "0vh", "0vh", "0vh",      // Hero
-        "0vh", "0vh", "0vh",      // S1 & S2
-        "0vh", "0vh",             // S3
-        "100vh"                   // Exit
+        "15vh", "15vh", "15vh",      // Hero - Lowered
+        "15vh",                      // S1
+        "15vh", "15vh",              // S2 - Now matching S1 exactly for horizontal glide
+        "15vh", "15vh",              // S3
+        "100vh"                      // Exit
     ]);
     const opacityDesktop = useTransform(scrollY, [0, exitStart, mascotEnd], [1, 1, 0]);
 
@@ -80,7 +83,7 @@ export default function GlobalCanOverlay() {
     // Mascot Journey: Top/Bottom Hemisphere Exchange to avoid text.
     // ═══════════════════════════════════════════════════════════════════
     const scaleMobile = useTransform(scrollY, scrollMap,
-        [0.90, 0.90, 0.90, 0.90, 0.90, 0.90, 0.90, 0.90, 0.90]
+        [0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85]
     );
     const xMobile = useTransform(scrollY, scrollMap, [
         "0vw",    // Hero — centered
@@ -94,11 +97,11 @@ export default function GlobalCanOverlay() {
         "0vw"     // Exit
     ]);
     const yMobile = useTransform(scrollY, scrollMap, [
-        "8vh", "8vh", "8vh",      // Hero (Centered lower in the absolute gap to avoid tall headlines)
-        "28vh",                   // S1
-        "-20vh", "-20vh",         // S2
-        "28vh", "28vh",           // S3
-        "-120vh"                  // Exit
+        "8vh", "8vh", "8vh",        // Hero
+        "25vh",                     // S1
+        "-10vh", "-10vh",           // S2 - Final tweak for optimal framing
+        "25vh", "25vh",             // S3
+        "-120vh"                    // Exit
     ]);
     const opacityMobile = useTransform(scrollY, [0, exitStart, mascotEnd], [1, 1, 0]);
 
@@ -111,8 +114,14 @@ export default function GlobalCanOverlay() {
                 className="absolute top-0 left-0 w-full h-full hidden lg:flex items-center justify-center pointer-events-none"
                 style={{ x: xDesktop, y: yDesktop, scale: scaleDesktop, opacity: opacityDesktop }}
             >
-                <div className="w-[34vw] h-[48vw]">
-                    <Scene scrollY={scrollY} vh={vh} />
+                <div className="w-[34vw] h-[80vw]">
+                    <Scene 
+                        scrollY={scrollY} 
+                        vh={vh} 
+                        labelPath={flavorData.label}
+                        liquidColor={flavorData.liquid}
+                        capColor={flavorData.cap}
+                    />
                 </div>
             </motion.div>
 
@@ -121,8 +130,14 @@ export default function GlobalCanOverlay() {
                 className="absolute top-0 left-0 w-full h-full lg:hidden flex items-center justify-center pointer-events-none"
                 style={{ x: xMobile, y: yMobile, scale: scaleMobile, opacity: opacityMobile }}
             >
-                <div className="w-[60vw] h-[85vw] max-w-[280px] max-h-[380px] flex items-center justify-center">
-                    <Scene scrollY={scrollY} vh={vh} />
+                <div className="w-[60vw] h-[140vw] max-w-[320px] max-h-[750px] flex items-center justify-center">
+                    <Scene 
+                        scrollY={scrollY} 
+                        vh={vh} 
+                        labelPath={flavorData.label}
+                        liquidColor={flavorData.liquid}
+                        capColor={flavorData.cap}
+                    />
                 </div>
             </motion.div>
         </div>

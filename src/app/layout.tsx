@@ -4,6 +4,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/CustomCursor";
+import { FlavorProvider } from "@/context/FlavorContext";
 
 const bodyFont = Poppins({
   subsets: ["latin"],
@@ -32,11 +33,13 @@ export default function RootLayout({
       <body
         className={`${bodyFont.variable} ${headingFont.variable} font-body antialiased bg-primary-white text-accent-premium ${"custom-cursor"}`}
       >
-        <CustomCursor />
-        <SmoothScroll>
-          <Navbar />
-          {children}
-        </SmoothScroll>
+        <FlavorProvider>
+          <CustomCursor />
+          <SmoothScroll>
+            <Navbar />
+            {children}
+          </SmoothScroll>
+        </FlavorProvider>
       </body>
     </html>
   );
