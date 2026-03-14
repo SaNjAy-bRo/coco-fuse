@@ -26,8 +26,11 @@ export default function GlobalCanOverlay() {
     // ══════════════════════════════════════════════
     // Page structure: Hero (200vh) → MascotJourney (400vh) → USP → Story → ...
     // Hero ends at scroll = 2vh. MascotJourney scroll range = 2vh to 5vh (sticky internal = 300vh)
+    // MascotJourney ends after Hero (2vh) + Mascot (4vh desk / 6vh mobile)
+    const isMobile = mounted && window.innerWidth < 1024;
     const heroEnd = vh * 2;
-    const mascotEnd = vh * 5;
+    const mascotHeight = isMobile ? vh * 6 : vh * 4;
+    const mascotEnd = heroEnd + mascotHeight;
 
     // MascotJourney internal progress mapped to absolute scroll pixels:
     // Scene 1→2 transition:  progress 0.30→0.40  =  heroEnd + 0.9vh → heroEnd + 1.2vh

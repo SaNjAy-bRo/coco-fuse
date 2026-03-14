@@ -46,7 +46,7 @@ export default function StorySection() {
         <section 
             id="story" 
             ref={sectionRef} 
-            className="relative w-full h-[300vh] bg-black overflow-clip"
+            className="relative w-full h-[450vh] lg:h-[300vh] bg-black overflow-clip"
         >
             {/* STICKY VIEWPORT CONTAINER */}
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
