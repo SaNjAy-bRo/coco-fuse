@@ -32,24 +32,23 @@ export default function GlobalCanOverlay() {
     const mascotHeight = isMobile ? vh * 6 : vh * 4;
     const mascotEnd = heroEnd + mascotHeight;
 
-    // MascotJourney internal progress mapped to absolute scroll pixels:
-    // Scene 1→2 transition:  progress 0.30→0.40  =  heroEnd + 0.9vh → heroEnd + 1.2vh
-    // Scene 2→3 transition:  progress 0.65→0.75  =  heroEnd + 1.95vh → heroEnd + 2.25vh
-    const s1End = heroEnd + vh * 0.9;
-    const s2Start = heroEnd + vh * 1.2;
-    const s2End = heroEnd + vh * 1.95;
-    const s3Start = heroEnd + vh * 2.25;
-    const exitStart = heroEnd + vh * 2.5;
+    // Use relative percentages of mascotHeight to match MascotJourney.tsx EXACTLY
+    // S1: [0, 0.25, 0.35] | S2: [0.3, 0.4, 0.6, 0.7] | S3: [0.65, 0.75, 1]
+    const s1End = heroEnd + mascotHeight * 0.25; 
+    const s2Start = heroEnd + mascotHeight * 0.40;
+    const s2End = heroEnd + mascotHeight * 0.60;
+    const s3Start = heroEnd + mascotHeight * 0.75;
+    const exitStart = heroEnd + mascotHeight * 0.90;
 
-    // 10 keyframes: Hero idle → Hero exit → S1 sit → S1→S2 travel → S2 sit → S2→S3 travel → S3 sit → exit
+    // 9 keyframes: Hero idle → Hero exit → S1 sit → S1→S2 travel → S2 sit → S2→S3 travel → S3 sit → exit
     const scrollMap = [
         0,              // 0: Page top
-        heroEnd * 0.5,  // 1: Mid-Hero (can sits here)
+        heroEnd * 0.5,  // 1: Mid-Hero
         heroEnd,        // 2: Hero exit / Mascot start
         s1End,          // 3: Scene 1 sit end
-        s2Start,        // 4: Scene 2 sit start (travel happens 3→4)
+        s2Start,        // 4: Scene 2 sit start
         s2End,          // 5: Scene 2 sit end
-        s3Start,        // 6: Scene 3 sit start (travel happens 5→6)
+        s3Start,        // 6: Scene 3 sit start
         exitStart,      // 7: Scene 3 sit end / begin exit
         mascotEnd       // 8: Fully gone
     ];
