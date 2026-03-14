@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useFlavor } from "@/context/FlavorContext";
+import { ShoppingBag, ArrowRight } from "lucide-react";
 
 export default function Hero() {
     const { flavorData } = useFlavor();
@@ -93,7 +94,7 @@ export default function Hero() {
                             </motion.div>
 
                             {/* Kinetic Headline */}
-                            <div className="flex flex-col mb-1 min-[400px]:mb-3 md:mb-8 w-full overflow-hidden drop-shadow-2xl mt-1 text-center lg:text-left">
+                            <div className="flex flex-col mb-1 min-[400px]:mb-3 md:mb-8 w-full overflow-hidden drop-shadow-2xl mt-1 text-center lg:text-left items-center lg:items-start">
                                 {[
                                     { text: "Hydrate", delay: 0.1, outline: false },
                                     { text: "The", delay: 0.2, outline: true },
@@ -104,8 +105,8 @@ export default function Hero() {
                                             initial={{ y: "110%" }}
                                             animate={{ y: 0 }}
                                             transition={{ duration: 0.7, delay: line.delay, ease: [0.22, 1, 0.36, 1] }}
-                                            className={`text-[11vw] sm:text-5xl md:text-7xl lg:text-[6.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-heading font-black uppercase tracking-tighter leading-[0.95] md:leading-[0.9] ${line.outline ? 'text-primary-white' : 'text-accent-premium'}`}
-                                            style={line.outline ? { WebkitTextStroke: "3px #0A0A0A" } : {}}
+                                            className={`text-[12vw] sm:text-5xl md:text-7xl lg:text-[6.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-heading font-black uppercase tracking-tighter leading-[0.95] md:leading-[0.9] ${line.outline ? 'text-primary-white' : 'text-accent-premium'}`}
+                                            style={line.outline ? { WebkitTextStroke: "2px #0A0A0A" } : {}}
                                         >
                                             {line.text}
                                         </motion.h1>
@@ -115,7 +116,7 @@ export default function Hero() {
                         </div>
 
                         {/* 2. MIDDLE STACK: The "Can Stage" (Dynamically expands) */}
-                        <div className="w-full lg:hidden flex-1 min-h-[45vh]" />
+                        <div className="w-full lg:hidden flex-1 min-h-[35vh] md:min-h-[45vh]" />
 
                         {/* 3. BOTTOM STACK: Subheading & CTAs (Desktop - Appears on Scroll) */}
                         <motion.div
@@ -146,33 +147,38 @@ export default function Hero() {
                         </motion.div>
 
                         {/* 3. BOTTOM STACK: Subheading & CTAs (Mobile - Static Normal) */}
-                        <div className="flex flex-col w-full pointer-events-auto text-center lg:hidden">
-                            {/* Subheading */}
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
+                        <div className="flex flex-col w-full pointer-events-auto text-center lg:hidden items-center justify-end pb-8">
+                            {/* Subheading - Refined Glassmorphism */}
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
-                                className="text-[10px] min-[400px]:text-xs md:text-xl font-body font-bold text-accent-premium bg-white/50 backdrop-blur-md px-3 py-2 md:px-6 md:py-4 rounded-xl max-w-[85vw] md:max-w-md leading-snug md:leading-relaxed mb-3 lg:mb-12 border border-white/40 shadow-xl mx-auto lg:mx-0"
+                                className="text-[11px] min-[400px]:text-xs font-body font-medium text-accent-premium bg-white/10 backdrop-blur-xl px-5 py-4 min-[400px]:px-6 min-[400px]:py-5 rounded-2xl max-w-[90vw] leading-relaxed mb-6 border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.1)] relative overflow-hidden group"
                             >
-                                Not a hydration drink. Not a soda. Not a juice.
-                                <span className="block font-black mt-1 text-accent-watermelon uppercase tracking-wider text-[9px] min-[400px]:text-xs md:text-lg lg:text-xl">CocoFuse is a guilt-free fun drink that happens to hydrate.</span>
-                            </motion.p>
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+                                <span className="relative z-10">
+                                    Not a hydration drink. Not a soda. Not a juice.
+                                    <span className="block font-black mt-2 text-accent-watermelon uppercase tracking-wider text-[10px] min-[400px]:text-[11px]">
+                                        CocoFuse is a guilt-free fun drink that happens to hydrate.
+                                    </span>
+                                </span>
+                            </motion.div>
 
-                            {/* CTA Group */}
+                            {/* CTA Group - Elevated */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
-                                className="flex flex-col sm:flex-row items-center gap-2 min-[400px]:gap-3 md:gap-4 w-[90%] sm:w-auto mx-auto lg:mx-0 relative z-30"
+                                className="flex flex-col items-center w-full max-w-[280px] mx-auto relative z-30"
                             >
-                                <button className="w-full sm:w-auto px-4 py-3 min-[400px]:px-5 min-[400px]:py-3.5 md:px-8 md:py-5 bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-[10px] min-[400px]:text-[11px] md:text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl relative overflow-hidden group">
-                                    <span className="relative z-10">Shop Flavours</span>
+                                <button className="w-full px-8 py-4.5 bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-[0_20px_50px_rgba(26,26,26,0.3)] relative overflow-hidden group">
+                                    <span className="relative z-10 flex items-center gap-2">
+                                        Shop Flavours
+                                        <ShoppingBag className="w-4 h-4" />
+                                    </span>
                                     <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                 </button>
-                                <a href="#story" className="w-full sm:w-auto px-4 py-3 min-[400px]:px-5 min-[400px]:py-3.5 md:px-8 md:py-5 rounded-full border-2 border-accent-premium/20 text-accent-premium font-heading font-bold uppercase tracking-widest text-[10px] min-[400px]:text-[11px] md:text-sm hover:border-accent-premium/40 hover:bg-white/50 backdrop-blur-sm transition-all text-center flex justify-center items-center gap-2 group bg-white/20">
-                                    Our Story
-                                    <svg className="w-3.5 h-3.5 min-[400px]:w-4 min-[400px]:h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                                </a>
+                                {/* Removed "Our Story" button from mobile as per user request */}
                             </motion.div>
                         </div>
 

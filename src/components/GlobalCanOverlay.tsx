@@ -99,9 +99,9 @@ export default function GlobalCanOverlay() {
         "0vw"     // Exit
     ]);
     const yMobile = useTransform(scrollY, scrollMap, [
-        "8vh", "8vh", "8vh",        // Hero
+        "5vh", "5vh", "5vh",        // Hero - Precisely centered in the new gap
         "25vh",                     // S1
-        "-10vh", "-10vh",           // S2 - Final tweak for optimal framing
+        "-10vh", "-10vh",           // S2
         "25vh", "25vh",             // S3
         "-120vh"                    // Exit
     ]);
