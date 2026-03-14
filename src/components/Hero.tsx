@@ -100,13 +100,13 @@ export default function Hero() {
                                     { text: "The", delay: 0.2, outline: true },
                                     { text: "Fun.", delay: 0.3, outline: false }
                                 ].map((line, i) => (
-                                    <div key={i} className="overflow-hidden relative z-20 pb-1">
+                                    <div key={i} className="overflow-hidden relative z-20">
                                         <motion.h1
                                             initial={{ y: "110%" }}
                                             animate={{ y: 0 }}
                                             transition={{ duration: 0.7, delay: line.delay, ease: [0.22, 1, 0.36, 1] }}
-                                            className={`text-[12vw] sm:text-5xl md:text-7xl lg:text-[6.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-heading font-black uppercase tracking-tighter leading-[0.95] md:leading-[0.9] ${line.outline ? 'text-primary-white' : 'text-accent-premium'}`}
-                                            style={line.outline ? { WebkitTextStroke: "2px #0A0A0A" } : {}}
+                                            className={`text-[12.5vw] sm:text-5xl md:text-7xl lg:text-[6.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-heading font-black uppercase tracking-tighter leading-[0.85] lg:leading-[0.9] ${line.outline ? 'text-primary-white' : 'text-accent-premium'}`}
+                                            style={line.outline ? { WebkitTextStroke: "1.5px #0A0A0A" } : {}}
                                         >
                                             {line.text}
                                         </motion.h1>
@@ -116,7 +116,7 @@ export default function Hero() {
                         </div>
 
                         {/* 2. MIDDLE STACK: The "Can Stage" (Dynamically expands) */}
-                        <div className="w-full lg:hidden flex-1 min-h-[35vh] md:min-h-[45vh]" />
+                        <div className="w-full lg:hidden flex-1 min-h-[40vh] md:min-h-[50vh]" />
 
                         {/* 3. BOTTOM STACK: Subheading & CTAs (Desktop - Appears on Scroll) */}
                         <motion.div

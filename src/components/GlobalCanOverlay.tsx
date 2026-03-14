@@ -99,7 +99,7 @@ export default function GlobalCanOverlay() {
         "0vw"     // Exit
     ]);
     const yMobile = useTransform(scrollY, scrollMap, [
-        "5vh", "5vh", "5vh",        // Hero - Precisely centered in the new gap
+        "15vh", "15vh", "15vh",     // Hero - Pushed down to clear the headline
         "25vh",                     // S1
         "-10vh", "-10vh",           // S2
         "25vh", "25vh",             // S3
