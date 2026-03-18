@@ -24,7 +24,7 @@ export interface FlavorData {
     ingredients: string;
 }
 
-const FLAVORS: Record<FlavorID, FlavorData> = {
+export const FLAVORS: Record<FlavorID, FlavorData> = {
     mango: {
         id: "mango",
         name: "Mango Refresh",

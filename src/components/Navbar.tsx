@@ -47,9 +47,9 @@ export default function Navbar() {
     const borderRadius = useTransform(scrollY, [0, 100], ["0px", "9999px"]);
 
     const navLinks = [
-        { name: "THE STORY", href: "#story-origin" },
-        { name: "FLAVOURS", href: "#flavours" },
-        { name: "THE MATH", href: "#nutrition" },
+        { name: "HOME", href: "/" },
+        { name: "THE STORY", href: "/#story-origin" },
+        { name: "FLAVOURS", href: "/#flavours" },
     ];
 
     const ctaClass = "bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all group relative overflow-hidden";
@@ -111,9 +111,9 @@ export default function Navbar() {
                         className="absolute top-[110%] left-1/2 -translate-x-1/2 w-[95vw] bg-primary-white/95 backdrop-blur-3xl border border-gray-200 rounded-3xl p-6 shadow-2xl md:hidden overflow-hidden flex flex-col gap-4"
                     >
                         {navLinks.map((link, i) => {
-                            // On mobile, we want "THE STORY" to go to the full #story section
+                            // On mobile, we want "THE STORY" to go to the full /#story section
                             // rather than just the "origin" heading used for desktop parallax anchoring.
-                            const mobileHref = link.name === "THE STORY" ? "#story" : link.href;
+                            const mobileHref = link.name === "THE STORY" ? "/#story" : link.href;
                             
                             return (
                                 <motion.a

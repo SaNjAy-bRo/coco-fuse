@@ -5,9 +5,11 @@ import { motion } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { Environment, ContactShadows, OrbitControls } from "@react-three/drei";
 import Bottle from "./Bottle";
+import Link from "next/link";
 
 const FLAVORS = [
     {
+        id: "mango",
         name: "Mango Refresh",
         label: "/assets/label_full.png",
         liquid: "#f97316",
@@ -16,6 +18,7 @@ const FLAVORS = [
         accent: "text-accent-mango"
     },
     {
+        id: "watermelon",
         name: "Watermelon Cool",
         label: "/assets/watermelon_label_extracted.png",
         liquid: "#ff4d4d",
@@ -24,6 +27,7 @@ const FLAVORS = [
         accent: "text-[#ff4d4d]"
     },
     {
+        id: "basil",
         name: "Basil Chili Kick",
         label: "/assets/chili_label_extracted.png",
         liquid: "#cc0000",
@@ -84,13 +88,15 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
                 </Canvas>
             </div>
 
-            <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-accent-premium text-white font-heading font-black uppercase tracking-wider py-4 px-10 rounded-full z-10 shadow-xl"
-            >
-                Shop Now
-            </motion.button>
+            <Link href={`/products/${flavor.id}`} passHref>
+                <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-accent-premium text-white font-heading font-black uppercase tracking-wider py-4 px-10 rounded-full z-10 shadow-xl"
+                >
+                    View Product
+                </motion.button>
+            </Link>
         </motion.div>
     );
 }

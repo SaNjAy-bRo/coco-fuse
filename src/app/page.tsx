@@ -5,7 +5,6 @@ import MascotJourney from "@/components/MascotJourney";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import FoundersSection from "@/components/FoundersSection";
 import ManifestoSection from "@/components/ManifestoSection";
-import Nutrition from "@/components/Nutrition";
 import CTASection from "@/components/CTASection";
 import FlavorShowcase from "@/components/FlavorShowcase";
 import MoodSelector from "@/components/MoodSelector";
@@ -25,7 +24,6 @@ export default function Home() {
       <FoundersSection />
       <ParallaxBanner />
       <USPSection />
-      <Nutrition />
       <CTASection />
       <ManifestoSection />
       <Footer />

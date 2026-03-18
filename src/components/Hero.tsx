@@ -25,13 +25,56 @@ export default function Hero() {
     const marqueeX1 = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
     const marqueeX2 = useTransform(scrollYProgress, [0, 1], ["-50%", "0%"]);
 
-    const bgClass = flavorData.id === "mango" ? "bg-festival-gradient-1" : 
-                    flavorData.id === "watermelon" ? "bg-watermelon-gradient" : "bg-basil-gradient";
+    const palettes = {
+        mango: {
+            bg: "bg-festival-gradient-1",
+            marquee1: "text-black",
+            marquee2Stroke: "white",
+            pillBg: "bg-accent-premium",
+            pillDot: "bg-primary-green",
+            pillText: "text-primary-white",
+            pillBorder: "border-primary-premium",
+            head1: "text-accent-premium",
+            head2Stroke: "#0A0A0A",
+            head3: "text-accent-premium",
+            btnBg: "bg-accent-premium",
+            btnText: "text-primary-white"
+        },
+        watermelon: {
+            bg: "bg-watermelon-gradient",
+            marquee1: "text-[#FAFAFA]",
+            marquee2Stroke: "#0A0A0A",
+            pillBg: "bg-[#E23F72]",
+            pillDot: "bg-[#F8DD59]",
+            pillText: "text-[#FAFAFA]",
+            pillBorder: "border-[#E23F72]",
+            head1: "text-[#E23F72]",
+            head2Stroke: "#0A0A0A",
+            head3: "text-[#FAFAFA]",
+            btnBg: "bg-[#E23F72]",
+            btnText: "text-[#FAFAFA]"
+        },
+        basil: {
+            bg: "bg-basil-gradient",
+            marquee1: "text-[#0A0A0A]",
+            marquee2Stroke: "#FAFAFA",
+            pillBg: "bg-[#FF1A1A]",
+            pillDot: "bg-[#FAFAFA]",
+            pillText: "text-[#FAFAFA]",
+            pillBorder: "border-[#FF1A1A]",
+            head1: "text-[#FAFAFA]",
+            head2Stroke: "#0A0A0A",
+            head3: "text-[#FF1A1A]",
+            btnBg: "bg-[#FF1A1A]",
+            btnText: "text-[#FAFAFA]"
+        }
+    };
+    const p = palettes[flavorData.id];
 
     return (
         <section
             ref={containerRef}
-            className={`relative w-full h-[200vh] ${bgClass} transition-colors duration-1000 selection:bg-primary-green/30`}
+            className={`relative w-full h-[200vh] ${p.bg} transition-colors duration-1000`}
         >
             <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
 
@@ -58,12 +101,12 @@ export default function Hero() {
                 {/* Background Kinetic Typography Marquees (Desktop mainly) */}
                 <div className="absolute inset-0 z-0 flex-col justify-between py-32 pointer-events-none opacity-20 overflow-hidden mix-blend-overlay hidden md:flex">
                     <motion.div style={{ x: marqueeX1 }} className="whitespace-nowrap flex">
-                        <span className="text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 text-black">THE ANTI-SODA THE ANTI-SUGAR THE ANTI-BORING</span>
-                        <span className="text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 text-black">THE ANTI-SODA THE ANTI-SUGAR THE ANTI-BORING</span>
+                        <span className={`text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 ${p.marquee1} transition-colors duration-1000`}>THE ANTI-SODA THE ANTI-SUGAR THE ANTI-BORING</span>
+                        <span className={`text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 ${p.marquee1} transition-colors duration-1000`}>THE ANTI-SODA THE ANTI-SUGAR THE ANTI-BORING</span>
                     </motion.div>
                     <motion.div style={{ x: marqueeX2 }} className="whitespace-nowrap flex">
-                        <span className="text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 text-black" style={{ WebkitTextStroke: "4px white" }}>CLEAN FUEL CLEAN FUEL CLEAN FUEL CLEAN FUEL</span>
-                        <span className="text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 text-black" style={{ WebkitTextStroke: "4px white" }}>CLEAN FUEL CLEAN FUEL CLEAN FUEL CLEAN FUEL</span>
+                        <span className="text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 text-transparent transition-colors duration-1000" style={{ WebkitTextStroke: `4px ${p.marquee2Stroke}` }}>CLEAN FUEL CLEAN FUEL CLEAN FUEL CLEAN FUEL</span>
+                        <span className="text-[15rem] font-heading font-black uppercase tracking-tighter leading-none mx-8 text-transparent transition-colors duration-1000" style={{ WebkitTextStroke: `4px ${p.marquee2Stroke}` }}>CLEAN FUEL CLEAN FUEL CLEAN FUEL CLEAN FUEL</span>
                     </motion.div>
                 </div>
 
@@ -84,29 +127,29 @@ export default function Hero() {
                                 initial={{ opacity: 0, y: 20, scale: 0.9 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                                className="inline-flex items-center self-center lg:self-start gap-2 px-4 py-1.5 min-[400px]:px-5 min-[400px]:py-2 rounded-full border-2 border-primary-premium bg-accent-premium shadow-[0_10px_30px_rgba(26,26,26,0.3)] mb-4 min-[400px]:mb-6 md:mb-10 shrink-0"
+                                className={`inline-flex items-center self-center lg:self-start gap-2 px-4 py-1.5 min-[400px]:px-5 min-[400px]:py-2 rounded-full border-2 ${p.pillBorder} ${p.pillBg} shadow-[0_10px_30px_rgba(26,26,26,0.3)] mb-4 min-[400px]:mb-6 md:mb-10 shrink-0 transition-colors duration-1000`}
                             >
                                 <span className="relative flex h-2.5 w-2.5 min-[400px]:h-3 min-[400px]:w-3">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-green opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 min-[400px]:h-3 min-[400px]:w-3 bg-primary-green"></span>
+                                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${p.pillDot} opacity-75`}></span>
+                                    <span className={`relative inline-flex rounded-full h-2.5 w-2.5 min-[400px]:h-3 min-[400px]:w-3 ${p.pillDot}`}></span>
                                 </span>
-                                <span className="font-heading font-black text-[10px] min-[400px]:text-xs uppercase tracking-[0.2em] text-primary-white mt-[2px]">Now Available</span>
+                                <span className={`font-heading font-black text-[10px] min-[400px]:text-xs uppercase tracking-[0.2em] ${p.pillText} mt-[2px]`}>Now Available</span>
                             </motion.div>
 
                             {/* Kinetic Headline */}
                             <div className="flex flex-col mb-1 min-[400px]:mb-3 md:mb-8 w-full overflow-hidden drop-shadow-2xl mt-1 text-center lg:text-left items-center lg:items-start">
                                 {[
-                                    { text: "Hydrate", delay: 0.1, outline: false },
-                                    { text: "The", delay: 0.2, outline: true },
-                                    { text: "Fun.", delay: 0.3, outline: false }
+                                    { text: "Hydrate", delay: 0.1, outline: false, color: p.head1 },
+                                    { text: "The", delay: 0.2, outline: true, strokeColor: p.head2Stroke },
+                                    { text: "Fun.", delay: 0.3, outline: false, color: p.head3 }
                                 ].map((line, i) => (
                                     <div key={i} className="overflow-hidden relative z-20">
                                         <motion.h1
                                             initial={{ y: "110%" }}
                                             animate={{ y: 0 }}
                                             transition={{ duration: 0.7, delay: line.delay, ease: [0.22, 1, 0.36, 1] }}
-                                            className={`text-[12.5vw] sm:text-5xl md:text-7xl lg:text-[6.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-heading font-black uppercase tracking-tighter leading-[0.85] lg:leading-[0.9] ${line.outline ? 'text-primary-white' : 'text-accent-premium'}`}
-                                            style={line.outline ? { WebkitTextStroke: "1.5px #0A0A0A" } : {}}
+                                            className={`text-[12.5vw] sm:text-5xl md:text-7xl lg:text-[6.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-heading font-black uppercase tracking-tighter leading-[0.85] lg:leading-[0.9] transition-colors duration-1000 ${line.outline ? 'text-transparent' : line.color}`}
+                                            style={line.outline ? { WebkitTextStroke: `1.5px ${line.strokeColor}` } : {}}
                                         >
                                             {line.text}
                                         </motion.h1>
@@ -128,16 +171,16 @@ export default function Hero() {
                                 className="text-xl font-body font-bold text-accent-premium bg-white/50 backdrop-blur-md px-6 py-4 rounded-xl max-w-md leading-relaxed mb-12 border border-white/40 shadow-xl mx-0"
                             >
                                 Not a hydration drink. Not a soda. Not a juice.
-                                <span className="block font-black mt-1 text-accent-watermelon uppercase tracking-wider text-xl">CocoFuse is a guilt-free fun drink that happens to hydrate.</span>
+                                <span className={`block font-black mt-1 ${flavorData.accent} uppercase tracking-wider text-xl`}>CocoFuse is a guilt-free fun drink that happens to hydrate.</span>
                             </p>
 
                             {/* CTA Group */}
                             <div
                                 className="flex flex-row items-center gap-4 w-auto mx-0 relative z-30"
                             >
-                                <button className="px-8 py-5 bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl relative overflow-hidden group">
+                                <button className={`px-8 py-5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl relative overflow-hidden group`}>
                                     <span className="relative z-10">Shop Flavours</span>
-                                    <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                                 </button>
                                 <a href="#story" className="px-8 py-5 rounded-full border-2 border-accent-premium/20 text-accent-premium font-heading font-bold uppercase tracking-widest text-sm hover:border-accent-premium/40 hover:bg-white/50 backdrop-blur-sm transition-all text-center flex justify-center items-center gap-2 group bg-white/20">
                                     Our Story
@@ -158,7 +201,7 @@ export default function Hero() {
                                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
                                 <span className="relative z-10">
                                     Not a hydration drink. Not a soda. Not a juice.
-                                    <span className="block font-black mt-2 text-accent-watermelon uppercase tracking-wider text-[10px] min-[400px]:text-[11px]">
+                                    <span className={`block font-black mt-2 ${flavorData.accent} uppercase tracking-wider text-[10px] min-[400px]:text-[11px]`}>
                                         CocoFuse is a guilt-free fun drink that happens to hydrate.
                                     </span>
                                 </span>
@@ -171,12 +214,12 @@ export default function Hero() {
                                 transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
                                 className="flex flex-col items-center w-full max-w-[280px] mx-auto relative z-30"
                             >
-                                <button className="w-full px-8 py-4.5 bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-[0_20px_50px_rgba(26,26,26,0.3)] relative overflow-hidden group">
+                                <button className={`w-full px-8 py-4.5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-[0_20px_50px_rgba(26,26,26,0.3)] relative overflow-hidden group`}>
                                     <span className="relative z-10 flex items-center gap-2">
                                         Shop Flavours
                                         <ShoppingBag className="w-4 h-4" />
                                     </span>
-                                    <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                                 </button>
                                 {/* Removed "Our Story" button from mobile as per user request */}
                             </motion.div>

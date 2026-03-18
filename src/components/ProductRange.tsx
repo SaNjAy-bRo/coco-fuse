@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function ProductRange() {
     const products = [
         {
-            name: "Mango Delight",
+            id: "mango",
+            name: "Mango Refresh",
             tagline: "Tropical energy burst",
             color: "bg-accent-mango",
             textColor: "text-accent-mango",
@@ -14,28 +16,22 @@ export default function ProductRange() {
             gradient: "from-accent-mango/80 to-accent-mango/20"
         },
         {
-            name: "Watermelon Mint",
+            id: "watermelon",
+            name: "Watermelon Cool",
             tagline: "Ultra refreshing cool",
             color: "bg-accent-watermelon",
-            textColor: "text-accent-watermelon",
-            shadow: "shadow-[0_20px_50px_rgba(255,107,107,0.3)]",
-            gradient: "from-accent-watermelon/80 to-accent-watermelon/20"
+            textColor: "text-[#FF3366]",
+            shadow: "shadow-[0_20px_50px_rgba(255,51,102,0.3)]",
+            gradient: "from-[#FF3366]/80 to-[#FF3366]/20"
         },
         {
-            name: "Basil Chili",
+            id: "basil",
+            name: "Basil Chili Kick",
             tagline: "The wild card kick",
             color: "bg-primary-green",
-            textColor: "text-primary-green",
-            shadow: "shadow-[0_20px_50px_rgba(126,217,86,0.3)]",
-            gradient: "from-primary-green/80 to-primary-green/20"
-        },
-        {
-            name: "Premium Black",
-            tagline: "Deep hydration matrix",
-            color: "bg-accent-premium",
-            textColor: "text-accent-premium",
-            shadow: "shadow-[0_20px_50px_rgba(26,26,26,0.3)]",
-            gradient: "from-gray-800 to-accent-premium"
+            textColor: "text-[#00E676]",
+            shadow: "shadow-[0_20px_50px_rgba(0,230,118,0.3)]",
+            gradient: "from-[#00E676]/80 to-[#00E676]/20"
         }
     ];
 
@@ -78,29 +74,34 @@ export default function ProductRange() {
                     </motion.button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {products.map((product, index) => (
-                        <motion.div
-                            key={product.name}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            whileHover={{ y: -15 }}
-                            className={`relative rounded-[2rem] p-8 h-[400px] flex flex-col justify-end bg-gradient-to-br ${product.gradient} overflow-hidden group cursor-pointer ${product.shadow}`}
-                        >
-                            {/* Inner glow / texture */}
-                            <div className="absolute inset-0 bg-white/10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <Link href={`/products/${product.id}`} key={product.id}>
+                            <motion.div
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                whileHover={{ y: -15 }}
+                                className={`relative rounded-[2rem] p-8 h-[400px] flex flex-col justify-end bg-gradient-to-br ${product.gradient} overflow-hidden group cursor-pointer ${product.shadow}`}
+                            >
+                                {/* Inner glow / texture */}
+                                <div className="absolute inset-0 bg-white/10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                            <div className="relative z-10 w-full bg-white/95 backdrop-blur-md p-6 rounded-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl">
-                                <h3 className={`text-2xl font-heading font-black uppercase tracking-widest mb-1 ${product.textColor}`}>
-                                    {product.name}
-                                </h3>
-                                <p className="text-sm font-body font-medium text-gray-500 uppercase tracking-wider">
-                                    {product.tagline}
-                                </p>
-                            </div>
-                        </motion.div>
+                                <div className="relative z-10 w-full bg-white/95 backdrop-blur-md p-6 rounded-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl">
+                                    <h3 className={`text-2xl font-heading font-black uppercase tracking-widest mb-1 ${product.textColor}`}>
+                                        {product.name}
+                                    </h3>
+                                    <p className="text-sm font-body font-medium text-gray-500 uppercase tracking-wider mb-4">
+                                        {product.tagline}
+                                    </p>
+
+                                    <div className={`inline-flex items-center gap-2 font-heading font-bold uppercase text-sm ${product.textColor} group-hover:opacity-80 transition-opacity`}>
+                                        View Product <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </Link>
                     ))}
                 </div>
             </div>

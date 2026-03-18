@@ -67,3 +67,11 @@
 .bg-festival-gradient-3 {
   background: linear-gradient(135deg, var(--color-primary-green) 0%, var(--color-primary-blue) 100%);
 }
+
+.bg-watermelon-gradient {
+  background: linear-gradient(135deg, #F8DD59 0%, #5FADD8 50%, #E23F72 100%);
+}
+
+.bg-basil-gradient {
+  background: linear-gradient(135deg, #56AFE1 0%, #89C260 50%, #049948 100%);
+}
