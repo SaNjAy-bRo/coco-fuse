@@ -144,9 +144,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             transition={{ duration: 0.8, delay: 0.5 }}
                             className="w-full flex justify-center lg:justify-start order-4 lg:col-start-2 lg:row-start-3 lg:self-start pt-6 lg:pt-0"
                         >
-                            <Link href={`/checkout?flavor=${product.id}`} className={`w-full sm:w-auto px-10 py-5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-lg hover:scale-105 active:scale-95 transition-all shadow-xl relative overflow-hidden group flex items-center justify-center gap-3 border-2 border-white/20`}>
+                            <Link href={`/checkout/configure?flavor=${product.id}`} className={`w-full sm:w-auto px-10 py-5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-lg md:text-xl hover:scale-105 active:scale-95 transition-all shadow-xl relative overflow-hidden group flex items-center justify-center gap-3 border-2 border-white/20`}>
                                 <span className="relative z-10 flex items-center gap-2">
-                                    Add to Cart - $29.99
+                                    Configure & Buy
                                     <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                                 </span>
                                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none" />

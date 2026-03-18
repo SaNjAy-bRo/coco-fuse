@@ -16,7 +16,18 @@ function CheckoutContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const flavorQuery = searchParams.get("flavor") as FlavorID;
+    const packQuery = searchParams.get("pack") || "12";
     const flavorData = (flavorQuery && FLAVORS[flavorQuery]) ? FLAVORS[flavorQuery] : defaultFlavorData;
+
+    const packSize = parseInt(packQuery, 10);
+    const getPrice = (size: number) => {
+        if (size === 3) return 9.99;
+        if (size === 6) return 16.99;
+        return 29.99;
+    };
+    const subtotal = getPrice(packSize);
+    const tax = Number((subtotal * 0.08).toFixed(2));
+    const total = (subtotal + tax).toFixed(2);
 
     const [mounted, setMounted] = useState(false);
 
@@ -64,8 +75,8 @@ function CheckoutContent() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Redirect to success route carrying the flavor id forward
-        router.push(`/checkout/success?flavor=${flavorData.id}`);
+        // Redirect to success route carrying the flavor id and pack size forward
+        router.push(`/checkout/success?flavor=${flavorData.id}&pack=${packSize}`);
     };
 
     if (!mounted) return null;
@@ -187,8 +198,8 @@ function CheckoutContent() {
                                 </div>
                                 <div className="flex flex-col flex-1 pl-2">
                                     <h4 className="font-heading font-black uppercase text-xl leading-tight">{flavorData.name}</h4>
-                                    <p className="text-white/60 font-body text-sm mt-1">12-Pack Case</p>
-                                    <div className="mt-3 font-heading font-black text-lg">$29.99</div>
+                                    <p className="text-white/60 font-body text-sm mt-1">{packSize}-Pack Case</p>
+                                    <div className="mt-3 font-heading font-black text-lg">${subtotal.toFixed(2)}</div>
                                 </div>
                             </div>
 
@@ -196,7 +207,7 @@ function CheckoutContent() {
                             <div className="flex flex-col gap-4 font-body border-y border-white/10 py-6 mb-8 text-white/80">
                                 <div className="flex justify-between items-center">
                                     <span>Subtotal</span>
-                                    <span className="font-bold text-white">$29.99</span>
+                                    <span className="font-bold text-white">${subtotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="flex items-center gap-2">
@@ -206,14 +217,14 @@ function CheckoutContent() {
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span>Estimated Taxes</span>
-                                    <span className="font-bold text-white">$2.40</span>
+                                    <span className="font-bold text-white">${tax.toFixed(2)}</span>
                                 </div>
                             </div>
 
                             {/* Total Area */}
                             <div className="flex justify-between items-end mb-10">
                                 <span className="font-heading font-black uppercase text-gray-400 tracking-widest text-sm mb-1">Total</span>
-                                <span className="text-4xl lg:text-5xl font-heading font-black tracking-tighter">$32.39</span>
+                                <span className="text-4xl lg:text-5xl font-heading font-black tracking-tighter">${total}</span>
                             </div>
 
                             {/* Checkout Button */}
