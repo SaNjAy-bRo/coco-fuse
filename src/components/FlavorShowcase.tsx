@@ -111,8 +111,13 @@ export default function FlavorShowcase() {
         target: targetRef,
     });
     
-    // We map 0 to 1 scroll progress to an aggressive horizontal shift perfectly sized for 3 objects taking up 100vw each.
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66.666%"]); 
+    // A much tighter track wrapper mapping 0-1 to slide precisely from the first to the last card.
+    // Assuming 3 cards, we translateX such that the final card sits in center.
+    // Instead of using rigid 100vw buckets, we'll let it be fluid using a `x` transform
+    // We map 0 to 1 scroll progress to shift the whole row. 
+    // To make it fully responsive, we just move `[-0%, -66.66%]` IF the row width matches the exactly three items, but since we're using a gap, we will use a relative viewport calculation.
+    // Actually, Framer Motion can interpolate between `0%` and `calc(-100% + 100vw)` nicely !
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", "calc(-100% + 100vw)"]);
 
     return (
         <section ref={targetRef} id="flavours" className="relative h-[300dvh] bg-white">
@@ -133,10 +138,10 @@ export default function FlavorShowcase() {
                 </div>
 
                 {/* Horizontal Sliding Track */}
-                <div className="flex-1 w-full flex items-center overflow-hidden relative z-10">
-                    <motion.div style={{ x }} className="flex w-[300vw] h-full items-center">
+                <div className="flex-1 w-full flex items-center relative z-10 overflow-hidden">
+                    <motion.div style={{ x }} className="flex w-max items-center h-full px-[7.5vw] md:px-[calc(50vw-175px)] gap-6 md:gap-16">
                         {FLAVORS.map((flavor, index) => (
-                            <div key={index} className="w-[100vw] shrink-0 flex justify-center items-center px-4 md:px-8 h-full pb-8 md:pb-16 pt-8 md:pt-12">
+                            <div key={index} className="shrink-0 flex justify-center items-center h-full pb-8 pt-8">
                                 <FlavorCard flavor={flavor} />
                             </div>
                         ))}
