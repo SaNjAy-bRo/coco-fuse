@@ -18,8 +18,6 @@ export default function CTASection() {
                     <div className="bg-accent-premium rounded-[3rem] p-8 md:p-16 lg:p-24 shadow-2xl relative overflow-hidden group">
                         {/* Animated Mesh Gradient Background inside Card */}
                         <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-1000">
-                            {/* <div className="absolute top-[-20%] left-[-20%] w-[100%] h-[100%] bg-accent-mango rounded-full blur-[120px] animate-pulse" /> */}
-                            <div className="absolute bottom-[-20%] right-[-20%] w-[100%] h-[100%] bg-primary-blue rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
                         </div>
 
                         <div className="relative z-10 flex flex-col items-center text-center">

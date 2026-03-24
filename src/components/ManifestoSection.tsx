@@ -7,11 +7,10 @@ export default function ManifestoSection() {
         <section id="manifesto" className="py-32 md:py-48 bg-accent-premium relative overflow-hidden flex items-center justify-center">
 
             {/* Dramatic background noise and glows (Intensified for Juice Vibe) */}
-            <div className="absolute inset-0 pointer-events-none mix-blend-screen opacity-70">
+            <div className="absolute inset-0 pointer-events-none opacity-50">
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-watermelon/10 to-accent-mango/20 z-0" />
-                <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary-green/30 rounded-full blur-[150px] animate-pulse" />
-                <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary-blue/30 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-watermelon/20 rounded-full blur-[200px]" />
+                <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary-green/20 rounded-full blur-[150px]" />
+                <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary-blue/20 rounded-full blur-[120px]" />
             </div>
 
             <div className="container mx-auto px-6 relative z-10 text-center">
@@ -22,7 +21,7 @@ export default function ManifestoSection() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="max-w-5xl mx-auto"
                 >
-                    <h2 className="text-5xl md:text-8xl lg:text-9xl font-heading font-black tracking-tighter text-primary-white leading-[0.9] uppercase mix-blend-difference mb-12">
+                    <h2 className="text-5xl md:text-8xl lg:text-9xl font-heading font-black tracking-tighter text-primary-white leading-[0.9] uppercase mb-12">
                         Clean <br className="hidden md:block" /> Hydration <br />
                         <span className="italic text-transparent bg-clip-text bg-gradient-to-br from-primary-green via-primary-blue to-accent-mango">With Attitude.</span>
                     </h2>

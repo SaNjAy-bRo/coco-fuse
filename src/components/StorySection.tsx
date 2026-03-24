@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
@@ -18,12 +18,8 @@ export default function StorySection() {
         offset: ["start start", "end end"]
     });
 
-    // Smooth progress for butter-smooth visual transitions
-    const progress = useSpring(scrollYProgress, {
-        stiffness: 50,
-        damping: 25,
-        restDelta: 0.001
-    });
+    // Use raw scrollYProgress — useSpring adds JS overhead that worsens mobile scroll
+    const progress = scrollYProgress;
 
     // PARALLAX BACKGROUND LOGIC
     // We over-fill the background (h-[120vh]) so that y-parallax never reveals the black floor.
@@ -64,8 +60,7 @@ export default function StorySection() {
                         className="object-cover"
                     />
                     {/* Atmospheric Overlay */}
-                    <div className="absolute inset-0 bg-black/30 z-10" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-accent-mango/10 to-accent-watermelon/20 mix-blend-overlay z-10" />
+                    <div className="absolute inset-0 bg-black/20 mix-blend-multiply z-10 pointer-events-none" />
                     
                     {/* Top/Bottom Cinematic Vignettes */}
                     <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-black/60 to-transparent z-10" />

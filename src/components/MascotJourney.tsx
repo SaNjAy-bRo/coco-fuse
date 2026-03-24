@@ -38,7 +38,7 @@ export default function MascotJourney() {
         {
             ...flavorData.story.morning,
             align: "items-center md:items-start justify-start pt-[16vh] md:pt-0 md:justify-center px-6 py-4 md:p-24 z-10 text-center md:text-left",
-            titleClass: "text-accent-premium mix-blend-overlay",
+            titleClass: "text-accent-premium opacity-70",
             descClass: "text-accent-premium max-w-xl",
             opacity: scene1Opacity
         },
@@ -52,7 +52,7 @@ export default function MascotJourney() {
         {
             ...flavorData.story.evening,
             align: "items-center md:items-start justify-start pt-[16vh] md:pt-0 md:justify-center text-center md:text-left px-6 py-4 md:p-24 lg:pr-[40vw] z-30",
-            titleClass: "text-accent-premium mix-blend-overlay",
+            titleClass: "text-accent-premium opacity-70",
             descClass: "text-accent-premium max-w-2xl",
             opacity: scene3Opacity
         }
@@ -80,12 +80,6 @@ export default function MascotJourney() {
                     </motion.div>
                 ))}
 
-                <motion.div
-                    className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-30"
-                    style={{
-                        backgroundImage: "radial-gradient(circle at center, transparent 0%, black 150%)"
-                    }}
-                />
             </motion.div>
         </section>
     );

@@ -45,18 +45,18 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className={`w-[85vw] sm:w-[350px] flex-shrink-0 snap-center h-[520px] md:h-[650px] rounded-[3rem] ${flavor.bg} p-6 md:p-8 flex flex-col items-center justify-between border border-gray-100 shadow-sm relative overflow-hidden group`}
+            className={`w-[85vw] sm:w-[350px] flex-shrink-0 snap-center h-full max-h-[580px] rounded-[3rem] ${flavor.bg} p-5 md:p-8 flex flex-col items-center justify-between border border-gray-100 shadow-sm relative overflow-hidden group`}
         >
-            <div className="text-center z-10">
+            <div className="text-center z-10 shrink-0">
                 <h3 className={`text-2xl md:text-3xl font-heading font-black uppercase tracking-tighter ${flavor.accent}`}>
                     {flavor.name}
                 </h3>
-                <p className="text-sm font-body font-bold text-gray-500 mt-2 uppercase tracking-widest">
-                    Pure & Natural Hydration
+                <p className="text-sm font-body font-bold text-gray-500 mt-1 uppercase tracking-widest">
+                    Pure &amp; Natural Hydration
                 </p>
             </div>
 
-            <div className="w-full h-[280px] md:h-[400px]">
+            <div className="flex-1 w-full min-h-0">
                 <Canvas 
                     camera={{ position: [0, 0, 8.5], fov: 45 }} 
                     gl={{ 
@@ -102,6 +102,8 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
         </motion.div>
     );
 }
+
+
 
 export default function FlavorShowcase() {
     const targetRef = useRef<HTMLElement>(null);

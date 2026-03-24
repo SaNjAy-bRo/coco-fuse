@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 export default function Transformation() {
@@ -10,12 +10,8 @@ export default function Transformation() {
         offset: ["start start", "end end"]
     });
 
-    // SMOOTHING: Wrap scroll progress in a spring for momentum-based feel
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
+    // Use raw scrollYProgress — avoids JS spring overhead per frame
+    const smoothProgress = scrollYProgress;
 
     // OPTIMIZATION: Cross-fade instead of Filter
     // We'll have two layers. One grayscale, one color.
@@ -106,13 +102,6 @@ export default function Transformation() {
                     </div>
                 </div>
 
-                <motion.div 
-                    style={{ opacity: textOpacity }}
-                    className="absolute inset-0 pointer-events-none mix-blend-screen overflow-hidden"
-                >
-                    <div className="absolute top-[-10%] left-[-10%] w-1/2 h-1/2 bg-primary-blue/20 rounded-full blur-[150px] animate-pulse" />
-                    <div className="absolute bottom-[-10%] right-[-10%] w-1/2 h-1/2 bg-accent-watermelon/20 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: "1s" }} />
-                </motion.div>
             </div>
         </section>
     );
