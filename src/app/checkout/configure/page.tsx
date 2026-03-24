@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 const Scene = dynamic(() => import("@/components/Scene"), { ssr: false });
 
 const PACK_SIZE = 6;
-const PACK_PRICE = 69;
+const PACK_PRICE = 300;
 
 function ConfigureContent() {
     const { flavorData: defaultFlavor } = useFlavor();
@@ -64,7 +64,10 @@ function ConfigureContent() {
                                         <h3 className="font-heading font-black uppercase text-xl md:text-2xl text-accent-premium leading-tight">{PACK_SIZE} Bottles</h3>
                                         <p className="text-gray-500 text-sm font-body mt-1">Standard Loadout</p>
                                     </div>
-                                    <div className="text-3xl sm:text-4xl font-heading font-black uppercase tracking-tighter text-accent-premium">₹{PACK_PRICE}</div>
+                                    <div className="flex flex-col items-end">
+                                        <div className="text-3xl sm:text-4xl font-heading font-black uppercase tracking-tighter text-accent-premium">₹{PACK_PRICE}</div>
+                                        <div className="text-[10px] md:text-xs font-bold text-gray-500 mt-1 uppercase tracking-widest bg-gray-100 px-2 py-0.5 rounded-full">(₹50 / Bottle)</div>
+                                    </div>
                                 </div>
                                 
                                 {/* Quantity Controls */}

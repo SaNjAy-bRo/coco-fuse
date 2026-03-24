@@ -49,11 +49,11 @@ function CheckoutContent() {
 
     const quantity = parseInt(packQuery, 10) || 1;
     const getPrice = (qty: number) => {
-        return qty * 69;
+        return qty * 300;
     };
     const subtotal = getPrice(quantity);
-    const tax = Number((subtotal * 0.08).toFixed(2));
-    const total = (subtotal + tax).toFixed(2);
+    const shipping = 69;
+    const total = (subtotal + shipping).toFixed(2);
 
     const [mounted, setMounted] = useState(false);
 
@@ -282,11 +282,7 @@ function CheckoutContent() {
                                     <span className="flex items-center gap-2">
                                         <Truck className="w-4 h-4" /> Shipping
                                     </span>
-                                    <span className="font-bold text-[#39FF14] uppercase text-xs tracking-widest">Free</span>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <span>Estimated Taxes (8%)</span>
-                                    <span className="font-bold text-white">₹{tax.toFixed(2)}</span>
+                                    <span className="font-bold text-white tracking-widest">₹{shipping.toFixed(2)}</span>
                                 </div>
                             </div>
 

@@ -59,9 +59,9 @@ export default function MascotJourney() {
     ];
 
     return (
-        <section ref={containerRef} className="relative w-full h-[600vh] lg:h-[400vh]">
+        <section ref={containerRef} className="relative w-full h-[250vh] lg:h-[400vh]">
             <motion.div
-                className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center px-6 py-4 md:p-8"
+                className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center px-6 py-4 md:p-8"
                 style={{ backgroundColor: bgColor }}
             >
                 {scenes.map((scene, i) => (

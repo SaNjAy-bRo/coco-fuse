@@ -62,10 +62,11 @@ export default function HeroDeco({ flavorId, opacity }: HeroDecoProps) {
                             src={item.src}
                             alt={`${flavorId} decor`}
                             className={`drop-shadow-2xl ${item.w}`}
-                            animate={{ 
+                            whileInView={{ 
                                 y: [0, -20, 0], 
                                 rotate: [0, 5, -5, 0] 
                             }}
+                            viewport={{ once: false, amount: 0.1 }}
                             transition={{ 
                                 duration: 6, 
                                 repeat: Infinity, 
@@ -92,10 +93,11 @@ export default function HeroDeco({ flavorId, opacity }: HeroDecoProps) {
                             src={item.src}
                             alt={`${flavorId} decor`}
                             className={`drop-shadow-xl ${item.w}`}
-                            animate={{ 
+                            whileInView={{ 
                                 y: [0, -15, 0], 
                                 rotate: [0, 5, -5, 0] 
                             }}
+                            viewport={{ once: false, amount: 0.1 }}
                             transition={{ 
                                 duration: 5, 
                                 repeat: Infinity, 

@@ -24,7 +24,7 @@ export default function Scene({
             <Canvas
                 camera={{ position: [0, 0, 10], fov: 45 }}
                 gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
-                dpr={[1, 2]}
+                dpr={[1, 1.5]}
             >
                 <ambientLight intensity={1.5} />
                 <directionalLight position={[10, 10, 10]} intensity={2} />

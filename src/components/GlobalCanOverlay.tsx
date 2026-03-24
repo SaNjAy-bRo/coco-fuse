@@ -29,8 +29,7 @@ export default function GlobalCanOverlay() {
     // MascotJourney ends after Hero (2vh) + Mascot (4vh desk / 6vh mobile)
     const isMobile = mounted && window.innerWidth < 1024;
     const heroEnd = vh * 2;
-    const mascotHeight = isMobile ? vh * 6 : vh * 4;
-    const mascotEnd = heroEnd + mascotHeight;
+    const mascotHeight = isMobile ? vh * 2.5 : vh * 4;
 
     // Use relative percentages of mascotHeight to match MascotJourney.tsx EXACTLY
     // S1: [0, 0.25, 0.35] | S2: [0.3, 0.4, 0.6, 0.7] | S3: [0.65, 0.75, 1]
@@ -39,6 +38,7 @@ export default function GlobalCanOverlay() {
     const s2End = heroEnd + mascotHeight * 0.60;
     const s3Start = heroEnd + mascotHeight * 0.75;
     const exitStart = heroEnd + mascotHeight * 0.90;
+    const mascotEnd = heroEnd + mascotHeight;
 
     // 9 keyframes: Hero idle → Hero exit → S1 sit → S1→S2 travel → S2 sit → S2→S3 travel → S3 sit → exit
     const scrollMap = [
@@ -99,7 +99,7 @@ export default function GlobalCanOverlay() {
         "0vw"     // Exit
     ]);
     const yMobile = useTransform(scrollY, scrollMap, [
-        "15vh", "15vh", "15vh",     // Hero - Pushed down to clear the headline
+        "10vh", "10vh", "10vh",     // User specifically requested 10vh fine-tuning
         "25vh",                     // S1
         "-10vh", "-10vh",           // S2
         "25vh", "25vh",             // S3
@@ -135,7 +135,7 @@ export default function GlobalCanOverlay() {
                     className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none"
                     style={{ x: xMobile, y: yMobile, scale: scaleMobile, opacity: opacityMobile }}
                 >
-                    <div className="w-[60vw] h-[140vw] max-w-[320px] max-h-[750px] flex items-center justify-center">
+                    <div className="w-[50vw] h-[110vw] max-w-[280px] max-h-[600px] flex items-center justify-center">
                         <Scene 
                             scrollY={scrollY} 
                             vh={vh} 

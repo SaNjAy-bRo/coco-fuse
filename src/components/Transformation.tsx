@@ -36,7 +36,7 @@ export default function Transformation() {
             className="relative h-[250vh] bg-accent-premium border-y border-white/5"
             style={{ willChange: "transform" }}
         >
-            <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+            <div className="sticky top-0 h-[100dvh] w-full flex items-center justify-center overflow-hidden">
                 {/* Parallax Background */}
                 <motion.div 
                     style={{ scale: bgScale }}

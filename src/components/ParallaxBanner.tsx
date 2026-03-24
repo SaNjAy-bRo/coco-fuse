@@ -114,7 +114,7 @@ export default function ParallaxBanner() {
         >
             {/* Parallax Background Glows (Removed for cleaner look) */}
             {/* <motion.div
-                className="absolute md:fixed inset-0 w-full h-full md:h-screen pointer-events-none mix-blend-screen"
+                className="absolute md:fixed inset-0 w-full h-full md:h-[100dvh] pointer-events-none mix-blend-screen"
                 style={{ y: bgY }}
             >
                 <motion.div 
@@ -129,7 +129,7 @@ export default function ParallaxBanner() {
             </motion.div> */}
 
             {/* Content Container */}
-            <div className="md:sticky top-0 md:h-screen w-full flex flex-col md:flex-row items-center overflow-hidden py-16 md:py-0">
+            <div className="md:sticky top-0 md:h-[100dvh] w-full flex flex-col md:flex-row items-center overflow-hidden py-16 md:py-0">
                 <div className="container mx-auto px-5 md:px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 lg:gap-24 relative z-10 w-full h-full">
 
                     {/* Left Side: Sticky Text */}
@@ -192,7 +192,7 @@ export default function ParallaxBanner() {
                     </div>
 
                     {/* Right Side: Desktop Sliding Image Cards */}
-                    <div className="relative md:h-screen flex flex-col md:block items-center justify-center lg:justify-end perspective-1000 gap-16 py-12 md:py-0 w-full pl-0 md:pl-16">
+                    <div className="relative md:h-[100dvh] flex flex-col md:block items-center justify-center lg:justify-end perspective-1000 gap-16 py-12 md:py-0 w-full pl-0 md:pl-16">
                         {cards.map((card, idx) => (
                             <DesktopCard
                                 key={idx}

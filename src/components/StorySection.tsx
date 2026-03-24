@@ -49,7 +49,7 @@ export default function StorySection() {
             className="relative w-full h-[450vh] lg:h-[300vh] bg-black overflow-clip"
         >
             {/* STICKY VIEWPORT CONTAINER */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+            <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center">
                 
                 {/* BACKGROUND IMAGE LAYER (ULTRA-ROBUST COVERAGE) */}
                 <motion.div
@@ -86,22 +86,22 @@ export default function StorySection() {
                     <motion.div
                         id="story-origin"
                         style={{ opacity: opacity1, y: y1 }}
-                        className="absolute flex flex-col items-center max-w-6xl w-full"
+                        className="absolute flex flex-col items-center max-w-6xl w-full px-4 md:px-0"
                     >
-                        <span className="inline-block px-4 py-1.5 md:px-6 md:py-2 bg-primary-green/20 border border-primary-green/30 text-primary-green text-xs md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-8 shadow-[0_0_20px_rgba(57,255,20,0.1)]">
+                        <span className="inline-block px-5 py-2 md:px-6 md:py-2 bg-primary-green/20 border border-primary-green/30 text-primary-green text-[10px] md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-6 md:mb-8 shadow-[0_0_20px_rgba(57,255,20,0.1)]">
                             The Origin
                         </span>
-                        <h2 className="text-4xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black tracking-tighter mb-6 md:mb-10 leading-[0.85] uppercase text-white drop-shadow-2xl">
+                        <h2 className="text-5xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black tracking-tighter mb-4 md:mb-10 leading-[0.9] md:leading-[0.85] uppercase text-white drop-shadow-2xl">
                             Born on a <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon italic">Mountain.</span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon italic pr-2">Mountain.</span>
                         </h2>
-                        <div className="w-12 h-1 md:w-20 md:h-1.5 bg-primary-green mx-auto mb-6 shadow-[0_0_20px_rgba(57,255,20,0.5)]" />
-                        <p className="text-base md:text-2xl lg:text-3xl font-body font-light text-gray-100 max-w-3xl mx-auto leading-snug">
+                        <div className="w-16 h-1 md:w-20 md:h-1.5 bg-primary-green mx-auto mb-6 md:mb-8 shadow-[0_0_20px_rgba(57,255,20,0.5)]" />
+                        <p className="text-lg md:text-2xl lg:text-3xl font-body font-light text-gray-100 max-w-3xl mx-auto leading-relaxed md:leading-snug">
                             Miket realized on a long trek that hydration was <br className="hidden md:block" />
                             <span className="text-white font-bold italic">dull, sugary, and over-processed.</span>
                         </p>
                         <div className="mt-8 md:mt-12 flex flex-col items-center">
-                            <span className="text-white font-black uppercase text-lg md:text-3xl lg:text-5xl tracking-tight drop-shadow-lg">
+                            <span className="text-white font-black uppercase text-xl md:text-3xl lg:text-5xl tracking-tight drop-shadow-lg">
                                 He wanted something real.
                             </span>
                         </div>
@@ -110,20 +110,20 @@ export default function StorySection() {
                     {/* STAGE 2: THE IMPACT */}
                     <motion.div
                         style={{ opacity: opacity2, y: y2 }}
-                        className="absolute flex flex-col items-center max-w-6xl w-full"
+                        className="absolute flex flex-col items-center max-w-6xl w-full px-4 md:px-0"
                     >
-                        <span className="inline-block px-4 py-1.5 md:px-6 md:py-2 bg-primary-blue/20 border border-primary-blue/30 text-primary-blue text-xs md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-8 shadow-[0_0_20px_rgba(0,198,255,0.1)]">
+                        <span className="inline-block px-5 py-2 md:px-6 md:py-2 bg-primary-blue/20 border border-primary-blue/30 text-primary-blue text-[10px] md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-6 md:mb-8 shadow-[0_0_20px_rgba(0,198,255,0.1)]">
                             The Effect
                         </span>
-                        <h2 className="text-4xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black tracking-tighter mb-6 md:mb-10 leading-[0.85] uppercase text-white drop-shadow-2xl">
+                        <h2 className="text-5xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black tracking-tighter mb-4 md:mb-10 leading-[0.9] md:leading-[0.85] uppercase text-white drop-shadow-2xl">
                             The <br />
-                            <span className="text-primary-blue italic">Impact.</span>
+                            <span className="text-primary-blue italic pr-2">Impact.</span>
                         </h2>
-                        <p className="text-base md:text-2xl lg:text-4xl font-body font-light text-gray-100 max-w-4xl mx-auto leading-snug">
+                        <p className="text-lg md:text-2xl lg:text-4xl font-body font-light text-gray-100 max-w-4xl mx-auto leading-relaxed md:leading-snug">
                             One bottle changes the baseline. <br className="hidden md:block" />
                             <span className="text-white font-bold italic">No crash. No fog.</span>
                         </p>
-                        <p className="mt-8 md:mt-12 text-primary-green font-black uppercase tracking-widest text-2xl md:text-5xl lg:text-7xl drop-shadow-[0_0_40px_rgba(57,255,20,0.4)]">
+                        <p className="mt-8 md:mt-12 text-primary-green font-black uppercase tracking-widest text-3xl md:text-5xl lg:text-7xl drop-shadow-[0_0_40px_rgba(57,255,20,0.4)]">
                             Electric Drive.
                         </p>
                     </motion.div>

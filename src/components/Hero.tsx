@@ -105,7 +105,7 @@ export default function Hero() {
             ref={containerRef}
             className={`relative w-full h-[200vh] ${p.bg} transition-colors duration-1000`}
         >
-            <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
+            <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col justify-center">
 
                 {/* Parallax Background Gradient Blobs - Removed for cleaner look */}
                 {/* <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-color-burn">
