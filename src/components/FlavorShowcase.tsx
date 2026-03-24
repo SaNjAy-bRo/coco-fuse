@@ -115,16 +115,17 @@ export default function FlavorShowcase() {
     // Assuming 3 cards, we translateX such that the final card sits in center.
     // Instead of using rigid 100vw buckets, we'll let it be fluid using a `x` transform
     // We map 0 to 1 scroll progress to shift the whole row. 
-    // To make it fully responsive, we just move `[-0%, -66.66%]` IF the row width matches the exactly three items, but since we're using a gap, we will use a relative viewport calculation.
-    // Actually, Framer Motion can interpolate between `0%` and `calc(-100% + 100vw)` nicely !
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", "calc(-100% + 100vw)"]);
+    // Framer motion can't smoothly interpolate 'calc()', so we use explicit 'vw' units.
+    // Track width is approx 282vw (-100vw viewport = -182vw translation needed)
+    const x = useTransform(scrollYProgress, [0, 1], ["0vw", "-182vw"]);
 
     return (
-        <section ref={targetRef} id="flavours" className="relative h-[300dvh] bg-white">
-            <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col justify-center">
+        <section ref={targetRef} id="flavours" className="relative h-[300dvh] md:h-auto bg-white">
+            {/* Mobile: Sticky 100dvh wrapper | Desktop: Standard relative block */}
+            <div className="sticky top-0 h-[100dvh] md:relative md:top-auto md:h-auto w-full overflow-hidden flex flex-col justify-center py-0 md:py-24">
                 
                 {/* Header Container */}
-                <div className="w-full text-center px-6 pt-16 md:pt-24 shrink-0 transition-all duration-300">
+                <div className="w-full text-center px-6 pt-16 md:pt-0 shrink-0 transition-all duration-300 mb-0 md:mb-16">
                     <motion.h2 
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
@@ -137,11 +138,15 @@ export default function FlavorShowcase() {
                     </p>
                 </div>
 
-                {/* Horizontal Sliding Track */}
-                <div className="flex-1 w-full flex items-center relative z-10 overflow-hidden">
-                    <motion.div style={{ x }} className="flex w-max items-center h-full px-[7.5vw] md:px-[calc(50vw-175px)] gap-6 md:gap-16">
+                {/* Horizontal Sliding Track (Mobile) / Flex Row (Desktop) */}
+                <div className="flex-1 md:flex-none w-full flex items-center md:justify-center relative z-10 overflow-hidden md:overflow-visible">
+                    <motion.div 
+                        style={{ x }} 
+                        // md:[transform:none!important] forcefully overrides Framer Motion's inline style on desktop
+                        className="flex w-max md:w-full md:flex-wrap md:justify-center items-center h-full md:h-auto px-[7.5vw] md:px-6 gap-6 md:gap-8 lg:gap-12 md:[transform:none!important]"
+                    >
                         {FLAVORS.map((flavor, index) => (
-                            <div key={index} className="shrink-0 flex justify-center items-center h-full pb-8 pt-8">
+                            <div key={index} className="shrink-0 flex justify-center items-center h-full md:h-auto pb-8 pt-8 md:p-0">
                                 <FlavorCard flavor={flavor} />
                             </div>
                         ))}
