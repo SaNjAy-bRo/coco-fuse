@@ -2,8 +2,10 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 import { useFlavor } from "@/context/FlavorContext";
 import { ShoppingBag, ArrowRight } from "lucide-react";
+import HeroDeco from "./HeroDeco";
 
 export default function Hero() {
     const { flavorData } = useFlavor();
@@ -110,6 +112,9 @@ export default function Hero() {
                     </motion.div>
                 </div>
 
+                {/* HERO DECORATIONS */}
+                <HeroDeco flavorId={flavorData.id} opacity={textOpacity} />
+
                 {/* 3D Can Layer - REMOVED -> Now handled globally by GlobalCanOverlay in page.tsx */}
 
                 {/* Main Text Content */}
@@ -178,10 +183,10 @@ export default function Hero() {
                             <div
                                 className="flex flex-row items-center gap-4 w-auto mx-0 relative z-30"
                             >
-                                <button className={`px-8 py-5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl relative overflow-hidden group`}>
+                                <Link href={`/products/${flavorData.id}`} className={`px-8 py-5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl relative overflow-hidden group inline-flex justify-center items-center`}>
                                     <span className="relative z-10">Shop Flavours</span>
                                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                                </button>
+                                </Link>
                                 <a href="#story" className="px-8 py-5 rounded-full border-2 border-accent-premium/20 text-accent-premium font-heading font-bold uppercase tracking-widest text-sm hover:border-accent-premium/40 hover:bg-white/50 backdrop-blur-sm transition-all text-center flex justify-center items-center gap-2 group bg-white/20">
                                     Our Story
                                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
@@ -214,13 +219,13 @@ export default function Hero() {
                                 transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
                                 className="flex flex-col items-center w-full max-w-[280px] mx-auto relative z-30"
                             >
-                                <button className={`w-full px-8 py-4.5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-[0_20px_50px_rgba(26,26,26,0.3)] relative overflow-hidden group`}>
+                                <Link href={`/products/${flavorData.id}`} className={`w-full px-8 py-4.5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-[0_20px_50px_rgba(26,26,26,0.3)] relative overflow-hidden group`}>
                                     <span className="relative z-10 flex items-center gap-2">
                                         Shop Flavours
                                         <ShoppingBag className="w-4 h-4" />
                                     </span>
                                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                                </button>
+                                </Link>
                                 {/* Removed "Our Story" button from mobile as per user request */}
                             </motion.div>
                         </div>

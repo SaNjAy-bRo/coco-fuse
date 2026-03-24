@@ -9,11 +9,8 @@ import dynamic from "next/dynamic";
 
 const Scene = dynamic(() => import("@/components/Scene"), { ssr: false });
 
-const PACK_OPTIONS = [
-    { size: 3, label: "Starter Pack", price: 9.99, bestValue: false },
-    { size: 6, label: "Half Case", price: 16.99, bestValue: false },
-    { size: 12, label: "Full Case", price: 29.99, bestValue: true }
-];
+const PACK_SIZE = 6;
+const PACK_PRICE = 69;
 
 function ConfigureContent() {
     const { flavorData: defaultFlavor } = useFlavor();
@@ -22,10 +19,10 @@ function ConfigureContent() {
     const flavorQuery = searchParams.get("flavor") as FlavorID;
     const flavorData = flavorQuery && FLAVORS[flavorQuery] ? FLAVORS[flavorQuery] : defaultFlavor;
 
-    const [selectedPack, setSelectedPack] = useState(12);
+    const [quantity, setQuantity] = useState(1);
 
     const handleContinue = () => {
-        router.push(`/checkout?flavor=${flavorData?.id}&pack=${selectedPack}`);
+        router.push(`/checkout?flavor=${flavorData?.id}&pack=${quantity}`);
     };
 
     if (!flavorData) return null;
@@ -58,29 +55,40 @@ function ConfigureContent() {
                         <p className="text-gray-500 font-body text-lg mb-4 leading-relaxed max-w-md">Select your preferred case quantity for <strong className="text-black">{flavorData.name}</strong>. Need a quick restock or a full hydration arsenal?</p>
                         
                         <div className="flex flex-col gap-4">
-                            {PACK_OPTIONS.map((pack) => (
-                                <div 
-                                    key={pack.size} 
-                                    onClick={() => setSelectedPack(pack.size)}
-                                    className={`relative cursor-pointer p-6 rounded-2xl border-2 transition-all flex items-center justify-between ${selectedPack === pack.size ? 'border-accent-premium bg-gray-50 shadow-md transform scale-[1.02]' : 'border-gray-200 hover:border-gray-300'}`}
-                                >
-                                    {pack.bestValue && (
-                                        <div className="absolute -top-3 left-6 bg-[#39FF14] text-black text-[10px] sm:text-xs font-heading font-black uppercase tracking-widest px-3 py-1 rounded-full border border-black/10 shadow-sm z-10">
-                                            Best Value
-                                        </div>
-                                    )}
-                                    <div className="flex items-center gap-4 relative z-0">
-                                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors shrink-0 ${selectedPack === pack.size ? 'border-accent-premium' : 'border-gray-300'}`}>
-                                            {selectedPack === pack.size && <div className="w-3 h-3 bg-accent-premium rounded-full" />}
-                                        </div>
-                                        <div>
-                                            <h3 className="font-heading font-black uppercase text-xl">{pack.size}-Pack</h3>
-                                            <p className="text-gray-500 text-sm font-body">{pack.label}</p>
-                                        </div>
-                                    </div>
-                                    <div className="text-2xl sm:text-3xl font-heading font-black uppercase tracking-tighter">${pack.price}</div>
+                            <div className={`relative p-6 rounded-2xl border-2 border-accent-premium bg-gray-50 shadow-md flex flex-col gap-5`}>
+                                <div className="absolute -top-3 left-6 bg-[#39FF14] text-black text-[10px] sm:text-xs font-heading font-black uppercase tracking-widest px-3 py-1 rounded-full border border-black/10 shadow-sm z-10">
+                                    Pack of {PACK_SIZE}
                                 </div>
-                            ))}
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex flex-col">
+                                        <h3 className="font-heading font-black uppercase text-xl md:text-2xl text-accent-premium leading-tight">{PACK_SIZE} Bottles</h3>
+                                        <p className="text-gray-500 text-sm font-body mt-1">Standard Loadout</p>
+                                    </div>
+                                    <div className="text-3xl sm:text-4xl font-heading font-black uppercase tracking-tighter text-accent-premium">₹{PACK_PRICE}</div>
+                                </div>
+                                
+                                {/* Quantity Controls */}
+                                <div className="flex items-center justify-between mt-2 pt-4 border-t border-gray-200">
+                                    <span className="font-heading font-black uppercase text-xs text-gray-400 tracking-widest">Quantity:</span>
+                                    <div className="flex items-center bg-white border border-gray-200 rounded-full overflow-hidden shadow-sm">
+                                        <button 
+                                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                            className="w-12 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-black transition-colors"
+                                        >
+                                            <span className="text-xl font-bold leading-none mb-1">-</span>
+                                        </button>
+                                        <div className="w-10 h-10 flex items-center justify-center font-heading font-black text-lg text-accent-premium bg-gray-50">
+                                            {quantity}
+                                        </div>
+                                        <button 
+                                            onClick={() => setQuantity(quantity + 1)}
+                                            className="w-12 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-black transition-colors"
+                                        >
+                                            <span className="text-xl font-bold leading-none mb-1">+</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <button onClick={handleContinue} className="mt-6 w-full bg-accent-premium text-white py-6 rounded-full font-heading font-black uppercase tracking-widest text-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-xl">
