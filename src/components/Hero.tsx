@@ -1,15 +1,39 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { useFlavor } from "@/context/FlavorContext";
+import { useFlavor, FLAVORS, FlavorID } from "@/context/FlavorContext";
 import { ShoppingBag, ArrowRight } from "lucide-react";
 import HeroDeco from "./HeroDeco";
 
+function MiniBottleIcon({ liquid, cap, active, onClick, name, hideLabel = false }: { liquid: string, cap: string, active: boolean, onClick: () => void, name: string, hideLabel?: boolean }) {
+    return (
+        <button 
+            type="button"
+            onClick={onClick}
+            className={`relative z-10 flex flex-col items-center gap-2 group transition-all duration-500 scale-75 sm:scale-100 ${active ? 'scale-100 sm:scale-110 opacity-100' : 'opacity-40 hover:opacity-100 hover:scale-90 sm:hover:scale-100'}`}
+        >
+            <div className={`w-10 h-20 sm:w-12 sm:h-24 rounded-[20px] shadow-lg border-2 flex flex-col items-center justify-start overflow-hidden transition-all duration-500`} style={{ borderColor: liquid, backgroundColor: 'rgba(255,255,255,0.1)' }}>
+                {/* Cap */}
+                <div className="w-5 h-2.5 sm:w-6 sm:h-3 mt-1 rounded-t-sm transition-colors duration-500" style={{ backgroundColor: cap }} />
+                {/* Body Liquid */}
+                <div className="w-full flex-1 mt-1 rounded-t-lg opacity-80 transition-colors duration-500" style={{ backgroundColor: liquid }} />
+            </div>
+            {!hideLabel && (
+                <span className={`text-[9px] sm:text-[10px] font-heading font-black uppercase tracking-widest absolute -bottom-5 sm:-bottom-6 whitespace-nowrap transition-all duration-300 ${active ? 'opacity-100 text-white drop-shadow-md' : 'opacity-0 group-hover:opacity-100 text-white/70'}`}>
+                    {name}
+                </span>
+            )}
+        </button>
+    );
+}
+
 export default function Hero() {
-    const { flavorData } = useFlavor();
+    const { flavorData, setFlavor } = useFlavor();
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isMobileSelectorOpen, setIsMobileSelectorOpen] = useState(false);
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end start"]
@@ -18,6 +42,9 @@ export default function Hero() {
     // Parallax logic for 200vh sticky section
     const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]);
     const textOpacity = useTransform(scrollYProgress, [0, 0.8, 0.95], [1, 1, 0]);
+    
+    // Toggles interaction state dynamically so invisible buttons don't block layout when scrolling
+    const pointerEventsControls = useTransform(scrollYProgress, [0, 0.8, 0.95], ["auto", "auto", "none"]);
 
     // CTA Reveal Logic for Desktop (Hidden at top, appears on scroll)
     const ctaOpacityDesktop = useTransform(scrollYProgress, [0, 0.08], [0, 1]);
@@ -113,7 +140,7 @@ export default function Hero() {
                 </div>
 
                 {/* HERO DECORATIONS */}
-                <HeroDeco flavorId={flavorData.id} opacity={textOpacity} />
+                <HeroDeco key={flavorData.id} flavorId={flavorData.id} opacity={textOpacity} />
 
                 {/* 3D Can Layer - REMOVED -> Now handled globally by GlobalCanOverlay in page.tsx */}
 
@@ -238,7 +265,7 @@ export default function Hero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.5, duration: 1 }}
-                    className="absolute bottom-4 min-[400px]:bottom-6 lg:bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 min-[400px]:gap-3 mix-blend-difference xl:mix-blend-normal"
+                    className="absolute bottom-6 left-6 lg:bottom-12 lg:left-12 z-30 flex flex-col items-center gap-2 min-[400px]:gap-3 mix-blend-difference xl:mix-blend-normal pointer-events-none"
                 >
                     <span className="text-[10px] font-heading font-black uppercase tracking-[0.2em] text-accent-premium/50 [writing-mode:vertical-lr] rotate-180">Scroll</span>
                     <div className="w-[1px] h-12 bg-accent-premium/20 overflow-hidden">
@@ -249,8 +276,88 @@ export default function Hero() {
                         />
                     </div>
                 </motion.div>
-
             </div >
+
+            {/* DYNAMIC FIXED LAYER FOR SELECTORS */}
+            <motion.div style={{ opacity: textOpacity }} className="fixed inset-0 z-[100] pointer-events-none">
+                {/* DESKTOP FLAVOR SELECTOR DOCK (Bottom Center) */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1, duration: 0.8 }}
+                    style={{ pointerEvents: pointerEventsControls as any }}
+                    className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-3 mix-blend-difference xl:mix-blend-normal"
+                >
+                    <span className="text-[10px] sm:text-xs font-heading font-black uppercase tracking-[0.2em] text-white/50">Switch Flavor</span>
+                    <div className="flex gap-2 sm:gap-4 bg-black/20 backdrop-blur-md p-3 sm:p-4 rounded-3xl border border-white/10 shadow-2xl">
+                        {(Object.keys(FLAVORS) as FlavorID[]).map((flavorKey) => (
+                            <MiniBottleIcon 
+                                key={flavorKey}
+                                name={FLAVORS[flavorKey].name.split(" ")[0]}
+                                liquid={FLAVORS[flavorKey].liquid}
+                                cap={FLAVORS[flavorKey].cap}
+                                active={flavorData.id === flavorKey}
+                                onClick={() => setFlavor(flavorKey)}
+                            />
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* MOBILE FLAVOR SELECTOR FAB (Bottom Right) */}
+                <motion.div style={{ pointerEvents: pointerEventsControls as any }} className="lg:hidden absolute bottom-6 right-6 flex flex-col items-end gap-4">
+                    {/* Expanding Options */}
+                    <motion.div 
+                        initial={false}
+                        animate={{ 
+                            opacity: isMobileSelectorOpen ? 1 : 0, 
+                            y: isMobileSelectorOpen ? 0 : 20, 
+                            scale: isMobileSelectorOpen ? 1 : 0.8, 
+                            pointerEvents: isMobileSelectorOpen ? 'auto' : 'none' 
+                        }}
+                        className="flex flex-col gap-4 items-end origin-bottom"
+                    >
+                        {(Object.keys(FLAVORS) as FlavorID[]).map((flavorKey) => (
+                            <div key={flavorKey} className="flex relative items-center justify-end w-full group z-[110]">
+                                {/* Native Speed Dial Label */}
+                                <span className={`absolute right-full mr-4 z-[120] whitespace-nowrap bg-black/60 backdrop-blur-md text-white text-[10px] sm:text-xs font-heading font-bold uppercase tracking-widest px-4 py-2 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/10 transition-all duration-300 ${flavorData.id === flavorKey ? 'opacity-100 scale-100 border-white/30' : 'opacity-80 scale-95'}`}>
+                                    {FLAVORS[flavorKey].name}
+                                </span>
+                                {/* The Bottle Container */}
+                                <div className={`relative z-[110] bg-black/30 backdrop-blur-md p-2 rounded-3xl border transition-colors shadow-xl ${flavorData.id === flavorKey ? 'border-white/30' : 'border-white/10'}`}>
+                                    <MiniBottleIcon 
+                                        name=""
+                                        liquid={FLAVORS[flavorKey].liquid}
+                                        cap={FLAVORS[flavorKey].cap}
+                                        active={flavorData.id === flavorKey}
+                                        hideLabel={true}
+                                        onClick={() => {
+                                            setFlavor(flavorKey);
+                                            setIsMobileSelectorOpen(false);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </motion.div>
+                    
+                    {/* The Main Dot / FAB */}
+                    <button 
+                        onClick={() => setIsMobileSelectorOpen(!isMobileSelectorOpen)}
+                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.4)] border border-white/30 flex items-center justify-center transition-transform active:scale-95 relative z-50 backdrop-blur-md"
+                        style={{ backgroundColor: isMobileSelectorOpen ? '#000000' : flavorData.liquid }}
+                    >
+                        {isMobileSelectorOpen ? (
+                            <span className="text-white font-body text-2xl font-light mb-1">&times;</span>
+                        ) : (
+                            <>
+                                <div className="w-5 h-5 rounded-full bg-white/30 backdrop-blur-sm shadow-inner" />
+                                <span className="absolute -top-2 -right-2 bg-white text-black text-[9px] font-heading font-black px-2 py-1 rounded-full uppercase tracking-widest shadow-xl">Switch</span>
+                            </>
+                        )}
+                    </button>
+                </motion.div>
+            </motion.div>
+
         </section >
     );
 }

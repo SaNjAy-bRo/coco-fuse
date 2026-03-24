@@ -22,7 +22,7 @@ export default function HeroDeco({ flavorId, opacity }: HeroDecoProps) {
             { src: "/assets/deco/Watermelon 1.svg", top: "15%", left: "60%", mobileTop: "8%", mobileLeft: "5%", w: "w-16 md:w-32 hover:scale-110 transition-transform", delay: 0 },
             { src: "/assets/deco/Watermelon 2.svg", top: "75%", left: "55%", mobileTop: "65%", mobileLeft: "10%", w: "w-20 md:w-40 hover:scale-110 transition-transform", delay: 0.2 },
             { src: "/assets/deco/Watermelon 3.svg", top: "45%", left: "85%", mobileTop: "38%", mobileLeft: "78%", w: "w-14 md:w-28 hover:scale-110 transition-transform", delay: 0.4 },
-            { src: "/assets/deco/leaf 2.svg", top: "10%", left: "82%", mobileTop: "5%", mobileLeft: "75%", w: "w-12 md:w-24 hover:scale-110 transition-transform", delay: 0.1 },
+            { src: "/assets/deco/leaf 2 (3).svg", top: "10%", left: "82%", mobileTop: "5%", mobileLeft: "75%", w: "w-12 md:w-24 hover:scale-110 transition-transform", delay: 0.1 },
             { src: "/assets/deco/leaf 2 (1).svg", top: "80%", left: "80%", mobileTop: "75%", mobileLeft: "75%", w: "w-16 md:w-32 hover:scale-110 transition-transform", delay: 0.3 },
             { src: "/assets/deco/leaf 2 (2).svg", top: "50%", left: "50%", mobileTop: "40%", mobileLeft: "8%", w: "w-10 md:w-20 hover:scale-110 transition-transform", delay: 0.5 },
         ],
@@ -45,40 +45,65 @@ export default function HeroDeco({ flavorId, opacity }: HeroDecoProps) {
         >
             {assets.map((item, idx) => (
                 <div key={`${flavorId}-${idx}`}>
-                    {/* Desktop Version */}
-                    <motion.img
-                        src={item.src}
-                        alt={`${flavorId} decor`}
-                        className={`absolute hidden lg:block drop-shadow-2xl ${item.w}`}
-                        style={{ top: item.top, left: item.left }}
-                        animate={{ 
-                            y: [0, -20, 0], 
-                            rotate: [0, 5, -5, 0] 
-                        }}
+                    {/* Desktop Version: Originates from x: 75%, y: 50% (where the Desktop 3D bottle sits) */}
+                    <motion.div
+                        className="absolute hidden lg:block z-0"
+                        initial={{ top: "50%", left: "75%", x: "-50%", y: "-50%", scale: 0, opacity: 0, rotate: -45 }}
+                        animate={{ top: item.top, left: item.left, x: "-50%", y: "-50%", scale: 1, opacity: 1, rotate: 0 }}
                         transition={{ 
-                            duration: 6, 
-                            repeat: Infinity, 
-                            ease: "easeInOut", 
-                            delay: item.delay 
+                            type: "spring", 
+                            damping: 14, 
+                            stiffness: 100, 
+                            mass: 0.8, 
+                            delay: item.delay * 1.2 
                         }}
-                    />
-                    {/* Mobile/Tablet Version */}
-                    <motion.img
-                        src={item.src}
-                        alt={`${flavorId} decor`}
-                        className={`absolute lg:hidden drop-shadow-xl ${item.w}`}
-                        style={{ top: item.mobileTop, left: item.mobileLeft }}
-                        animate={{ 
-                            y: [0, -15, 0], 
-                            rotate: [0, 5, -5, 0] 
-                        }}
+                    >
+                        <motion.img
+                            src={item.src}
+                            alt={`${flavorId} decor`}
+                            className={`drop-shadow-2xl ${item.w}`}
+                            animate={{ 
+                                y: [0, -20, 0], 
+                                rotate: [0, 5, -5, 0] 
+                            }}
+                            transition={{ 
+                                duration: 6, 
+                                repeat: Infinity, 
+                                ease: "easeInOut", 
+                                delay: item.delay 
+                            }}
+                        />
+                    </motion.div>
+
+                    {/* Mobile/Tablet Version: Originates from x: 50%, y: 65% (where the Mobile 3D bottle sits) */}
+                    <motion.div
+                        className="absolute lg:hidden z-0"
+                        initial={{ top: "65%", left: "50%", x: "-50%", y: "-50%", scale: 0, opacity: 0, rotate: -45 }}
+                        animate={{ top: item.mobileTop, left: item.mobileLeft, x: "-50%", y: "-50%", scale: 1, opacity: 1, rotate: 0 }}
                         transition={{ 
-                            duration: 5, 
-                            repeat: Infinity, 
-                            ease: "easeInOut", 
-                            delay: item.delay 
+                            type: "spring", 
+                            damping: 14, 
+                            stiffness: 100, 
+                            mass: 0.8, 
+                            delay: item.delay * 1.2 
                         }}
-                    />
+                    >
+                        <motion.img
+                            src={item.src}
+                            alt={`${flavorId} decor`}
+                            className={`drop-shadow-xl ${item.w}`}
+                            animate={{ 
+                                y: [0, -15, 0], 
+                                rotate: [0, 5, -5, 0] 
+                            }}
+                            transition={{ 
+                                duration: 5, 
+                                repeat: Infinity, 
+                                ease: "easeInOut", 
+                                delay: item.delay 
+                            }}
+                        />
+                    </motion.div>
                 </div>
             ))}
         </motion.div>

@@ -153,7 +153,8 @@ export default function Bottle({
             const heroProgress = Math.min(Math.max(currentScroll / heroEnd, 0), 1);
 
             if (heroProgress === 0) {
-                idleAngle.current += delta * 0.4;
+                const spinSpeed = state.current.transition < 1 ? 15 : 0.4;
+                idleAngle.current += delta * spinSpeed;
                 lockedTarget.current.active = false;
                 groupRef.current.rotation.y = idleAngle.current;
             } else {
