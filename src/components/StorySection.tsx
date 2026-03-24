@@ -34,9 +34,9 @@ export default function StorySection() {
     // Finishes exactly at the end of the section
     const bgOverlayOpacity = useTransform(progress, [0.88, 0.96], [0, 1]);
 
-    // TEXT STAGE 1: The Mountain (Visible from 5% to 45%)
-    const opacity1 = useTransform(progress, [0.05, 0.15, 0.4, 0.5], [0, 1, 1, 0]);
-    const y1 = useTransform(progress, [0.05, 0.15, 0.4, 0.5], [50, 0, 0, -50]);
+    // TEXT STAGE 1: The Mountain (Appears immediately)
+    const opacity1 = useTransform(progress, [0, 0.05, 0.4, 0.5], [0, 1, 1, 0]);
+    const y1 = useTransform(progress, [0, 0.05, 0.4, 0.5], [50, 0, 0, -50]);
 
     // TEXT STAGE 2: The Impact (Visible from 55% to 90%)
     const opacity2 = useTransform(progress, [0.55, 0.65, 0.88, 0.95], [0, 1, 1, 0]);
