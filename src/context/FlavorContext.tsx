@@ -30,7 +30,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         name: "Mango Refresh",
         label: "/assets/label_full.png",
         liquid: "#f97316",
-        cap: "#39FF14",
+        cap: "#111111",
         accent: "text-accent-mango",
         story: {
             morning: { title: "Fuse Your <br /> Mornings.", desc: "Mango Delight + Coconut Water. A fresh, hydrating wake-up call to start your day right." },
@@ -52,7 +52,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         name: "Watermelon Cool",
         label: "/assets/watermelon_label_extracted.png",
         liquid: "#ff4d4d",
-        cap: "#ff1a1a",
+        cap: "#111111",
         accent: "text-[#ff4d4d]",
         story: {
             morning: { title: "Fuse Your <br /> Workout.", desc: "Watermelon + Coconut Water. The ultimate pre-session hydration to prime your muscles." },
@@ -74,7 +74,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         name: "Basil Chili Kick",
         label: "/assets/chili_label_extracted.png",
         liquid: "#cc0000",
-        cap: "#cc0000",
+        cap: "#111111",
         accent: "text-[#cc0000]",
         story: {
             morning: { title: "Fuse Your <br /> Focus.", desc: "Basil Chili + Coconut Water. A zingy neural spark to ignite your makers mindset." },
