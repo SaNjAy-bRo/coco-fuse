@@ -322,18 +322,18 @@ export default function Hero() {
                                 <span className={`absolute right-full mr-4 z-[120] whitespace-nowrap bg-black/60 backdrop-blur-md text-white text-[10px] sm:text-xs font-heading font-bold uppercase tracking-widest px-4 py-2 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/10 transition-all duration-300 ${flavorData.id === flavorKey ? 'opacity-100 scale-100 border-white/30' : 'opacity-80 scale-95'}`}>
                                     {FLAVORS[flavorKey].name}
                                 </span>
-                                {/* The Bottle Container */}
-                                <div className={`relative z-[110] bg-black/30 backdrop-blur-md p-2 rounded-3xl border transition-colors shadow-xl ${flavorData.id === flavorKey ? 'border-white/30' : 'border-white/10'}`}>
-                                    <MiniBottleIcon 
-                                        name=""
-                                        liquid={FLAVORS[flavorKey].liquid}
-                                        cap={FLAVORS[flavorKey].cap}
-                                        active={flavorData.id === flavorKey}
-                                        hideLabel={true}
-                                        onClick={() => {
-                                            setFlavor(flavorKey);
-                                            setIsMobileSelectorOpen(false);
-                                        }}
+                                {/* The Fruit Icon Container */}
+                                <div 
+                                    className={`relative z-[110] bg-black/40 backdrop-blur-xl p-3 rounded-full border transition-all duration-300 shadow-2xl flex items-center justify-center cursor-pointer ${flavorData.id === flavorKey ? 'border-white/50 bg-white/10 scale-110' : 'border-white/10 active:scale-95'}`}
+                                    onClick={() => {
+                                        setFlavor(flavorKey);
+                                        setIsMobileSelectorOpen(false);
+                                    }}
+                                >
+                                    <img 
+                                        src={FLAVORS[flavorKey].icon} 
+                                        alt={FLAVORS[flavorKey].name}
+                                        className="w-8 h-8 object-contain drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)]"
                                     />
                                 </div>
                             </div>

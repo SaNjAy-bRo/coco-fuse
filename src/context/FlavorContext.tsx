@@ -10,6 +10,7 @@ export interface FlavorData {
     label: string;
     liquid: string;
     cap: string;
+    icon: string;
     accent: string;
     story: {
         morning: { title: string; desc: string };
@@ -31,6 +32,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         label: "/assets/label_full.png",
         liquid: "#f97316",
         cap: "#111111",
+        icon: "/assets/deco/mango 1.png",
         accent: "text-accent-mango",
         story: {
             morning: { title: "Fuse Your <br /> Mornings.", desc: "Mango Delight + Coconut Water. A fresh, hydrating wake-up call to start your day right." },
@@ -53,6 +55,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         label: "/assets/watermelon_label_extracted.png",
         liquid: "#ff4d4d",
         cap: "#111111",
+        icon: "/assets/deco/Watermelon 1.png",
         accent: "text-[#ff4d4d]",
         story: {
             morning: { title: "Fuse Your <br /> Workout.", desc: "Watermelon + Coconut Water. The ultimate pre-session hydration to prime your muscles." },
@@ -75,6 +78,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         label: "/assets/chili_label_extracted.png",
         liquid: "#cc0000",
         cap: "#111111",
+        icon: "/assets/deco/Chili 1.png",
         accent: "text-[#cc0000]",
         story: {
             morning: { title: "Fuse Your <br /> Focus.", desc: "Basil Chili + Coconut Water. A zingy neural spark to ignite your makers mindset." },
