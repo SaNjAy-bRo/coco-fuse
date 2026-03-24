@@ -103,22 +103,81 @@ export default function Bottle({
         });
     }, []);
 
-    const points = useMemo(() => {
-        const p = [];
-        p.push(new THREE.Vector2(0, -2));
-        p.push(new THREE.Vector2(1.1, -2));
-        p.push(new THREE.Vector2(1.2, -1.9));
-        p.push(new THREE.Vector2(1.2, 1.5));
-        for (let i = 0; i <= 10; i++) {
-            const angle = (i / 10) * Math.PI / 2;
-            p.push(new THREE.Vector2(0.6 + 0.6 * Math.cos(angle), 1.5 + 0.8 * Math.sin(angle)));
-        }
-        p.push(new THREE.Vector2(0.5, 2.7));
-        p.push(new THREE.Vector2(0.45, 2.9));
-        p.push(new THREE.Vector2(0.55, 3.0));
-        p.push(new THREE.Vector2(0.55, 3.4));
-        p.push(new THREE.Vector2(0, 3.4));
-        return p;
+    const { bottlePoints, wrapperPoints, liquidPoints } = useMemo(() => {
+        const getBottlePoints = () => {
+            const p: THREE.Vector2[] = [];
+            const pushP = (x: number, y: number) => p.push(new THREE.Vector2(x, y));
+            pushP(0, -2.6); pushP(0.8, -2.6);
+            for(let i=1; i<=10; i++) {
+                const angle = (i/10) * Math.PI/2;
+                pushP(0.8 + 0.3 * Math.sin(angle), -2.6 + 0.2 * (1 - Math.cos(angle)));
+            }
+            for(let i=1; i<=10; i++) {
+                const t = i/10;
+                pushP(1.1 - 0.08 * t, -2.4 + 1.9 * t);
+            }
+            for(let i=1; i<=10; i++) {
+                const t = i/10;
+                pushP(1.02 + 0.18 * t, -0.5 + 1.9 * t);
+            }
+            for(let i=1; i<=15; i++) {
+                const t = i/15;
+                pushP(0.65 + 0.55 * (0.5 + 0.5 * Math.cos(t * Math.PI)), 1.4 + 0.9 * t);
+            }
+            pushP(0.65, 2.5);
+            pushP(0.7, 2.5); pushP(0.7, 2.65); pushP(0.65, 2.65);
+            pushP(0.65, 3.0); pushP(0, 3.0);
+            return p;
+        };
+
+        const getWrapperPoints = () => {
+            const p: THREE.Vector2[] = [];
+            const pushP = (x: number, y: number) => p.push(new THREE.Vector2(x + 0.015, y));
+            const STEPS = 30;
+            const startY = -2.1;
+            const endY = 1.45;
+            for(let i=0; i<=STEPS; i++) {
+                const t = i/STEPS;
+                const y = startY + (endY - startY) * t;
+                let x = 0;
+                if (y < -0.5) {
+                    const segT = (y + 2.4) / 1.9;
+                    x = 1.1 - 0.08 * Math.max(0, segT);
+                } else if (y < 1.4) {
+                    const segT = (y + 0.5) / 1.9;
+                    x = 1.02 + 0.18 * segT;
+                } else {
+                    const segT = (y - 1.4) / 0.9;
+                    x = 0.65 + 0.55 * (0.5 + 0.5 * Math.cos(segT * Math.PI));
+                }
+                pushP(x, y);
+            }
+            return p;
+        };
+
+        const getLiquidPoints = () => {
+            const p: THREE.Vector2[] = [];
+            const pushP = (x: number, y: number) => p.push(new THREE.Vector2(x * 0.96, y));
+            pushP(0, -2.55); pushP(0.8, -2.55);
+            for(let i=1; i<=10; i++) {
+                const angle = (i/10) * Math.PI/2;
+                pushP(0.8 + 0.3 * Math.sin(angle), -2.6 + 0.2 * (1 - Math.cos(angle)));
+            }
+            for(let i=1; i<=10; i++) {
+                pushP(1.1 - 0.08 * (i/10), -2.4 + 1.9 * (i/10));
+            }
+            for(let i=1; i<=10; i++) {
+                pushP(1.02 + 0.18 * (i/10), -0.5 + 1.9 * (i/10));
+            }
+            for(let i=1; i<=10; i++) {
+                const t = i/10;
+                pushP(0.65 + 0.55 * (0.5 + 0.5 * Math.cos(t * Math.PI)), 1.4 + 0.7 * t);
+            }
+            pushP(0, 2.1);
+            return p;
+        };
+
+        return { bottlePoints: getBottlePoints(), wrapperPoints: getWrapperPoints(), liquidPoints: getLiquidPoints() };
     }, []);
 
     const idleAngle = useRef(0);
@@ -180,32 +239,32 @@ export default function Bottle({
             <group position={[0, -0.725, 0]}>
                 {/* Clear Bottle */}
                 <mesh>
-                    <latheGeometry args={[points, 64]} />
+                    <latheGeometry args={[bottlePoints, 64]} />
                     <meshPhysicalMaterial 
-                        color="#ffffff" transparent opacity={0.3} roughness={0.05} 
-                        metalness={0.1} transmission={0.95} thickness={0.5} envMapIntensity={2.0} 
+                        color="#ffffff" transparent opacity={0.2} roughness={0.08} 
+                        metalness={0.15} transmission={0.98} thickness={0.7} envMapIntensity={2.0} 
                         clearcoat={1} clearcoatRoughness={0.1}
                     />
                 </mesh>
 
                 {/* Internal Liquid */}
-                <mesh ref={liquidRef} position={[0, -0.1, 0]} scale={[0.95, 0.95, 0.95]}>
-                    <latheGeometry args={[points.slice(0, 14), 64]} />
-                    <meshStandardMaterial color={liquidColor} transparent opacity={0.8} roughness={0.1} metalness={0.1} />
+                <mesh ref={liquidRef} position={[0, -0.05, 0]}>
+                    <latheGeometry args={[liquidPoints, 64]} />
+                    <meshStandardMaterial color={liquidColor} transparent opacity={0.88} roughness={0.05} metalness={0.1} />
                 </mesh>
 
-                {/* The Wrapper Label (Using Custom Shader) */}
-                <mesh ref={wrapperRef} position={[0, -0.2, 0]} rotation={[0, -Math.PI / 2, 0]} material={wrapperMaterial}>
-                    <cylinderGeometry args={[1.21, 1.21, 3.4, 64, 1, true]} />
+                {/* The Wrapper Shrink Sleeve */}
+                <mesh ref={wrapperRef} rotation={[0, -Math.PI / 2, 0]} material={wrapperMaterial}>
+                    <latheGeometry args={[wrapperPoints, 64]} />
                 </mesh>
 
                 {/* The Bottle Cap */}
-                <mesh ref={capRef1} position={[0, 3.2, 0]}>
-                    <cylinderGeometry args={[0.58, 0.58, 0.5, 64]} />
-                    <meshStandardMaterial color={capColor} roughness={0.4} metalness={0.2} />
+                <mesh ref={capRef1} position={[0, 3.0, 0]}>
+                    <cylinderGeometry args={[0.68, 0.68, 0.7, 50]} />
+                    <meshStandardMaterial color={capColor} roughness={0.5} metalness={0.1} />
                 </mesh>
-                <mesh ref={capRef2} position={[0, 3.45, 0]}>
-                    <cylinderGeometry args={[0.6, 0.58, 0.05, 64]} />
+                <mesh ref={capRef2} position={[0, 3.35, 0]}>
+                    <cylinderGeometry args={[0.65, 0.68, 0.05, 50]} />
                     <meshBasicMaterial color={capColor} />
                 </mesh>
             </group>
