@@ -3,13 +3,11 @@ import GlobalCanOverlay from "@/components/GlobalCanOverlay";
 import USPSection from "@/components/USPSection";
 import MascotJourney from "@/components/MascotJourney";
 import ParallaxBanner from "@/components/ParallaxBanner";
-import FoundersSection from "@/components/FoundersSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import CTASection from "@/components/CTASection";
 import FlavorShowcase from "@/components/FlavorShowcase";
 import MoodSelector from "@/components/MoodSelector";
 import StorySection from "@/components/StorySection";
-import Transformation from "@/components/Transformation";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -21,7 +19,6 @@ export default function Home() {
       <FlavorShowcase />
       <MoodSelector />
       <StorySection />
-      <FoundersSection />
       <ParallaxBanner />
       <USPSection />
       <CTASection />
@@ -30,3 +27,5 @@ export default function Home() {
     </main>
   );
 }
+
+

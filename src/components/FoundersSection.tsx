@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+
 
 export default function FoundersSection() {
     const founders = [
@@ -85,15 +85,12 @@ export default function FoundersSection() {
                         >
                             {/* Minimal Portrait Placeholder */}
                             <div className={`w-48 h-64 md:w-64 md:h-80 rounded-[4rem] ${founder.bg} border-4 ${founder.border} overflow-hidden mb-8 transition-transform duration-500 group-hover:scale-105 group-hover:shadow-2xl relative`}>
-                                {/* Replace with actual portraits later */}
-                                <div className="absolute inset-0">
-                                        <Image
-                                            src={founder.image}
-                                            alt={founder.name}
-                                            fill
-                                            className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                                        />
-                                </div>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                    src={founder.image}
+                                    alt={founder.name}
+                                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                                />
                             </div>
 
                             <h3 className="text-3xl font-heading font-black text-accent-premium uppercase tracking-wider mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-accent-mango group-hover:to-accent-watermelon transition-all">
