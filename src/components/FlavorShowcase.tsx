@@ -111,13 +111,19 @@ export default function FlavorShowcase() {
         target: targetRef,
     });
     
-    // A much tighter track wrapper mapping 0-1 to slide precisely from the first to the last card.
-    // Assuming 3 cards, we translateX such that the final card sits in center.
-    // Instead of using rigid 100vw buckets, we'll let it be fluid using a `x` transform
     // We map 0 to 1 scroll progress to shift the whole row. 
     // Framer motion can't smoothly interpolate 'calc()', so we use explicit 'vw' units.
     // Track width is approx 282vw (-100vw viewport = -182vw translation needed)
     const x = useTransform(scrollYProgress, [0, 1], ["0vw", "-182vw"]);
+
+    const [isDesktop, setIsDesktop] = React.useState(true);
+
+    React.useEffect(() => {
+        const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
+        checkDesktop();
+        window.addEventListener("resize", checkDesktop);
+        return () => window.removeEventListener("resize", checkDesktop);
+    }, []);
 
     return (
         <section ref={targetRef} id="flavours" className="relative h-[300dvh] md:h-auto bg-white">
@@ -141,9 +147,8 @@ export default function FlavorShowcase() {
                 {/* Horizontal Sliding Track (Mobile) / Flex Row (Desktop) */}
                 <div className="flex-1 md:flex-none w-full flex items-center md:justify-center relative z-10 overflow-hidden md:overflow-visible">
                     <motion.div 
-                        style={{ x }} 
-                        // md:[transform:none!important] forcefully overrides Framer Motion's inline style on desktop
-                        className="flex w-max md:w-full md:flex-wrap md:justify-center items-center h-full md:h-auto px-[7.5vw] md:px-6 gap-6 md:gap-8 lg:gap-12 md:[transform:none!important]"
+                        style={isDesktop ? undefined : { x }} 
+                        className="flex w-max md:w-full md:flex-wrap md:justify-center items-center h-full md:h-auto px-[7.5vw] md:px-6 gap-6 md:gap-8 lg:gap-12"
                     >
                         {FLAVORS.map((flavor, index) => (
                             <div key={index} className="shrink-0 flex justify-center items-center h-full md:h-auto pb-8 pt-8 md:p-0">
