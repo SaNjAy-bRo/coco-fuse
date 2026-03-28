@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import GlobalCanOverlay from "@/components/GlobalCanOverlay";
 import USPSection from "@/components/USPSection";
 import MascotJourney from "@/components/MascotJourney";
+import TransitionBanner from "@/components/TransitionBanner";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import ManifestoSection from "@/components/ManifestoSection";
 import CTASection from "@/components/CTASection";
@@ -16,6 +17,7 @@ export default function Home() {
     <main className="min-h-screen bg-primary-white text-accent-premium font-body relative">
       <GlobalCanOverlay />
       <Hero />
+      <TransitionBanner />
       <MascotJourney />
       <MonkeySection />
       <FlavorShowcase />

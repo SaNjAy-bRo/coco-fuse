@@ -53,7 +53,7 @@ export default function ProductRange() {
                         transition={{ duration: 0.6 }}
                         className="max-w-2xl"
                     >
-                        <h2 className="text-5xl md:text-7xl font-heading font-black tracking-tighter text-accent-premium uppercase mb-4">
+                        <h2 className="text-5xl md:text-7xl font-heading font-black italic tracking-tighter text-accent-premium uppercase mb-4">
                             Pick Your <span className="text-primary-blue italic">Vibe</span>
                         </h2>
                         <p className="text-xl font-body text-gray-500">
@@ -89,7 +89,7 @@ export default function ProductRange() {
                                 <div className="absolute inset-0 bg-white/10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                 <div className="relative z-10 w-full bg-white/95 backdrop-blur-md p-6 rounded-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl">
-                                    <h3 className={`text-2xl font-heading font-black uppercase tracking-widest mb-1 ${product.textColor}`}>
+                                    <h3 className={`text-2xl font-heading font-black italic uppercase tracking-widest mb-1 ${product.textColor}`}>
                                         {product.name}
                                     </h3>
                                     <p className="text-sm font-body font-medium text-gray-500 uppercase tracking-wider mb-4">

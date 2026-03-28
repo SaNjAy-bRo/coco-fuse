@@ -85,7 +85,7 @@ export default function MoodSelector() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-5xl md:text-7xl lg:text-8xl font-heading font-black tracking-tighter text-accent-premium uppercase leading-none"
+                        className="text-5xl md:text-7xl lg:text-8xl font-heading font-black italic tracking-tighter text-accent-premium uppercase leading-none"
                     >
                         Who are you <br />
                         <span className="text-primary-blue italic">Right Now?</span>
@@ -111,7 +111,7 @@ export default function MoodSelector() {
                                     <Icon className="w-7 h-7 md:w-8 md:h-8 text-accent-premium" strokeWidth={2.5} />
                                 </div>
 
-                                <h3 className="text-2xl md:text-3xl font-heading font-black text-accent-premium uppercase tracking-tighter mb-2 leading-none">
+                                <h3 className="text-2xl md:text-3xl font-heading font-black italic text-accent-premium uppercase tracking-tighter mb-2 leading-none">
                                     {mood.title}
                                 </h3>
                                 <p className={`text-[10px] md:text-sm font-heading font-bold uppercase tracking-widest mb-4 md:mb-6 opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>

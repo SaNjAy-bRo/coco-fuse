@@ -21,7 +21,7 @@ export default function ManifestoSection() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="max-w-5xl mx-auto"
                 >
-                    <h2 className="text-5xl md:text-8xl lg:text-9xl font-heading font-black tracking-tighter text-primary-white leading-[0.9] uppercase mb-12">
+                    <h2 className="text-5xl md:text-8xl lg:text-9xl font-heading font-black italic tracking-tighter text-primary-white leading-[0.9] uppercase mb-12">
                         Clean <br className="hidden md:block" /> Hydration <br />
                         <span className="italic text-transparent bg-clip-text bg-gradient-to-br from-primary-green via-primary-blue to-accent-mango">With Attitude.</span>
                     </h2>

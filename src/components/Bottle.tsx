@@ -226,11 +226,29 @@ export default function Bottle({
                     if (nextTarget - idleAngle.current < Math.PI) nextTarget += TWO_PI;
                     lockedTarget.current.target = nextTarget;
                 }
-                groupRef.current.rotation.y = THREE.MathUtils.lerp(lockedTarget.current.start, lockedTarget.current.target, heroProgress);
+                const baseTarget = THREE.MathUtils.lerp(lockedTarget.current.start, lockedTarget.current.target, heroProgress);
+                
+                if (state.current.transition < 1) {
+                    // Inject a fast 360 spin during the fade, calculating an Ease-In-Out quadratic curve
+                    const t = state.current.transition; // 0 to 1 timeframe
+                    const easeT = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // Smoothed 0 to 1
+                    groupRef.current.rotation.y = baseTarget + (easeT * Math.PI * 2);
+                } else {
+                    groupRef.current.rotation.y = baseTarget;
+                }
+
+                // Inject a continuous, elegant 3D tilt specifically across the Mascot Journey so it feels alive
+                if (heroProgress === 1) {
+                    const mascotScrollPhase = currentScroll * 0.0012;
+                    groupRef.current.rotation.x = Math.sin(mascotScrollPhase) * 0.15;
+                    groupRef.current.rotation.z = Math.cos(mascotScrollPhase * 0.8) * 0.1;
+                }
             }
 
-            groupRef.current.rotation.x = (1 - heroProgress) * Math.sin(heroProgress * Math.PI) * 0.2;
-            groupRef.current.rotation.z = (1 - heroProgress) * Math.cos(heroProgress * Math.PI) * 0.1;
+            if (heroProgress < 1) {
+                groupRef.current.rotation.x = (1 - heroProgress) * Math.sin(heroProgress * Math.PI) * 0.2;
+                groupRef.current.rotation.z = (1 - heroProgress) * Math.cos(heroProgress * Math.PI) * 0.1;
+            }
         }
     });
 

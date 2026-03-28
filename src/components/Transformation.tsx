@@ -73,7 +73,7 @@ export default function Transformation() {
                             <span className="text-primary-green font-heading font-black uppercase tracking-widest text-lg md:text-2xl mb-6">
                                 The Moment of Impact
                             </span>
-                            <h2 className="text-5xl md:text-8xl lg:text-[10rem] font-heading font-black text-white uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12">
+                            <h2 className="text-5xl md:text-8xl lg:text-[10rem] font-heading font-black italic text-white uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12">
                                 <span className="block italic text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon">VIBE</span> 
                                 SHIFTED
                             </h2>

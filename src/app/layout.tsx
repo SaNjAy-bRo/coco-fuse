@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Outfit } from "next/font/google";
+import { Poppins, Nunito, Pacifico } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
@@ -12,10 +12,16 @@ const bodyFont = Poppins({
   variable: "--font-body",
 });
 
-const headingFont = Outfit({
+const headingFont = Nunito({
   subsets: ["latin"],
-  weight: ["500", "700", "900"],
+  weight: ["500", "700", "800", "900"],
   variable: "--font-heading",
+});
+
+const scriptFont = Pacifico({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-script",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${bodyFont.variable} ${headingFont.variable} font-body antialiased bg-primary-white text-accent-premium ${"custom-cursor"}`}
+        className={`${bodyFont.variable} ${headingFont.variable} ${scriptFont.variable} font-body antialiased bg-primary-white text-accent-premium ${"custom-cursor"}`}
       >
         <FlavorProvider>
           <CustomCursor />

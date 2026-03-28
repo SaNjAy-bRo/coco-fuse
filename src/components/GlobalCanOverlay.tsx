@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { useFlavor } from "@/context/FlavorContext";
+import { useFlavor, FLAVORS } from "@/context/FlavorContext";
 
 const Scene = dynamic(() => import("./Scene"), { ssr: false });
 
@@ -12,6 +12,7 @@ export default function GlobalCanOverlay() {
     const { scrollY } = useScroll();
     const [mounted, setMounted] = useState(false);
     const [vh, setVh] = useState(() => typeof window !== "undefined" ? window.innerHeight : 0);
+    const [renderFlavor, setRenderFlavor] = useState(flavorData);
 
     useEffect(() => {
         setMounted(true);
@@ -29,83 +30,139 @@ export default function GlobalCanOverlay() {
     // MascotJourney ends after Hero (2vh) + Mascot (4vh desk / 6vh mobile)
     const isMobile = mounted && window.innerWidth < 1024;
     const heroEnd = vh * 2;
-    const mascotHeight = isMobile ? vh * 2.5 : vh * 4;
+    const transitionHeight = vh * 1.0; 
+    const mascotStart = heroEnd + transitionHeight;
+    const mascotHeight = vh * 4;
 
-    // Use relative percentages of mascotHeight to match MascotJourney.tsx EXACTLY
-    // S1: [0, 0.25, 0.35] | S2: [0.3, 0.4, 0.6, 0.7] | S3: [0.65, 0.75, 1]
-    const s1End = heroEnd + mascotHeight * 0.25; 
-    const s2Start = heroEnd + mascotHeight * 0.40;
-    const s2End = heroEnd + mascotHeight * 0.60;
-    const s3Start = heroEnd + mascotHeight * 0.75;
-    const exitStart = heroEnd + mascotHeight * 0.90;
-    const mascotEnd = heroEnd + mascotHeight;
+    // Force-sync Hero clicks instantly IF the user is still at the top of the page
+    useEffect(() => {
+        if (mounted && scrollY.get() < mascotStart) {
+            setRenderFlavor(flavorData);
+        }
+    }, [flavorData, mascotStart, mounted, scrollY]);
 
-    // 9 keyframes: Hero idle → Hero exit → S1 sit → S1→S2 travel → S2 sit → S2→S3 travel → S3 sit → exit
+    // Use relative percentages of exactly matching the MascotJourney ScrollYProgress (which spans `height - 100vh`)
+    const progressDist = mascotHeight - vh;
+    
+    const s1End = mascotStart + progressDist * 0.25; 
+    const s2Start = mascotStart + progressDist * 0.40;
+    const s2End = mascotStart + progressDist * 0.60;
+    const s3Start = mascotStart + progressDist * 0.75;
+    
+    // The visual background remains statically pinned until exactly 100vh before the physical block ends
+    const unpinStart = mascotStart + progressDist; 
+    const mascotEnd = mascotStart + mascotHeight;
+
+    const transitionMid = heroEnd + (transitionHeight / 2);
+
+    // 11 Keyframes specifically designed to execute sequential physical timeline hooks
     const scrollMap = [
         0,              // 0: Page top
         heroEnd * 0.5,  // 1: Mid-Hero
-        heroEnd,        // 2: Hero exit / Mascot start
-        s1End,          // 3: Scene 1 sit end
-        s2Start,        // 4: Scene 2 sit start
-        s2End,          // 5: Scene 2 sit end
-        s3Start,        // 6: Scene 3 sit start
-        exitStart,      // 7: Scene 3 sit end / begin exit
-        mascotEnd       // 8: Fully gone
+        heroEnd,        // 2: Hero exit / Transition start
+        transitionMid,  // 3: Exact middle of Transition
+        mascotStart,    // 4: Transition end / Mascot start
+        s1End,          // 5: Scene 1 sit end
+        s2Start,        // 6: Scene 2 sit start
+        s2End,          // 7: Scene 2 sit end
+        s3Start,        // 8: Scene 3 sit start
+        unpinStart,     // 9: Background formally unpins
+        mascotEnd       // 10: Natural 1:1 scroll upwards complete
     ];
 
     // ═══════════════════════════════════════
     // DESKTOP PATH (untouched from web view)
     // ═══════════════════════════════════════
     const scaleDesktop = useTransform(scrollY, scrollMap,
-        [0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80]
+        [0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80, 0.80]
     );
     const xDesktop = useTransform(scrollY, scrollMap, [
-        "23.5vw", // Hero idle
-        "23.5vw", // Mid-Hero
-        "23.5vw", // Hero exit
-        "15vw",   // S1 sit
-        "-30vw",  // S2 sit (left side)
+        "20.5vw", // Hero idle
+        "20.5vw", // Mid-Hero
+        "20.5vw", // Hero exit
+        "20.5vw", // Transition mid
+        "20.5vw", // Mascot Start
+        "20.5vw", // S1 sit
+        "-30vw",  // S2 sit 
         "-30vw",  // S2 end
-        "23.5vw", // S3 sit (right side)
-        "23.5vw", // S3 end
-        "23.5vw"  // Exit
+        "20.5vw", // S3 sit 
+        "20.5vw", // Maintians position
+        "20.5vw"  // Locked X during out
     ]);
     const yDesktop = useTransform(scrollY, scrollMap, [
-        "15vh", "15vh", "15vh",      // Hero - Lowered
+        "15vh", "15vh", "15vh",      // Hero
+        "15vh",                      // Transition Mid
+        "15vh",                      // Mascot start
         "15vh",                      // S1
-        "15vh", "15vh",              // S2 - Now matching S1 exactly for horizontal glide
-        "15vh", "15vh",              // S3
-        "100vh"                      // Exit
+        "15vh", "15vh",              // S2
+        "15vh",                      // S3 sit start
+        "15vh",                      // Mascot unpins
+        "-85vh"                      // Scrolls out (15vh - 100vh)
     ]);
-    const opacityDesktop = useTransform(scrollY, [0, exitStart, mascotEnd], [1, 1, 0]);
+    const opacityDesktop = useTransform(scrollY, [0, unpinStart, mascotEnd], [1, 1, 1]);
 
     // ═══════════════════════════════════════════════════════════════════
     // MOBILE PATH — Premium Vertical Flow
-    // Hero: perfectly centered in the new "Stage".
-    // Mascot Journey: Top/Bottom Hemisphere Exchange to avoid text.
+    // Hero: centered.
+    // Transition: Cinematic Shrink-Dodge (Bottle scales down 50% and drops to bottom border to clear massive text)
+    // Mascot Journey: Aggressive Hemisphere Jumping (Top vs Bottom) to totally eliminate text overlap.
     // ═══════════════════════════════════════════════════════════════════
-    const scaleMobile = useTransform(scrollY, scrollMap,
-        [0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85]
-    );
+    const scaleMobile = useTransform(scrollY, scrollMap, [
+        0.80, 0.80, 0.80, // Hero
+        0.45,             // Transition MID: Maximum shrink depth
+        0.95,             // Mascot Start: Fully restored scale immediately at scene entry
+        0.95,             // S1
+        0.95, 0.95,       // S2
+        0.95,             // S3
+        0.95,             // Mascot unpin
+        0.95              // Exit
+    ]);
     const xMobile = useTransform(scrollY, scrollMap, [
-        "0vw",    // Hero — centered
-        "0vw",    // Mid-Hero
-        "0vw",    // Hero exit
-        "0vw",    // S1 — Tropics
-        "0vw",    // S2 — Chill Zone
-        "0vw",    // S2 end
-        "0vw",    // S3 — Party
-        "0vw",    // S3 end
-        "0vw"     // Exit
+        "0vw", "0vw", "0vw",        // Hero
+        "0vw",                      // Transition Mid
+        "0vw",                      // Mascot Start
+        "0vw",                      // S1
+        "0vw", "0vw",               // S2
+        "0vw",                      // S3
+        "0vw",                      // Unpin
+        "0vw"                       // Exit
     ]);
     const yMobile = useTransform(scrollY, scrollMap, [
-        "10vh", "10vh", "10vh",     // User specifically requested 10vh fine-tuning
-        "25vh",                     // S1
-        "-10vh", "-10vh",           // S2
-        "25vh", "25vh",             // S3
-        "-120vh"                    // Exit
+        "10vh", "10vh", "10vh",     // Hero
+        "30vh",                     // Transition MID (Deepest dive to completely clear massive text)
+        "28vh",                     // Mascot Start (Gracefully floats up slightly to exactly S1 baseline)
+        "28vh",                     // S1
+        "-22vh", "-22vh",           // S2
+        "28vh",                     // S3
+        "28vh",                     // Mascot unpins
+        "-72vh"                     // Natural scroll: (28vh - 100vh)
     ]);
-    const opacityMobile = useTransform(scrollY, [0, exitStart, mascotEnd], [1, 1, 0]);
+    const opacityMobile = useTransform(scrollY, [0, unpinStart, mascotEnd], [1, 1, 1]);
+
+    // ═══════════════════════════════════════════════════════════════════
+    // TEXTURE HOT-SWAP LOGIC FOR MASCOT SCENES
+    // ═══════════════════════════════════════════════════════════════════
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        if (!mounted || vh === 0) return;
+
+        // Calculate explicit midpoints halfway through the bottle's horizontal travel
+        const s1ToS2Midpoint = (s1End + s2Start) / 2;
+        const s2ToS3Midpoint = (s2End + s3Start) / 2;
+        
+        if (latest < mascotStart) {
+            // Above MascotJourney -> Respect user's active context flavor explicitly
+            if (renderFlavor.id !== flavorData.id) setRenderFlavor(flavorData);
+        } else if (latest < s1ToS2Midpoint) {
+            // S1: Morning -> Mango (Swaps halfway traveling out of S1)
+            if (renderFlavor.id !== "mango") setRenderFlavor(FLAVORS.mango);
+        } else if (latest < s2ToS3Midpoint) {
+            // S2: Afternoon -> Watermelon (Swaps halfway traveling out of S2)
+            if (renderFlavor.id !== "watermelon") setRenderFlavor(FLAVORS.watermelon);
+        } else {
+            // S3: Evening -> Basil
+            if (renderFlavor.id !== "basil") setRenderFlavor(FLAVORS.basil);
+        }
+    });
 
     if (!mounted) return null;
 
@@ -121,9 +178,9 @@ export default function GlobalCanOverlay() {
                         <Scene 
                             scrollY={scrollY} 
                             vh={vh} 
-                            labelPath={flavorData.label}
-                            liquidColor={flavorData.liquid}
-                            capColor={flavorData.cap}
+                            labelPath={renderFlavor.label}
+                            liquidColor={renderFlavor.liquid}
+                            capColor={renderFlavor.cap}
                         />
                     </div>
                 </motion.div>
@@ -139,9 +196,9 @@ export default function GlobalCanOverlay() {
                         <Scene 
                             scrollY={scrollY} 
                             vh={vh} 
-                            labelPath={flavorData.label}
-                            liquidColor={flavorData.liquid}
-                            capColor={flavorData.cap}
+                            labelPath={renderFlavor.label}
+                            liquidColor={renderFlavor.liquid}
+                            capColor={renderFlavor.cap}
                         />
                     </div>
                 </motion.div>

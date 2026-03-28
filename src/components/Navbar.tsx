@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const DrinkMenuIcon = ({ isOpen }: { isOpen: boolean }) => (
     <div className="relative w-10 h-10 flex items-center justify-center bg-accent-premium/5 rounded-full border border-black/10 overflow-hidden group hover:bg-black/5 transition-colors">
@@ -47,27 +48,27 @@ export default function Navbar() {
     const borderRadius = useTransform(scrollY, [0, 100], ["0px", "9999px"]);
 
     const navLinks = [
-        { name: "HOME", href: "/" },
-        { name: "ABOUT", href: "/about" },
-        { name: "FLAVOURS", href: "/#flavours" },
+        { name: "Home", href: "/" },
+        { name: "About Us", href: "/about" },
+        { name: "Flavours", href: "/#flavours" },
     ];
 
-    const ctaClass = "bg-accent-premium text-primary-white rounded-full font-heading font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all group relative overflow-hidden";
+    const ctaClass = "bg-accent-premium text-primary-white rounded-full font-heading font-black tracking-widest text-sm hover:scale-105 active:scale-95 transition-all group relative overflow-hidden";
 
     return (
         <motion.nav
             style={{ width, top, borderRadius }}
-            className="fixed left-1/2 -translate-x-1/2 z-[100] bg-primary-white/80 backdrop-blur-2xl border border-gray-200 shadow-sm flex items-center justify-between px-6 lg:px-12 h-20 origin-top"
+            className="absolute left-1/2 -translate-x-1/2 z-[100] bg-primary-white/80 backdrop-blur-2xl border border-gray-200 shadow-sm flex items-center justify-between px-6 lg:px-12 h-20 origin-top"
         >
             {/* Logo */}
             <a href="#" className="flex-shrink-0 relative z-[110] outline-none">
                 <Image
                     src="/assets/client_logo.png"
                     alt="CocoFuse"
-                    width={150}
-                    height={48}
+                    width={180}
+                    height={64}
                     priority
-                    className="h-10 md:h-12 w-auto object-contain transition-transform hover:scale-105"
+                    className="h-14 md:h-16 w-auto object-contain transition-transform hover:scale-105"
                 />
             </a>
 
@@ -77,7 +78,7 @@ export default function Navbar() {
                     <a
                         key={link.name}
                         href={link.href}
-                        className="text-sm font-heading font-black tracking-widest text-accent-premium/60 hover:text-accent-premium uppercase transition-all hover:-translate-y-0.5"
+                        className="text-sm font-heading font-black tracking-widest text-accent-premium/60 hover:text-accent-premium transition-all hover:-translate-y-0.5"
                     >
                         {link.name}
                     </a>
@@ -86,10 +87,10 @@ export default function Navbar() {
 
             {/* CTA & Mobile Toggle */}
             <div className="flex items-center gap-4">
-                <button className={`hidden md:block px-6 py-3 shadow-md hover:shadow-xl ${ctaClass}`}>
-                    <span className="relative z-10">Get Hydrated</span>
+                <Link href="/#flavours" className={`hidden md:block px-6 py-3 shadow-md hover:shadow-xl ${ctaClass}`}>
+                    <span className="relative z-10">Buy Now</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </button>
+                </Link>
 
                 <button
                     onClick={() => setIsOpen(!isOpen)}
@@ -123,7 +124,7 @@ export default function Navbar() {
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: i * 0.1 }}
-                                    className="text-2xl font-heading font-black tracking-widest text-accent-premium hover:text-primary-blue uppercase transition-colors"
+                                    className="text-2xl font-heading font-black tracking-widest text-accent-premium hover:text-primary-blue transition-colors"
                                 >
                                     {link.name}
                                 </motion.a>
@@ -133,10 +134,10 @@ export default function Navbar() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => { setIsOpen(false); window.location.href = '/#flavours'; }}
                             className={`mt-4 w-full py-4 shadow-xl ${ctaClass}`}
                         >
-                            <span className="relative z-10">Get Hydrated</span>
+                            <span className="relative z-10">Buy Now</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </motion.button>
                     </motion.div>

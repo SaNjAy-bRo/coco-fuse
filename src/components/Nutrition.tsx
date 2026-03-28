@@ -20,7 +20,7 @@ export default function Nutrition() {
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className={`text-4xl md:text-6xl font-heading font-black uppercase mb-6 ${flavorData.accent}`}
+                            className={`text-4xl md:text-6xl font-heading font-black italic uppercase mb-6 ${flavorData.accent}`}
                         >
                             The Raw Math
                         </motion.h2>
@@ -35,7 +35,7 @@ export default function Nutrition() {
                         </motion.p>
 
                         <div className="bg-black/50 p-8 rounded-3xl border border-white/5 shadow-2xl">
-                            <h3 className="text-xl font-heading font-bold text-primary-blue mb-4 uppercase">Ingredients:</h3>
+                            <h3 className="text-xl font-heading font-bold italic text-primary-blue mb-4 uppercase">Ingredients:</h3>
                             <p className="text-sm font-body text-gray-400">
                                 {flavorData.ingredients}
                             </p>
@@ -50,7 +50,7 @@ export default function Nutrition() {
                             className="bg-black/50 rounded-3xl overflow-hidden border border-white/5"
                         >
                             <div className="bg-white/5 p-6 border-b border-white/10">
-                                <h3 className="text-2xl font-heading font-black text-white uppercase tracking-wider">Nutritional Information</h3>
+                                <h3 className="text-2xl font-heading font-black italic text-white uppercase tracking-wider">Nutritional Information</h3>
                                 <p className="text-gray-400 font-body text-sm mt-1">Approx. per 100 ml for {flavorData.name}</p>
                             </div>
 

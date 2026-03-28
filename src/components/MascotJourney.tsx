@@ -31,7 +31,7 @@ export default function MascotJourney() {
     const scene2Opacity = useTransform(scrollYProgress, [0.3, 0.4, 0.6, 0.7], [0, 1, 1, 0]);
     const scene3Opacity = useTransform(scrollYProgress, [0.65, 0.75, 1], [0, 1, 1]);
 
-    const sharedTitleClass = "text-4xl md:text-8xl lg:text-9xl font-heading font-black uppercase tracking-tighter leading-[0.9] mb-3 md:mb-6";
+    const sharedTitleClass = "text-4xl md:text-8xl lg:text-9xl font-heading font-black italic uppercase tracking-tighter leading-[0.9] mb-3 md:mb-6";
     const sharedDescClass = "text-base md:text-2xl lg:text-3xl font-body font-bold";
 
     const scenes = [
@@ -59,7 +59,7 @@ export default function MascotJourney() {
     ];
 
     return (
-        <section ref={containerRef} className="relative w-full h-[250vh] lg:h-[400vh]">
+        <section ref={containerRef} className="relative w-full h-[400vh]">
             <motion.div
                 className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center px-6 py-4 md:p-8"
                 style={{ backgroundColor: bgColor }}

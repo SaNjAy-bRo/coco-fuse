@@ -80,7 +80,7 @@ export default function USPSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-4xl md:text-6xl font-heading font-black tracking-tighter text-accent-premium uppercase"
+                        className="text-4xl md:text-6xl font-heading font-black italic tracking-tighter text-accent-premium uppercase"
                     >
                         Why <span className="text-primary-blue italic">Coco</span><span className="text-primary-green italic">Fuse</span>?
                     </motion.h2>
@@ -105,7 +105,7 @@ export default function USPSection() {
                                 <div className={`w-16 h-16 rounded-2xl ${usp.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                                     <Icon className={`w-8 h-8 ${usp.color}`} strokeWidth={2.5} />
                                 </div>
-                                <h3 className="text-2xl font-heading font-black text-accent-premium uppercase tracking-wide mb-3">
+                                <h3 className="text-2xl font-heading font-black italic text-accent-premium uppercase tracking-wide mb-3">
                                     {usp.title}
                                 </h3>
                                 <p className="text-gray-600 font-body text-lg leading-relaxed">

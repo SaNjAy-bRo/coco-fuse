@@ -86,7 +86,7 @@ export default function StorySection() {
                         <span className="inline-block px-5 py-2 md:px-6 md:py-2 bg-primary-green/20 border border-primary-green/30 text-primary-green text-[10px] md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-6 md:mb-8 shadow-[0_0_20px_rgba(57,255,20,0.1)]">
                             The Origin
                         </span>
-                        <h2 className="text-5xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black tracking-tighter mb-4 md:mb-10 leading-[0.9] md:leading-[0.85] uppercase text-white drop-shadow-2xl">
+                        <h2 className="text-5xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black italic tracking-tighter mb-4 md:mb-10 leading-[0.9] md:leading-[0.85] uppercase text-white drop-shadow-2xl">
                             Born on a <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon italic pr-2">Mountain.</span>
                         </h2>
@@ -110,7 +110,7 @@ export default function StorySection() {
                         <span className="inline-block px-5 py-2 md:px-6 md:py-2 bg-primary-blue/20 border border-primary-blue/30 text-primary-blue text-[10px] md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-6 md:mb-8 shadow-[0_0_20px_rgba(0,198,255,0.1)]">
                             The Effect
                         </span>
-                        <h2 className="text-5xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black tracking-tighter mb-4 md:mb-10 leading-[0.9] md:leading-[0.85] uppercase text-white drop-shadow-2xl">
+                        <h2 className="text-5xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black italic tracking-tighter mb-4 md:mb-10 leading-[0.9] md:leading-[0.85] uppercase text-white drop-shadow-2xl">
                             The <br />
                             <span className="text-primary-blue italic pr-2">Impact.</span>
                         </h2>
