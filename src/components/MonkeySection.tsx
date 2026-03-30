@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
@@ -20,7 +21,7 @@ const monkeys = [
     glowColor: "bg-[#FF3366]/40", // Pink-red glow base
   },
   {
-    id: "chilli",
+    id: "basil",
     bg: "/assets/background_chilli.jpeg",
     monkey: "/chilli/chilli_monkey.png",
     alt: "Chilli Monkey",
@@ -57,20 +58,21 @@ function MonkeyCard({ item, isMobile, index }: { item: any; isMobile: boolean; i
   const isInView = useInView(ref, { amount: 0.3, once: false });
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: isMobile ? 0 : index * 0.1 }}
-      className="relative w-full md:w-1/3 aspect-[4/5] group cursor-pointer"
-    >
+    <Link href={`/products/${item.id}`} className="relative z-20 w-full md:w-1/3 aspect-[4/5] group cursor-pointer block">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: isMobile ? 0 : index * 0.1 }}
+        className="w-full h-full"
+      >
       {/* Inner Container for Background - This SHRINKS significantly and hides overflow */}
       <div 
-        className={`absolute inset-0 z-0 rounded-3xl overflow-hidden shadow-2xl transition-all duration-700 ease-out transform-gpu will-change-transform bg-black ${
+        className={`absolute inset-0 z-0 rounded-3xl overflow-hidden border-4 border-[#111111] transition-all duration-700 ease-out transform-gpu will-change-transform bg-black ${
           isMobile 
-            ? isInView ? "scale-90" : "scale-100" 
-            : "scale-100 group-hover:scale-90"
+            ? isInView ? "scale-90 shadow-[6px_6px_0px_#111111]" : "scale-100 shadow-[10px_10px_0px_#111111]" 
+            : "scale-100 shadow-[10px_10px_0px_#111111] group-hover:scale-90 group-hover:shadow-[6px_6px_0px_#111111]"
         }`}
       >
         {/* Background Image */}
@@ -125,6 +127,7 @@ function MonkeyCard({ item, isMobile, index }: { item: any; isMobile: boolean; i
           <Image src={item.monkey} alt={item.alt} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-contain" />
         </div>
       </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }

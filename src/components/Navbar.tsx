@@ -58,7 +58,7 @@ export default function Navbar() {
     return (
         <motion.nav
             style={{ width, top, borderRadius }}
-            className="absolute left-1/2 -translate-x-1/2 z-[100] bg-primary-white/80 backdrop-blur-2xl border border-gray-200 shadow-sm flex items-center justify-between px-6 lg:px-12 h-20 origin-top"
+            className="absolute left-1/2 -translate-x-1/2 z-[100] bg-white border-b-4 border-x-4 border-[#111111] shadow-[4px_4px_0px_rgba(17,17,17,1)] flex items-center justify-between px-6 lg:px-12 h-20 origin-top overflow-visible transition-colors"
         >
             {/* Logo */}
             <a href="#" className="flex-shrink-0 relative z-[110] outline-none">
@@ -78,7 +78,7 @@ export default function Navbar() {
                     <a
                         key={link.name}
                         href={link.href}
-                        className="text-sm font-heading font-black tracking-widest text-accent-premium/60 hover:text-accent-premium transition-all hover:-translate-y-0.5"
+                        className="text-sm font-heading font-black italic tracking-widest text-[#111111] uppercase hover:text-accent-watermelon transition-all hover:-translate-y-0.5 px-2 py-1"
                     >
                         {link.name}
                     </a>
@@ -87,9 +87,8 @@ export default function Navbar() {
 
             {/* CTA & Mobile Toggle */}
             <div className="flex items-center gap-4">
-                <Link href="/#flavours" className={`hidden md:block px-6 py-3 shadow-md hover:shadow-xl ${ctaClass}`}>
+                <Link href="/#flavours" className="hidden md:block px-6 py-2.5 bg-[#39FF14] text-[#111111] rounded-full font-heading font-black uppercase italic tracking-widest text-xs lg:text-sm border-2 border-[#111111] shadow-[2px_2px_0px_#111111] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#111111] transition-all">
                     <span className="relative z-10">Buy Now</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
 
                 <button
@@ -109,7 +108,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -20, scale: 0.95 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute top-[110%] left-1/2 -translate-x-1/2 w-[95vw] bg-primary-white/95 backdrop-blur-3xl border border-gray-200 rounded-3xl p-6 shadow-2xl md:hidden overflow-hidden flex flex-col gap-4"
+                        className="absolute top-[110%] left-1/2 -translate-x-1/2 w-[95vw] bg-white border-4 border-[#111111] rounded-3xl p-6 shadow-[8px_8px_0px_#111111] md:hidden overflow-hidden flex flex-col gap-4 z-[200]"
                     >
                         {navLinks.map((link, i) => {
                             // On mobile, we want "THE STORY" to go to the full /#story section
@@ -124,7 +123,7 @@ export default function Navbar() {
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: i * 0.1 }}
-                                    className="text-2xl font-heading font-black tracking-widest text-accent-premium hover:text-primary-blue transition-colors"
+                                    className="text-2xl font-heading font-black italic uppercase tracking-widest text-[#111111] hover:text-accent-watermelon transition-colors border-b-2 border-black/5 pb-2 inline-block pt-1"
                                 >
                                     {link.name}
                                 </motion.a>
@@ -135,10 +134,9 @@ export default function Navbar() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
                             onClick={() => { setIsOpen(false); window.location.href = '/#flavours'; }}
-                            className={`mt-4 w-full py-4 shadow-xl ${ctaClass}`}
+                            className="mt-6 w-full py-4 bg-[#39FF14] text-[#111111] rounded-full font-heading font-black uppercase italic tracking-widest border-4 border-[#111111] shadow-[4px_4px_0px_#111111] active:translate-y-1 active:shadow-[0px_0px_0px_#111111] transition-all"
                         >
                             <span className="relative z-10">Buy Now</span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-accent-mango to-accent-watermelon opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </motion.button>
                     </motion.div>
                 )}

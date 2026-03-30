@@ -11,13 +11,15 @@ export default function Scene({
     vh, 
     labelPath, 
     liquidColor, 
-    capColor 
+    capColor,
+    isStaticMobile
 }: { 
     scrollY?: MotionValue<number>, 
     vh?: number,
     labelPath?: string,
     liquidColor?: string,
-    capColor?: string
+    capColor?: string,
+    isStaticMobile?: boolean
 }) {
     return (
         <div className="w-full h-full pointer-events-none">
@@ -32,20 +34,29 @@ export default function Scene({
                 <spotLight position={[10, -10, 10]} intensity={1} angle={0.3} penumbra={1} color="#4ade80" />
 
                 <Suspense fallback={null}>
-                    <Float
-                        speed={2}
-                        rotationIntensity={0} // Locked rotation to fulfill the "should not change angle" request
-                        floatIntensity={0.5}
-                        floatingRange={[-0.05, 0.05]} // Reduced floating bounce
-                    >
+                    {isStaticMobile ? (
                         <Bottle 
-                            scrollY={scrollY} 
                             vh={vh} 
                             labelPath={labelPath} 
                             liquidColor={liquidColor} 
                             capColor={capColor} 
                         />
-                    </Float>
+                    ) : (
+                        <Float
+                            speed={2}
+                            rotationIntensity={0}
+                            floatIntensity={0.5}
+                            floatingRange={[-0.05, 0.05]}
+                        >
+                            <Bottle 
+                                scrollY={scrollY} 
+                                vh={vh} 
+                                labelPath={labelPath} 
+                                liquidColor={liquidColor} 
+                                capColor={capColor} 
+                            />
+                        </Float>
+                    )}
 
                     <Environment preset="city" />
                     <ContactShadows position={[0, -3, 0]} opacity={0.6} scale={15} blur={2.5} far={4} color="#f97316" />

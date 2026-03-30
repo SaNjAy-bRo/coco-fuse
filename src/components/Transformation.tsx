@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export default function Transformation() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -13,14 +13,28 @@ export default function Transformation() {
     // Use raw scrollYProgress — avoids JS spring overhead per frame
     const smoothProgress = scrollYProgress;
 
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
     // OPTIMIZATION: Cross-fade instead of Filter
     // We'll have two layers. One grayscale, one color.
     const colorOpacity = useTransform(smoothProgress, [0, 0.4], [0, 1]);
     const grayscaleOpacity = useTransform(smoothProgress, [0, 0.4], [1, 0]);
     
-    const bgScale = useTransform(smoothProgress, [0, 0.6], [1.1, 1]);
+    const bgScaleDesktop = useTransform(smoothProgress, [0, 0.6], [1.1, 1]);
+    const bgScaleMobile = useTransform(smoothProgress, [0, 0.6], [1.05, 1]);
+    const bgScale = isMobile ? bgScaleMobile : bgScaleDesktop;
+
     const textOpacity = useTransform(smoothProgress, [0.4, 0.6], [0, 1]);
-    const textY = useTransform(smoothProgress, [0.4, 0.6], [40, 0]);
+
+    const textYDesktop = useTransform(smoothProgress, [0.4, 0.6], [40, 0]);
+    const textYMobile = useTransform(smoothProgress, [0.4, 0.6], [10, 0]);
+    const textY = isMobile ? textYMobile : textYDesktop;
     
     const overlayOpacity = useTransform(smoothProgress, [0.3, 0.7], [0.4, 0]);
 
@@ -29,7 +43,7 @@ export default function Transformation() {
     return (
         <section 
             ref={containerRef} 
-            className="relative h-[250vh] bg-accent-premium border-y border-white/5"
+            className="relative h-[150vh] md:h-[250vh] bg-accent-premium border-y border-white/5"
             style={{ willChange: "transform" }}
         >
             <div className="sticky top-0 h-[100dvh] w-full flex items-center justify-center overflow-hidden">
@@ -49,7 +63,8 @@ export default function Transformation() {
                         style={{ 
                             opacity: grayscaleOpacity,
                             backgroundImage: `url(${bgUrl})`, 
-                            filter: "grayscale(100%)" 
+                            filter: "grayscale(100%)",
+                            willChange: "transform, opacity"
                         }}
                         className="absolute inset-0 bg-cover bg-center grayscale"
                     />
@@ -67,7 +82,7 @@ export default function Transformation() {
                 <div className="container mx-auto px-6 relative z-30 text-center">
                     <div className="max-w-5xl mx-auto">
                         <motion.div
-                            style={{ opacity: textOpacity, y: textY }}
+                            style={{ opacity: textOpacity, y: textY, willChange: "transform, opacity" }}
                             className="flex flex-col items-center"
                         >
                             <span className="text-primary-green font-heading font-black uppercase tracking-widest text-lg md:text-2xl mb-6">

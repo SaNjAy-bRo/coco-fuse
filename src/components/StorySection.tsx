@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 
 /**
@@ -23,7 +23,17 @@ export default function StorySection() {
 
     // PARALLAX BACKGROUND LOGIC
     // We over-fill the background (h-[120vh]) so that y-parallax never reveals the black floor.
-    const bgY = useTransform(progress, [0, 1], ["5%", "-5%"]);
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    const bgYDesktop = useTransform(progress, [0, 1], ["5%", "-5%"]);
+    const bgYMobile = useTransform(progress, [0, 1], ["2%", "-2%"]);
+    const bgY = isMobile ? bgYMobile : bgYDesktop;
     const bgScale = useTransform(progress, [0, 1], [1.1, 1.25]);
 
     // TRANSITION TO WHITE (For seamless blend with FoundersSection)
@@ -32,24 +42,28 @@ export default function StorySection() {
 
     // TEXT STAGE 1: The Mountain (Appears immediately)
     const opacity1 = useTransform(progress, [0, 0.05, 0.4, 0.5], [0, 1, 1, 0]);
-    const y1 = useTransform(progress, [0, 0.05, 0.4, 0.5], [50, 0, 0, -50]);
+    const y1Desktop = useTransform(progress, [0, 0.05, 0.4, 0.5], [50, 0, 0, -50]);
+    const y1Mobile = useTransform(progress, [0, 0.05, 0.4, 0.5], [20, 0, 0, -20]);
+    const y1 = isMobile ? y1Mobile : y1Desktop;
 
     // TEXT STAGE 2: The Impact (Visible from 55% to 90%)
     const opacity2 = useTransform(progress, [0.55, 0.65, 0.88, 0.95], [0, 1, 1, 0]);
-    const y2 = useTransform(progress, [0.55, 0.65, 0.88, 0.95], [50, 0, 0, -50]);
+    const y2Desktop = useTransform(progress, [0.55, 0.65, 0.88, 0.95], [50, 0, 0, -50]);
+    const y2Mobile = useTransform(progress, [0.55, 0.65, 0.88, 0.95], [20, 0, 0, -20]);
+    const y2 = isMobile ? y2Mobile : y2Desktop;
 
     return (
         <section 
             id="story" 
             ref={sectionRef} 
-            className="relative w-full h-[450vh] lg:h-[300vh] bg-black overflow-clip"
+            className="relative w-full h-[250vh] md:h-[300vh] bg-black overflow-clip"
         >
             {/* STICKY VIEWPORT CONTAINER */}
             <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center">
                 
                 {/* BACKGROUND IMAGE LAYER (ULTRA-ROBUST COVERAGE) */}
                 <motion.div
-                    style={{ y: bgY, scale: bgScale }}
+                    style={{ y: bgY, scale: bgScale, willChange: "transform" }}
                     className="absolute -top-[10vh] left-0 w-full h-[120vh] z-0"
                 >
                     <Image
@@ -70,7 +84,7 @@ export default function StorySection() {
                 {/* DYNAMIC BACKGROUND COLOR FADE (FOR SMOOTH TRANSITION) */}
                 <motion.div 
                     style={{ opacity: bgOverlayOpacity }}
-                    className="absolute inset-0 z-40 bg-white pointer-events-none"
+                    className="absolute inset-0 z-40 bg-accent-premium pointer-events-none"
                     aria-hidden="true"
                 />
 
@@ -80,7 +94,7 @@ export default function StorySection() {
                     {/* STAGE 1: THE ORIGIN */}
                     <motion.div
                         id="story-origin"
-                        style={{ opacity: opacity1, y: y1 }}
+                        style={{ opacity: opacity1, y: y1, willChange: "transform, opacity" }}
                         className="absolute flex flex-col items-center max-w-6xl w-full px-4 md:px-0"
                     >
                         <span className="inline-block px-5 py-2 md:px-6 md:py-2 bg-primary-green/20 border border-primary-green/30 text-primary-green text-[10px] md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-6 md:mb-8 shadow-[0_0_20px_rgba(57,255,20,0.1)]">
@@ -104,7 +118,7 @@ export default function StorySection() {
 
                     {/* STAGE 2: THE IMPACT */}
                     <motion.div
-                        style={{ opacity: opacity2, y: y2 }}
+                        style={{ opacity: opacity2, y: y2, willChange: "transform, opacity" }}
                         className="absolute flex flex-col items-center max-w-6xl w-full px-4 md:px-0"
                     >
                         <span className="inline-block px-5 py-2 md:px-6 md:py-2 bg-primary-blue/20 border border-primary-blue/30 text-primary-blue text-[10px] md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-6 md:mb-8 shadow-[0_0_20px_rgba(0,198,255,0.1)]">

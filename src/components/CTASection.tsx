@@ -5,98 +5,78 @@ import { ArrowRight, Zap } from "lucide-react";
 
 export default function CTASection() {
     return (
-        <section className="py-24 md:py-32 bg-primary-white overflow-hidden relative">
-            {/* Background Accent Shapes */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-primary-blue/5 via-transparent to-accent-watermelon/5 rotate-12 blur-3xl opacity-50" />
-                <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-primary-green/10 rounded-full blur-[100px]" />
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-accent-mango/10 rounded-full blur-[100px]" />
-            </div>
+        <section className="py-24 md:py-32 bg-[#F7F7F7] overflow-hidden relative border-t-4 border-[#111111]">
+            <div className="container mx-auto px-4 md:px-6 relative z-10 w-full max-w-6xl">
+                <div className="bg-[#111111] rounded-[3rem] border-4 border-[#111111] shadow-[16px_16px_0px_#FFD166] p-8 md:p-16 lg:p-24 relative overflow-hidden group w-full">
+                    
+                    {/* Subtle Neo-Pop Element */}
+                    <div className="absolute top-4 right-4 md:top-8 md:right-8 bg-[#FFD166] w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] md:border-4 border-[#111111] flex items-center justify-center shadow-[3px_3px_0px_#111111] md:shadow-[4px_4px_0px_#111111] z-0">
+                        <Zap className="w-6 h-6 md:w-8 md:h-8 text-[#111111]" fill="currentColor" strokeWidth={0} />
+                    </div>
 
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="max-w-5xl mx-auto">
-                    <div className="bg-accent-premium rounded-[3rem] p-8 md:p-16 lg:p-24 shadow-2xl relative overflow-hidden group">
-                        {/* Animated Mesh Gradient Background inside Card */}
-                        <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-1000">
-                        </div>
+                    <div className="relative z-10 flex flex-col items-center text-center">
+                        <motion.h2
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, ease: "easeOut" }}
+                            className="text-[11vw] sm:text-[4.5rem] lg:text-[6.5rem] font-heading font-black italic text-[#F7F7F7] uppercase tracking-tighter leading-[0.95] md:leading-[0.8] mb-8 relative z-20 drop-shadow-sm"
+                        >
+                            LEVEL UP YOUR <br className="hidden md:block" />
+                            DAILY <span className="text-[#3AB6FD] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF] block md:inline-block mt-1 md:mt-0">HYDRATION</span>
+                        </motion.h2>
 
-                        <div className="relative z-10 flex flex-col items-center text-center">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 border border-white/10"
+                        {/* Cleaned up Description */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2, duration: 0.5 }}
+                            className="mt-2 mb-10 w-full max-w-3xl bg-transparent border-t-2 border-b-2 border-white/20 py-8 px-4"
+                        >
+                            <p className="text-lg md:text-xl font-heading font-bold italic uppercase tracking-wider text-[#EAEAEA] leading-relaxed text-center">
+                                Stop settling for sugary junk. Switch to the fun, clean coconut-based fruit-flavored hydration that actually fuels your life.
+                                <br/><span className="mt-4 block text-[#39FF14] font-black text-xl md:text-2xl drop-shadow-sm">One bottle is all it takes to feel the difference.</span>
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.5 }}
+                            className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto"
+                        >
+                            <motion.button
+                                whileHover={{ scale: 1.05, y: -3, rotate: -2 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="bg-[#FF9F1C] text-[#111111] border-4 border-transparent shadow-[6px_6px_0px_#FFD166] hover:shadow-[2px_2px_0px_#FFD166] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider flex items-center justify-center gap-3 transition-all"
                             >
-                                <Zap className="w-8 h-8 text-accent-mango" fill="currentColor" />
-                            </motion.div>
+                                Get Your Fuse
+                                <ArrowRight strokeWidth={4} className="w-6 h-6" />
+                            </motion.button>
 
-                            <motion.h2
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                                className="text-4xl md:text-6xl lg:text-7xl font-heading font-black text-white uppercase tracking-tighter leading-none mb-8"
+                            <motion.button
+                                whileHover={{ scale: 1.05, y: -3, backgroundColor: "#222" }}
+                                whileTap={{ scale: 0.95 }}
+                                className="bg-[#111111] text-[#F7F7F7] border-4 border-[#3AB6FD] shadow-[6px_6px_0px_#3AB6FD] hover:shadow-[2px_2px_0px_#3AB6FD] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider transition-all"
                             >
-                                Level Up Your <br />
-                                <span className="text-accent-mango italic">Daily</span> <span className="text-primary-blue italic">Hydration</span>
-                            </motion.h2>
+                                View Flavours
+                            </motion.button>
+                        </motion.div>
 
-                            <motion.p
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.3, duration: 0.8 }}
-                                className="text-lg md:text-xl lg:text-2xl font-body text-gray-300 max-w-2xl mb-12 leading-relaxed"
-                            >
-                                Stop settling for sugary junk. Switch to mountain-born, coconut-powered hydration that actually fuels your life. One bottle is all it takes to feel the difference.
-                            </motion.p>
-
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.5 }}
-                                className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto"
-                            >
-                                <motion.button
-                                    whileHover={{ scale: 1.05, y: -5 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="bg-accent-mango text-accent-premium font-heading font-black px-12 py-5 rounded-full text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(255,209,102,0.3)] transition-all"
-                                >
-                                    Get Your Fuse
-                                    <ArrowRight strokeWidth={3} className="w-5 h-5" />
-                                </motion.button>
-
-                                <motion.button
-                                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="border-2 border-white/20 text-white font-heading font-bold px-12 py-5 rounded-full text-lg uppercase tracking-wider transition-all"
-                                >
-                                    View Flavours
-                                </motion.button>
-                            </motion.div>
-
-                            {/* Trust Badge */}
-                            <motion.div 
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 1 }}
-                                className="mt-12 pt-12 border-t border-white/10 w-full flex flex-wrap justify-center gap-8 md:gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500"
-                            >
-                                <span className="text-white font-heading font-black italic tracking-widest text-sm uppercase">0% Added Sugar</span>
-                                <span className="text-white font-heading font-black italic tracking-widest text-sm uppercase">100% Natural</span>
-                                <span className="text-white font-heading font-black italic tracking-widest text-sm uppercase">Peak Focus</span>
-                            </motion.div>
-                        </div>
-
-                        {/* Decorative Corner Details */}
-                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                            <div className="w-32 h-32 border-t-4 border-r-4 border-white opacity-20" />
-                        </div>
-                        <div className="absolute bottom-0 left-0 p-4 opacity-10">
-                            <div className="w-32 h-32 border-b-4 border-l-4 border-white opacity-20" />
-                        </div>
+                        {/* Trust Badge */}
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.8 }}
+                            className="mt-14 pt-8 border-t-4 border-[#111111] w-full flex flex-wrap justify-center gap-6 md:gap-12"
+                        >
+                            <span className="bg-[#FFD166] text-[#111111] border-2 border-[#111111] rounded-full px-5 py-2 font-heading font-black italic tracking-widest text-xs md:text-sm uppercase shadow-[3px_3px_0px_#111111]">0% Added Sugar</span>
+                            <span className="bg-[#39FF14] text-[#111111] border-2 border-[#111111] rounded-full px-5 py-2 font-heading font-black italic tracking-widest text-xs md:text-sm uppercase shadow-[3px_3px_0px_#111111]">100% Natural</span>
+                            <span className="bg-[#FF66B2] text-[#111111] border-2 border-[#111111] rounded-full px-5 py-2 font-heading font-black italic tracking-widest text-xs md:text-sm uppercase shadow-[3px_3px_0px_#111111]">Peak Focus</span>
+                        </motion.div>
                     </div>
                 </div>
             </div>

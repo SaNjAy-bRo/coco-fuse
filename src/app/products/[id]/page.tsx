@@ -82,13 +82,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             transition={{ duration: 0.8, delay: 0.1 }}
                             className="w-full flex flex-col items-center lg:items-start text-center lg:text-left order-1 lg:col-start-2 lg:row-start-1 lg:self-end pt-4 lg:pt-0"
                         >
-                            <div className="inline-block px-4 py-2 bg-white/80 backdrop-blur-md rounded-full font-heading font-black uppercase tracking-widest text-[10px] md:text-xs mb-4 md:mb-6 shadow-sm border border-white/60 text-accent-premium">
+                            <div className="inline-block px-4 py-2 bg-white/80 backdrop-blur-md rounded-full font-heading font-black italic uppercase tracking-widest text-[10px] md:text-xs mb-4 md:mb-6 shadow-[2px_2px_0px_#111111] border-2 border-[#111111] text-[#111111]">
                                 100% Core Hydration
                             </div>
                             
-                            <h1 className={`text-6xl sm:text-7xl md:text-8xl lg:text-8xl xl:text-[7rem] font-heading font-black uppercase tracking-tighter leading-[0.85] ${p.textMain} drop-shadow-xl`}>
+                            <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] ${p.textMain} drop-shadow-[2px_2px_0px_#111111] md:drop-shadow-[4px_4px_0px_#111111] break-words hyphens-auto max-w-full w-full`}>
                                 {product.name.split(' ').map((word, i) => (
-                                    <span key={i} className="block">{word}</span>
+                                    <span key={i} className="block w-full overflow-hidden text-clip">{word}</span>
                                 ))}
                             </h1>
                         </motion.div>
@@ -144,7 +144,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             transition={{ duration: 0.8, delay: 0.5 }}
                             className="w-full flex justify-center lg:justify-start order-4 lg:col-start-2 lg:row-start-3 lg:self-start pt-6 lg:pt-0"
                         >
-                            <Link href={`/checkout/configure?flavor=${product.id}`} className={`w-full sm:w-auto px-10 py-5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black uppercase tracking-widest text-lg md:text-xl hover:scale-105 active:scale-95 transition-all shadow-xl relative overflow-hidden group flex items-center justify-center gap-3 border-2 border-white/20`}>
+                            <Link href={`/checkout/configure?flavor=${product.id}`} className={`w-full sm:w-auto px-10 py-5 ${p.btnBg} ${p.btnText} rounded-full font-heading font-black italic uppercase tracking-widest text-lg md:text-xl hover:-translate-y-1 active:scale-95 transition-all shadow-[6px_6px_0px_#111111] hover:shadow-[8px_8px_0px_#111111] relative overflow-hidden group flex items-center justify-center gap-3 border-4 border-[#111111]`}>
                                 <span className="relative z-10 flex items-center gap-2">
                                     Configure & Buy
                                     <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
@@ -160,7 +160,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <section className="py-20 md:py-28 bg-primary-white relative overflow-hidden">
                 <div className="container mx-auto px-6 max-w-7xl">
                     <div className="text-center mb-16 md:mb-20">
-                        <h2 className={`text-4xl md:text-6xl font-heading font-black uppercase tracking-tighter ${p.textMain}`}>
+                        <h2 className={`text-4xl md:text-6xl font-heading font-black italic uppercase tracking-tighter ${p.textMain} drop-shadow-md`}>
                             The Fuse Story
                         </h2>
                         <p className="text-lg md:text-xl text-gray-500 font-body max-w-2xl mx-auto mt-4">
@@ -169,12 +169,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[product.story.morning, product.story.afternoon, product.story.evening].map((story, idx) => (
-                            <div key={idx} className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.04)] hover:-translate-y-2 transition-transform duration-500 flex flex-col items-center text-center group">
-                                <div className={`w-16 h-16 rounded-full ${p.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                            <div key={idx} className="bg-white rounded-[2rem] p-8 border-4 border-[#111111] shadow-[6px_6px_0px_#111111] hover:shadow-[10px_10px_0px_#111111] hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center group">
+                                <div className={`w-16 h-16 rounded-full ${p.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border-2 border-[#111111]`}>
                                     <Sparkles className={`w-8 h-8 ${p.textMain}`} />
                                 </div>
-                                <h3 className="text-2xl font-heading font-black uppercase mb-4 text-accent-premium" dangerouslySetInnerHTML={{ __html: story.title }} />
-                                <p className="text-gray-600 leading-relaxed font-body text-base lg:text-lg border-t border-gray-100 pt-5">
+                                <h3 className="text-2xl font-heading font-black italic uppercase mb-4 text-[#111111]" dangerouslySetInnerHTML={{ __html: story.title }} />
+                                <p className="text-[#111111]/80 font-bold leading-relaxed font-body text-base lg:text-lg border-t-2 border-[#111111]/10 pt-5">
                                     {story.desc}
                                 </p>
                             </div>
@@ -188,7 +188,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-20">
                         <div className="w-full md:w-1/2">
-                            <h2 className={`text-4xl md:text-6xl font-heading font-black uppercase tracking-tighter ${p.textMain} leading-tight mb-6`}>
+                            <h2 className={`text-4xl md:text-6xl font-heading font-black italic uppercase tracking-tighter ${p.textMain} leading-tight mb-6 drop-shadow-md`}>
                                 Perfect<br/>Pairing
                             </h2>
                             <p className="text-lg md:text-xl font-body leading-relaxed text-gray-800 mb-8 bg-white/60 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-white/60 shadow-lg">

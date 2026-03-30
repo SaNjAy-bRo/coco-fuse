@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import StorySection from "@/components/StorySection";
 
 // ——— CONSTANTS & DATA ——————————————————————————————————————
 
@@ -52,11 +53,11 @@ const founders = [
 function LiquidBackground() {
     return (
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            {/* Base Dark/Premium BG */}
-            <div className="absolute inset-0 bg-accent-premium" />
+            {/* Base Light/Premium BG */}
+            <div className="absolute inset-0 bg-[#F7F7F7]" />
             
             {/* Noise Grain Texture */}
-            <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
             {/* Glowing Orbs */}
             <motion.div 
@@ -94,14 +95,14 @@ function LiquidBackground() {
  */
 function RevealTitle({ text, className }: { text: string, className?: string }) {
     return (
-        <h1 className={className}>
+        <h1 className={`${className} flex flex-wrap max-w-full`}>
             {text.split(" ").map((word, i) => (
-                <div key={i} className="inline-block overflow-hidden pb-2 mr-[0.3em]">
+                <div key={i} className="inline-block overflow-hidden pb-2 mr-[0.3em] max-w-full">
                     <motion.span
                         initial={{ y: "100%" }}
                         animate={{ y: 0 }}
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 + (i * 0.1) }}
-                        className="inline-block"
+                        className="inline-block break-words max-w-full"
                     >
                         {word}
                     </motion.span>
@@ -148,21 +149,21 @@ function AboutHero() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 text-white/50 font-heading font-black text-xs tracking-[0.4em] uppercase mb-8"
+                        className="inline-block px-4 py-1.5 rounded-full border-2 border-[#111111] bg-white text-[#111111] shadow-[2px_2px_0px_#111111] font-heading font-black italic text-xs tracking-[0.4em] uppercase mb-8"
                     >
                         The Humans of Fuse
                     </motion.span>
                     
                     <RevealTitle 
                         text="THE ARCHITECTS OF REFRESH"
-                        className="text-[12vw] md:text-[8vw] lg:text-[10rem] font-heading font-black uppercase tracking-tighter leading-[0.85] text-white"
+                        className="text-5xl sm:text-[10vw] md:text-[8vw] lg:text-[10rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] text-[#111111] drop-shadow-sm w-full"
                     />
 
                     <motion.p 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8, duration: 1 }}
-                        className="mt-8 text-white/40 font-body text-lg md:text-2xl max-w-2xl leading-relaxed font-light"
+                        className="mt-8 text-[#111111]/70 font-body font-bold text-lg md:text-2xl max-w-2xl leading-relaxed"
                     >
                         We didn't set out to build a brand. We set out to find a better way to hydrate. 
                         Met on the trail, stayed for the obsession.
@@ -191,7 +192,7 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
         >
             {/* Image Side */}
             <div className="relative w-full md:w-1/2 aspect-[4/5] md:aspect-[3/4]">
-                <div className="absolute inset-0 overflow-hidden rounded-[3rem] bg-white/5 border border-white/10 group">
+                <div className="absolute inset-0 overflow-hidden rounded-[3rem] bg-white border-4 border-[#111111] shadow-[8px_8px_0px_#111111] group">
                     <motion.div
                         whileInView={{ scale: [1.2, 1] }}
                         transition={{ duration: 1.5, ease: "easeOut" }}
@@ -206,8 +207,8 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
                     </motion.div>
                     
                     {/* Glassy Tag */}
-                    <div className="absolute top-8 left-8 p-1.5 px-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-                        <span className="text-[10px] font-heading font-black text-white/80 uppercase tracking-widest">{founder.tag}</span>
+                    <div className="absolute top-8 left-8 p-1.5 px-4 bg-white border-2 border-[#111111] shadow-[2px_2px_0px_#111111] rounded-full">
+                        <span className="text-[10px] font-heading font-black italic text-[#111111] uppercase tracking-widest">{founder.tag}</span>
                     </div>
 
                     {/* Corner Accent */}
@@ -217,7 +218,7 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
                 </div>
                 
                 {/* Floating Background Text */}
-                <span className={`absolute ${isEven ? '-left-8 md:-left-20' : '-right-8 md:-right-20'} top-1/2 -translate-y-1/2 text-[20vw] font-heading font-black opacity-[0.03] text-white pointer-events-none select-none uppercase -rotate-90`}>
+                <span className={`absolute ${isEven ? '-left-8 md:-left-20' : '-right-8 md:-right-20'} top-1/2 -translate-y-1/2 text-[20vw] font-heading font-black italic opacity-[0.03] text-[#111111] pointer-events-none select-none uppercase -rotate-90`}>
                     {founder.name}
                 </span>
             </div>
@@ -229,21 +230,21 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3, duration: 0.8 }}
                 >
-                    <h2 className="text-6xl md:text-8xl lg:text-9xl font-heading font-black uppercase text-white tracking-tighter mb-4">
+                    <h2 className="text-6xl md:text-8xl lg:text-9xl font-heading font-black italic uppercase text-[#111111] tracking-tighter mb-4">
                         {founder.name}
                     </h2>
-                    <h3 className="text-xl md:text-2xl font-heading font-black uppercase tracking-widest mb-8" style={{ color: founder.color }}>
+                    <h3 className="text-xl md:text-2xl font-heading font-black italic uppercase tracking-widest mb-8" style={{ color: founder.color, textShadow: "1px 1px 0px rgba(17,17,17,0.2)" }}>
                         {founder.role}
                     </h3>
                     
-                    <div className="w-12 h-1 mb-8" style={{ backgroundColor: founder.color }} />
+                    <div className="w-12 h-2 border-2 border-[#111111] mb-8" style={{ backgroundColor: founder.color }} />
                     
-                    <p className="text-lg md:text-2xl font-body text-white/50 leading-relaxed max-w-lg mb-12">
+                    <p className="text-lg md:text-2xl font-body font-bold text-[#111111]/70 leading-relaxed max-w-lg mb-12">
                         {founder.desc}
                     </p>
 
-                    <div className="relative p-8 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <p className="text-lg md:text-xl font-body italic text-white/80 leading-snug">
+                    <div className="relative p-8 rounded-[2rem] bg-white border-4 border-[#111111]" style={{ boxShadow: `6px 6px 0px ${founder.color}` }}>
+                        <p className="text-lg md:text-xl font-body font-bold italic text-[#111111] leading-snug">
                             &ldquo;{founder.quote}&rdquo;
                         </p>
                     </div>
@@ -257,10 +258,12 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
 
 export default function AboutPage() {
     return (
-        <main className="min-h-screen font-body bg-accent-premium overflow-x-hidden selection:bg-primary-green selection:text-black">
+        <main className="min-h-screen font-body bg-[#F7F7F7] selection:bg-primary-green selection:text-[#111111] text-[#111111]">
             <Navbar />
             
             <AboutHero />
+
+            <StorySection />
 
             {/* ——— CONTENT START ——— */}
             <section className="relative py-24 md:py-32 z-20">
@@ -271,7 +274,7 @@ export default function AboutPage() {
                         <motion.h2 
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            className="text-4xl md:text-6xl font-heading font-black uppercase text-white tracking-tight"
+                            className="text-4xl md:text-6xl font-heading font-black italic uppercase text-[#111111] tracking-tight drop-shadow-sm"
                         >
                             THE FUSE <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon italic">COLLECTIVE</span>
@@ -279,7 +282,7 @@ export default function AboutPage() {
                         <motion.p 
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            className="text-white/40 font-body text-lg md:text-xl max-w-sm text-right leading-relaxed"
+                            className="text-[#111111]/70 font-bold font-body text-lg md:text-xl max-w-sm text-right leading-relaxed"
                         >
                             Three distinct disciplines, one shared quest for the ultimate peak state.
                         </motion.p>
@@ -294,26 +297,26 @@ export default function AboutPage() {
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="mt-24 md:mt-48 py-24 md:py-48 rounded-[4rem] bg-gradient-to-b from-white/5 to-transparent border-t border-white/10 text-center relative overflow-hidden"
+                        className="mt-24 md:mt-48 py-24 md:py-32 rounded-[4rem] bg-white border-4 border-[#111111] shadow-[12px_12px_0px_#111111] text-center relative overflow-hidden"
                     >
                         {/* Glow */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-full bg-primary-green/20 blur-[150px] opacity-30" />
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-full bg-primary-green/20 blur-[150px] opacity-60" />
                         
                         <div className="relative z-10">
-                            <span className="text-xs md:text-sm font-heading font-black text-white/30 uppercase tracking-[0.5em] mb-8 inline-block">THE FINAL EQUATION</span>
-                            <h3 className="text-5xl md:text-7xl lg:text-[7rem] font-heading font-black text-white uppercase tracking-tighter leading-none flex flex-col gap-4">
+                            <span className="text-xs md:text-sm font-heading font-black italic text-[#111111]/50 uppercase tracking-[0.5em] mb-8 inline-block">THE FINAL EQUATION</span>
+                            <h3 className="text-5xl md:text-7xl lg:text-[7rem] font-heading font-black italic text-[#111111] uppercase tracking-tighter leading-none flex flex-col gap-4">
                                 <span className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
                                     VISION <span className="text-primary-green">+</span> VIBE
                                 </span>
                                 <span className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-                                    BALANCE <span className="text-accent-watermelon">=</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango via-accent-watermelon to-primary-blue pr-2">FUSE</span>
+                                    BALANCE <span className="text-accent-watermelon">=</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango via-accent-watermelon to-primary-blue pr-2 drop-shadow-sm">FUSE</span>
                                 </span>
                             </h3>
                             
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="mt-16 px-12 py-5 bg-white text-accent-premium rounded-full font-heading font-black uppercase tracking-widest text-sm shadow-[0_20px_40px_rgba(255,255,255,0.1)] transition-all hover:bg-primary-green hover:text-white"
+                                className="mt-16 px-12 py-5 bg-[#39FF14] text-[#111111] border-4 border-[#111111] shadow-[6px_6px_0px_#111111] rounded-full font-heading font-black italic uppercase tracking-widest text-sm transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_#111111]"
                             >
                                 Shop the Fuse
                             </motion.button>

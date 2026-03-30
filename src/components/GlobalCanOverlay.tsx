@@ -153,11 +153,11 @@ export default function GlobalCanOverlay() {
             // Above MascotJourney -> Respect user's active context flavor explicitly
             if (renderFlavor.id !== flavorData.id) setRenderFlavor(flavorData);
         } else if (latest < s1ToS2Midpoint) {
-            // S1: Morning -> Mango (Swaps halfway traveling out of S1)
-            if (renderFlavor.id !== "mango") setRenderFlavor(FLAVORS.mango);
-        } else if (latest < s2ToS3Midpoint) {
-            // S2: Afternoon -> Watermelon (Swaps halfway traveling out of S2)
+            // S1: Morning -> Watermelon (Swaps halfway traveling out of S1)
             if (renderFlavor.id !== "watermelon") setRenderFlavor(FLAVORS.watermelon);
+        } else if (latest < s2ToS3Midpoint) {
+            // S2: Afternoon -> Mango (Swaps halfway traveling out of S2)
+            if (renderFlavor.id !== "mango") setRenderFlavor(FLAVORS.mango);
         } else {
             // S3: Evening -> Basil
             if (renderFlavor.id !== "basil") setRenderFlavor(FLAVORS.basil);
@@ -167,7 +167,7 @@ export default function GlobalCanOverlay() {
     if (!mounted) return null;
 
     return (
-        <div className="fixed inset-0 z-50 pointer-events-none">
+        <div className="hidden lg:block fixed inset-0 z-50 pointer-events-none">
             {/* Desktop */}
             {mounted && window.innerWidth >= 1024 && (
                 <motion.div
@@ -186,23 +186,6 @@ export default function GlobalCanOverlay() {
                 </motion.div>
             )}
 
-            {/* MOBILE RENDER */}
-            {mounted && window.innerWidth < 1024 && (
-                <motion.div
-                    className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none"
-                    style={{ x: xMobile, y: yMobile, scale: scaleMobile, opacity: opacityMobile }}
-                >
-                    <div className="w-[50vw] h-[110vw] max-w-[280px] max-h-[600px] flex items-center justify-center">
-                        <Scene 
-                            scrollY={scrollY} 
-                            vh={vh} 
-                            labelPath={renderFlavor.label}
-                            liquidColor={renderFlavor.liquid}
-                            capColor={renderFlavor.cap}
-                        />
-                    </div>
-                </motion.div>
-            )}
         </div>
     );
 }

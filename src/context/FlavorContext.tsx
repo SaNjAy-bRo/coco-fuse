@@ -51,7 +51,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
     },
     watermelon: {
         id: "watermelon",
-        name: "Watermelon Cool",
+        name: "Watermelon Mint Reset",
         label: "/assets/watermelon_label_extracted.png",
         liquid: "#ff4d4d",
         cap: "#111111",
@@ -74,7 +74,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
     },
     basil: {
         id: "basil",
-        name: "Basil Chili Kick",
+        name: "Basil Chili Revive",
         label: "/assets/chili_label_extracted.png",
         liquid: "#cc0000",
         cap: "#111111",
@@ -106,7 +106,7 @@ interface FlavorContextType {
 const FlavorContext = createContext<FlavorContextType | undefined>(undefined);
 
 export function FlavorProvider({ children }: { children: ReactNode }) {
-    const [flavor, setFlavorState] = useState<FlavorID>("mango");
+    const [flavor, setFlavorState] = useState<FlavorID>("watermelon");
 
     const setFlavor = (id: FlavorID) => {
         setFlavorState(id);

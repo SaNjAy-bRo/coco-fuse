@@ -1,11 +1,14 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useFlavor, FLAVORS, FlavorID } from "@/context/FlavorContext";
 import { ShoppingBag, ArrowRight } from "lucide-react";
 import HeroDeco from "./HeroDeco";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("./Scene"), { ssr: false });
 
 function MiniCoconutIcon({ liquid, active, onClick, name, hideLabel = false }: { liquid: string, active: boolean, onClick: () => void, name: string, hideLabel?: boolean }) {
     return (
@@ -43,13 +46,27 @@ export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isMobileSelectorOpen, setIsMobileSelectorOpen] = useState(false);
 
-    const { scrollYProgress } = useScroll({
+    const [vh, setVh] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobileAndHeight = () => {
+            setIsMobile(window.innerWidth < 1024);
+            setVh(window.innerHeight);
+        };
+        checkMobileAndHeight();
+        window.addEventListener("resize", checkMobileAndHeight);
+        return () => window.removeEventListener("resize", checkMobileAndHeight);
+    }, []);
+
+    const { scrollY, scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end start"]
     });
 
     // Parallax logic for 200vh sticky section
-    const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]);
+    const textYDesktop = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]);
+    const textYMobile = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+    const textY = isMobile ? textYMobile : textYDesktop;
     const textOpacity = useTransform(scrollYProgress, [0, 0.8, 0.95], [1, 1, 0]);
     
     // Toggles interaction state dynamically so invisible buttons don't block layout when scrolling
@@ -123,9 +140,9 @@ export default function Hero() {
     return (
         <section
             ref={containerRef}
-            className={`relative w-full h-[200vh] ${p.bg} transition-colors duration-1000`}
+            className={`relative w-full h-[200vh] ${p.bg} transition-colors duration-1000 z-10`}
         >
-            <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col justify-center">
+            <div className="sticky top-0 h-[100dvh] min-h-[600px] w-full overflow-hidden flex flex-col justify-center">
 
                 {/* Parallax Background Gradient Blobs - Removed for cleaner look */}
                 {/* <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-color-burn">
@@ -152,12 +169,23 @@ export default function Hero() {
                 {/* HERO DECORATIONS */}
                 <HeroDeco key={flavorData.id} flavorId={flavorData.id} opacity={textOpacity} />
 
-                {/* 3D Can Layer - REMOVED -> Now handled globally by GlobalCanOverlay in page.tsx */}
+                {/* 3D Can Layer - MOBILE ONLY (Static local instance) */}
+                {isMobile && vh > 0 && (
+                    <div className="absolute top-[50%] min-[400px]:top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[45vw] h-[90vw] max-w-[200px] max-h-[400px] flex items-center justify-center pointer-events-none lg:hidden z-10">
+                        <Scene 
+                            isStaticMobile={true}
+                            vh={vh} 
+                            labelPath={flavorData.label}
+                            liquidColor={flavorData.liquid}
+                            capColor={flavorData.cap}
+                        />
+                    </div>
+                )}
 
                 {/* Main Text Content */}
                 <motion.div
-                    style={{ y: textY, opacity: textOpacity }}
-                    className="container mx-auto px-5 md:px-6 lg:px-12 relative z-20 w-full h-[100dvh] pt-[75px] pb-3 min-[400px]:pt-[90px] min-[400px]:pb-5 lg:pt-[20vh] lg:pb-[10vh] flex flex-col justify-between lg:justify-start pointer-events-none"
+                    style={{ y: textY, opacity: textOpacity, willChange: "transform, opacity" }}
+                    className="container mx-auto px-5 md:px-6 lg:px-12 relative z-20 w-full h-[100dvh] min-h-[600px] pt-[75px] pb-3 min-[400px]:pt-[90px] min-[400px]:pb-[80px] lg:pt-[20vh] lg:pb-[10vh] flex flex-col justify-between lg:justify-start pointer-events-none"
                 >
                     <div className="w-full h-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left pointer-events-auto justify-between lg:justify-start lg:gap-2">
 
@@ -167,16 +195,16 @@ export default function Hero() {
                             {/* Status Pill - Vibrant Edition */}
                             <motion.div style={{ opacity: pillOpacity, y: pillY, pointerEvents: pillPointerEvents as any }}>
                                 <motion.div
-                                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    initial={{ opacity: 0, y: 20, scale: 0.9, rotate: -3 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1, rotate: -3 }}
                                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                                    className={`inline-flex items-center self-center lg:self-start gap-2 px-4 py-1.5 min-[400px]:px-5 min-[400px]:py-2 rounded-full border-2 ${p.pillBorder} ${p.pillBg} shadow-[0_10px_30px_rgba(26,26,26,0.3)] mb-4 min-[400px]:mb-6 md:mb-10 shrink-0 transition-colors duration-1000`}
+                                    className={`inline-flex items-center self-center lg:self-start gap-2 px-4 py-1.5 min-[400px]:px-5 min-[400px]:py-2 rounded-full border-4 border-[#111111] bg-white shadow-[6px_6px_0px_#111111] mb-6 md:mb-10 shrink-0 transform -rotate-3 hover:scale-105 hover:rotate-0 transition-all select-none`}
                                 >
                                     <span className="relative flex h-2.5 w-2.5 min-[400px]:h-3 min-[400px]:w-3">
                                         <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${p.pillDot} opacity-75`}></span>
                                         <span className={`relative inline-flex rounded-full h-2.5 w-2.5 min-[400px]:h-3 min-[400px]:w-3 ${p.pillDot}`}></span>
                                     </span>
-                                    <span className={`font-heading font-black text-[10px] min-[400px]:text-xs tracking-[0.2em] ${p.pillText} mt-[2px]`}>Now Available</span>
+                                    <span className={`font-heading font-black italic text-xs min-[400px]:text-sm tracking-[0.2em] text-[#111111] uppercase mt-[2px]`}>Now Available</span>
                                 </motion.div>
                             </motion.div>
 
@@ -199,6 +227,21 @@ export default function Hero() {
                                     </div>
                                 ))}
                             </div>
+
+                            {/* Hero CTA Button */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                className="mt-2 md:mt-4 w-full md:flex justify-center lg:justify-start hidden"
+                            >
+                                <Link href={`/products/${flavorData.id}`}>
+                                    <button className={`px-10 py-3 md:py-4 ${p.btnBg} ${p.btnText} font-heading font-black italic uppercase tracking-widest text-base md:text-xl rounded-full border-4 border-[#111111] shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] hover:-translate-y-1 hover:shadow-[6px_6px_0px_#111111] md:hover:shadow-[8px_8px_0px_#111111] transition-all flex items-center justify-center gap-2 group`}>
+                                        <ShoppingBag size={20} className="group-hover:-rotate-12 transition-transform md:w-6 md:h-6" />
+                                        <span>Buy Now</span>
+                                    </button>
+                                </Link>
+                            </motion.div>
                         </div>
 
                         {/* 2. MIDDLE STACK: The "Can Stage" (Dynamically expands) */}
@@ -210,35 +253,43 @@ export default function Hero() {
                             className="w-full pointer-events-auto text-left hidden lg:flex flex-col"
                         >
                             {/* Subheading */}
-                            <p className={`text-xl font-body font-bold max-w-md leading-relaxed mb-6 drop-shadow-md px-6 lg:px-0 ${p.descText}`}>
-                                Not a hydration drink. Not a soda. Not a juice.
-                                <span className={`block font-black mt-2 tracking-wide text-[22px] font-heading drop-shadow-lg ${p.descAccent}`}>
+                            {/* Subheading - Neo Pop Bubbly Version */}
+                            <div className={`mt-4 lg:mt-6 p-6 px-7 bg-white/95 backdrop-blur-md border-4 border-[#111111] shadow-[8px_8px_0px_#111111] rounded-3xl max-w-sm lg:max-w-md transform rotate-1 transition-all duration-300 ml-4 lg:ml-0`}>
+                                <p className="font-heading font-black italic text-[#111111] text-2xl lg:text-3xl uppercase tracking-tighter leading-[0.9] drop-shadow-sm">
+                                    Not a hydration drink.<br/>Not a soda.<br/>Not a juice.
+                                </p>
+                                <p className={`mt-4 font-heading font-bold italic ${p.descAccent} text-lg lg:text-xl uppercase tracking-wider drop-shadow-sm leading-tight bg-[#F7F7F7] px-4 py-3 rounded-2xl border-2 border-[#111111]/10`}>
                                     Cocofuse is a guilt-free fun drink that happens to hydrate.
-                                </span>
-                                <span className={`block font-black mt-3 tracking-widest uppercase text-sm drop-shadow-xl opacity-90 border-t border-[currentColor]/30 pt-3 ${p.descText}`}>
-                                    Zero Added Sugar! 100% Natural Energy!
-                                </span>
-                            </p>
+                                </p>
+                                <div className="flex gap-3 mt-5 flex-wrap">
+                                    <span className="bg-[#111111] text-white text-xs lg:text-sm font-heading font-black italic uppercase px-4 py-1.5 rounded-full whitespace-nowrap shadow-[3px_3px_0px_#CC0000]">Zero Sugar ⚡</span>
+                                    <span className="bg-[#111111] text-white text-xs lg:text-sm font-heading font-black italic uppercase px-4 py-1.5 rounded-full whitespace-nowrap shadow-[3px_3px_0px_#39FF14]">Natural Energy 🔥</span>
+                                </div>
+                            </div>
                             {/* Redundant Desktop CTAs Removed */}
                         </motion.div>
 
                         {/* 3. BOTTOM STACK: Subheading & CTAs (Mobile - Static Normal) */}
                         <div className="flex flex-col w-full pointer-events-auto text-center lg:hidden items-center justify-end pb-8">
                             {/* Subheading - Seamless Presentation */}
-                            <motion.p
+                            {/* Subheading - Seamless Mobile Neo Pop */}
+                            <motion.div
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
-                                className={`text-sm font-body font-bold max-w-[90vw] leading-relaxed mb-6 drop-shadow-md px-5 ${p.descText}`}
+                                className={`mt-0 mb-6 p-5 bg-white/95 backdrop-blur-md border-[3px] border-[#111111] shadow-[6px_6px_0px_#111111] rounded-[2rem] max-w-[85vw] mx-auto transform -rotate-1 transition-all duration-300 text-left`}
                             >
-                                Not a hydration drink. Not a soda. Not a juice.
-                                <span className={`block font-black mt-2 tracking-wide text-lg font-heading drop-shadow-lg ${p.descAccent}`}>
-                                    Cocofuse is a guilt-free fun drink that happens to hydrate.
-                                </span>
-                                <span className={`block font-black mt-3 tracking-widest uppercase text-xs drop-shadow-xl opacity-90 border-t border-[currentColor]/30 pt-3 ${p.descText}`}>
-                                    Zero Added Sugar! 100% Natural Energy!
-                                </span>
-                            </motion.p>
+                                <p className="font-heading font-black italic text-[#111111] text-xl min-[400px]:text-2xl uppercase tracking-tighter leading-[0.9] drop-shadow-sm">
+                                    Not a hydration drink.<br/>Not a soda.<br/>Not a juice.
+                                </p>
+                                <p className={`mt-3 font-heading font-bold italic ${p.descAccent} text-sm min-[400px]:text-base uppercase tracking-wider drop-shadow-sm leading-tight bg-[#F7F7F7] px-3 py-2 rounded-xl border-2 border-[#111111]/10`}>
+                                    A guilt-free fun drink that happens to hydrate.
+                                </p>
+                                <div className="flex gap-2 mt-4 flex-wrap">
+                                    <span className="bg-[#111111] text-white text-[10px] min-[400px]:text-xs font-heading font-black italic uppercase px-3 py-1 rounded-full whitespace-nowrap shadow-[2px_2px_0px_#CC0000]">Zero Sugar ⚡</span>
+                                    <span className="bg-[#111111] text-white text-[10px] min-[400px]:text-xs font-heading font-black italic uppercase px-3 py-1 rounded-full whitespace-nowrap shadow-[2px_2px_0px_#39FF14]">Natural Energy 🔥</span>
+                                </div>
+                            </motion.div>
                             {/* Redundant Mobile CTAs Removed */}
                         </div>
 

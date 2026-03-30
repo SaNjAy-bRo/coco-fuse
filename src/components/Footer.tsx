@@ -4,24 +4,24 @@ import { motion } from "framer-motion";
 
 export default function Footer() {
     return (
-        <footer className="bg-accent-premium text-primary-white py-20 relative overflow-hidden">
+        <footer className="bg-[#111111] text-primary-white pt-24 pb-12 relative overflow-hidden border-t-8 border-[#111111]">
             {/* Background elements */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-green via-primary-blue to-accent-mango" />
 
             <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="mb-12"
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="mb-16 md:mb-24 w-full"
                 >
-                    <h2 className="text-4xl md:text-6xl font-heading font-black italic tracking-tighter mb-4">
-                        <span className="text-primary-green">COCO</span>
-                        <span className="text-primary-blue">FUSE</span>
+                    <h2 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] mb-4 md:mb-6">
+                        <span className="text-[#39FF14] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF]">COCO</span>
+                        <span className="text-[#3AB6FD] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF]">FUSE</span>
                     </h2>
-                    <p className="text-xl md:text-2xl font-body font-light text-gray-300 max-w-2xl mx-auto">
-                        The anti-soda. The anti-sugar. <span className="font-semibold text-accent-watermelon">The anti-boring.</span>
+                    <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-body font-medium text-white tracking-wide">
+                        The anti-soda. The anti-sugar. <span className="text-[#FF66B2] font-heading font-black italic uppercase drop-shadow-[2px_2px_0px_#FFD166] md:drop-shadow-[4px_4px_0px_#FFFFFF]">The anti-boring.</span>
                     </p>
                 </motion.div>
 
