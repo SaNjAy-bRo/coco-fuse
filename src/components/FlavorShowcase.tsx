@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { Environment, ContactShadows, OrbitControls } from "@react-three/drei";
 import Bottle from "./Bottle";
@@ -47,8 +47,12 @@ const FLAVORS = [
 ];
 
 function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(cardRef, { margin: "200px" });
+
     return (
         <motion.div 
+            ref={cardRef}
             initial={{ opacity: 0, scale: 0.95, y: 30 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
@@ -63,7 +67,7 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
             </div>
 
             <div className="text-center z-10 shrink-0 mt-8 md:mt-8 w-full">
-                <h3 className={`text-3xl min-[400px]:text-4xl md:text-5xl font-heading font-black italic uppercase tracking-tighter leading-[0.9] ${flavor.accent} drop-shadow-sm break-words`}>
+                <h3 className={`text-[9vw] sm:text-4xl md:text-5xl font-heading font-black italic uppercase tracking-tighter leading-[0.9] ${flavor.accent} drop-shadow-sm`}>
                     {flavor.name}
                 </h3>
                 <div className="mt-3">
@@ -73,8 +77,9 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
                 </div>
             </div>
 
-            <div className="flex-1 w-full min-h-[300px] relative z-10">
+            <div className="flex-1 w-full min-h-[220px] sm:min-h-[250px] md:min-h-[300px] relative z-10">
                 <Canvas 
+                    frameloop={isInView ? "always" : "never"}
                     camera={{ position: [0, 0, 7.5], fov: 45 }} 
                     gl={{ 
                         antialias: false, 

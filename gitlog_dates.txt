@@ -1,0 +1,25 @@
+﻿48561b5 2026-03-30 19:36:04 +0530 Finalize Neo-Pop UI Refinements: Set Watermelon as default, add Hero CTA, fix mobile layout clipping and redesign components for style consistency
+88b247e 2026-03-28 12:51:28 +0530 Refactor: Unified Mobile Physics & Typography Stylings
+cc364af 2026-03-24 21:26:21 +0530 style: optimize MonkeySection 3D effect for mobile scroll
+25664f5 2026-03-24 20:59:42 +0530 feat: add interactive Monkey section with flavor explosion on scroll
+fe53c6d 2026-03-24 18:14:34 +0530 fix(flavors): completely remove framer motion x translation on desktop to ensure static layout
+6ef5480 2026-03-24 18:12:01 +0530 fix(flavors): replace calc() with vw string for framer motion interpolation on mobile
+e13030a 2026-03-24 18:07:16 +0530 fix(flavors): remove unwanted 100vw spacing between flavor cards for tighter carousel
+859721d 2026-03-24 17:48:15 +0530 feat: premium redesign of about page and homepage structure refinement
+9cee40d 2026-03-24 17:25:40 +0530 fix(showcase): make FlavorCard height fluid to prevent mobile clipping; perf: kill all always-on animations and useSpring across site
+76d4c43 2026-03-24 16:53:15 +0530 style(story): restore original mobile scroll map and trigger immediate text entrance fade
+60fa25b 2026-03-24 16:39:47 +0530 feat(checkout): add explicit per-bottle pricing breakdown to configure page
+243f11f 2026-03-24 14:57:44 +0530 sync: push final flavor selector and icon changes
+2b73db7 2026-03-24 14:56:10 +0530 feat: replace mobile selector bottle icons with fruit PNGs
+411e2cb 2026-03-24 11:14:44 +0530 chore: standardize all bottle caps to black
+a0c3880 2026-03-24 11:05:18 +0530 feat: rebuild 3D bottle contour to match real product image
+0a4bf87 2026-03-24 10:52:32 +0530 feat: redesign hero selector UI, add speed dial mobile FAB, improve decorations splash effect
+da03df6 2026-03-24 09:59:43 +0530 chore: add hero deco images
+ecbe6a0 2026-03-24 09:57:44 +0530 feat: enhance hero visuals, refactor checkout flow, restrict shipping to mumbai, add validation
+4434a75 2026-03-18 16:34:22 +0530 Add Pack Selection configure page and dynamic pricing to checkout flow
+c904bba 2026-03-18 15:56:33 +0530 Implement 2-column Checkout, dynamic Success pages with 3D product previews, and refine Hero palettes
+286be6a 2026-03-14 13:38:01 +0530 feat: use full story section anchor for mobile navigation
+cb4d67f 2026-03-14 13:28:00 +0530 fix: resolve mobile hero overlap by adjusting bottle offset
+4e6f19e 2026-03-14 13:08:41 +0530 fix: resolve hydration error by correcting Hero HTML nesting
+e3edd2a 2026-03-14 12:56:07 +0530 fix: recalibrate 3D bottle scroll map for scaled mobile heights
+6027b12 2026-03-14 12:52:42 +0530 perf: refine mobile scroll pace and parallax mileage

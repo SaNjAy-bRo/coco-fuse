@@ -169,18 +169,7 @@ export default function Hero() {
                 {/* HERO DECORATIONS */}
                 <HeroDeco key={flavorData.id} flavorId={flavorData.id} opacity={textOpacity} />
 
-                {/* 3D Can Layer - MOBILE ONLY (Static local instance) */}
-                {isMobile && vh > 0 && (
-                    <div className="absolute top-[50%] min-[400px]:top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[45vw] h-[90vw] max-w-[200px] max-h-[400px] flex items-center justify-center pointer-events-none lg:hidden z-10">
-                        <Scene 
-                            isStaticMobile={true}
-                            vh={vh} 
-                            labelPath={flavorData.label}
-                            liquidColor={flavorData.liquid}
-                            capColor={flavorData.cap}
-                        />
-                    </div>
-                )}
+                {/* 3D Can Layer - MOBILE ONLY -> Moved to MIDDLE STACK below */}
 
                 {/* Main Text Content */}
                 <motion.div
@@ -244,8 +233,20 @@ export default function Hero() {
                             </motion.div>
                         </div>
 
-                        {/* 2. MIDDLE STACK: The "Can Stage" (Dynamically expands) */}
-                        <div className="w-full lg:hidden flex-1 min-h-[40vh] md:min-h-[50vh]" />
+                        {/* 2. MIDDLE STACK: The "Can Stage" (Dynamically expands) inline, no absolute positioning */}
+                        <div className="w-full lg:hidden flex-1 min-h-[40vh] md:min-h-[50vh] flex items-center justify-center pointer-events-none z-10">
+                            {isMobile && vh > 0 && (
+                                <div className="w-[45vw] h-[90vw] max-w-[200px] max-h-[400px]">
+                                    <Scene 
+                                        scrollY={scrollY}
+                                        vh={vh} 
+                                        labelPath={flavorData.label}
+                                        liquidColor={flavorData.liquid}
+                                        capColor={flavorData.cap}
+                                    />
+                                </div>
+                            )}
+                        </div>
 
                         {/* 3. BOTTOM STACK: Subheading & CTAs (Desktop - Appears on Scroll) */}
                         <motion.div

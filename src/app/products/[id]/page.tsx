@@ -86,9 +86,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                                 100% Core Hydration
                             </div>
                             
-                            <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] ${p.textMain} drop-shadow-[2px_2px_0px_#111111] md:drop-shadow-[4px_4px_0px_#111111] break-words hyphens-auto max-w-full w-full`}>
+                            <h1 className={`text-[11vw] min-[400px]:text-[12vw] sm:text-[10vw] md:text-7xl lg:text-[7vw] xl:text-[6.5rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] ${p.textMain} drop-shadow-[2px_2px_0px_#111111] md:drop-shadow-[4px_4px_0px_#111111] max-w-full w-full`}>
                                 {product.name.split(' ').map((word, i) => (
-                                    <span key={i} className="block w-full overflow-hidden text-clip">{word}</span>
+                                    <span key={i} className="block w-full overflow-visible whitespace-nowrap">{word}</span>
                                 ))}
                             </h1>
                         </motion.div>

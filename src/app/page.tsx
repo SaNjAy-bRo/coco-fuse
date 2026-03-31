@@ -6,6 +6,7 @@ import ParallaxBanner from "@/components/ParallaxBanner";
 import CTASection from "@/components/CTASection";
 import FlavorShowcase from "@/components/FlavorShowcase";
 import MonkeySection from "@/components/MonkeySection";
+import DailyRhythmSection from "@/components/DailyRhythmSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <MascotJourney />
       <MonkeySection />
       <FlavorShowcase />
+      <DailyRhythmSection />
       <ParallaxBanner />
       <CTASection />
       <Footer />

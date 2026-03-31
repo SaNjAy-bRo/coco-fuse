@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import StorySection from "@/components/StorySection";
+import Link from "next/link";
 
 // ——— CONSTANTS & DATA ——————————————————————————————————————
 
@@ -313,13 +314,15 @@ export default function AboutPage() {
                                 </span>
                             </h3>
                             
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="mt-16 px-12 py-5 bg-[#39FF14] text-[#111111] border-4 border-[#111111] shadow-[6px_6px_0px_#111111] rounded-full font-heading font-black italic uppercase tracking-widest text-sm transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_#111111]"
-                            >
-                                Shop the Fuse
-                            </motion.button>
+                            <Link href="/#flavors" passHref legacyBehavior>
+                                <motion.a
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="mt-16 inline-block px-12 py-5 bg-[#39FF14] text-[#111111] border-4 border-[#111111] shadow-[6px_6px_0px_#111111] rounded-full font-heading font-black italic uppercase tracking-widest text-sm transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_#111111] cursor-pointer"
+                                >
+                                    Shop the Fuse
+                                </motion.a>
+                            </Link>
                         </div>
                     </motion.div>
 

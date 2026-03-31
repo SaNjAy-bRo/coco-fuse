@@ -42,7 +42,24 @@ export default function MonkeySection() {
   return (
     <section className="w-full py-20 md:py-32 bg-primary-white overflow-hidden">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-16 md:gap-12 max-w-7xl mx-auto mt-12">
+        
+        {/* Tagline Header */}
+        <div className="w-full text-center mb-16 md:mb-24">
+          <motion.h2 
+            initial={{ opacity: 0, y: 30, rotate: -2 }}
+            whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-black italic tracking-tighter text-[#111111] uppercase max-w-5xl mx-auto leading-[0.9]"
+          >
+            THE ANTI-SODA. <br className="hidden md:block" />
+            THE ANTI-SUGAR. <br className="hidden md:block" />
+            <span className="inline-block mt-4 md:mt-6 px-6 py-2 md:px-8 md:py-3 bg-[#111111] text-[#39FF14] border-4 border-[#39FF14] rounded-full shadow-[6px_6px_0px_#39FF14] transform rotate-[-2deg] hover:rotate-[2deg] transition-transform duration-300">
+              THE ANTI-BORING.
+            </span>
+          </motion.h2>
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center justify-center gap-16 md:gap-12 max-w-7xl mx-auto mt-4 md:mt-12">
           {monkeys.map((item, index) => (
             <MonkeyCard key={item.id} item={item} isMobile={isMobile} index={index} />
           ))}

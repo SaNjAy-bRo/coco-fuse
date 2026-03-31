@@ -1,0 +1,25 @@
+﻿48561b5 Finalize Neo-Pop UI Refinements: Set Watermelon as default, add Hero CTA, fix mobile layout clipping and redesign components for style consistency
+88b247e Refactor: Unified Mobile Physics & Typography Stylings
+cc364af style: optimize MonkeySection 3D effect for mobile scroll
+25664f5 feat: add interactive Monkey section with flavor explosion on scroll
+fe53c6d fix(flavors): completely remove framer motion x translation on desktop to ensure static layout
+6ef5480 fix(flavors): replace calc() with vw string for framer motion interpolation on mobile
+e13030a fix(flavors): remove unwanted 100vw spacing between flavor cards for tighter carousel
+859721d feat: premium redesign of about page and homepage structure refinement
+9cee40d fix(showcase): make FlavorCard height fluid to prevent mobile clipping; perf: kill all always-on animations and useSpring across site
+76d4c43 style(story): restore original mobile scroll map and trigger immediate text entrance fade
+60fa25b feat(checkout): add explicit per-bottle pricing breakdown to configure page
+243f11f sync: push final flavor selector and icon changes
+2b73db7 feat: replace mobile selector bottle icons with fruit PNGs
+411e2cb chore: standardize all bottle caps to black
+a0c3880 feat: rebuild 3D bottle contour to match real product image
+0a4bf87 feat: redesign hero selector UI, add speed dial mobile FAB, improve decorations splash effect
+da03df6 chore: add hero deco images
+ecbe6a0 feat: enhance hero visuals, refactor checkout flow, restrict shipping to mumbai, add validation
+4434a75 Add Pack Selection configure page and dynamic pricing to checkout flow
+c904bba Implement 2-column Checkout, dynamic Success pages with 3D product previews, and refine Hero palettes
+286be6a feat: use full story section anchor for mobile navigation
+cb4d67f fix: resolve mobile hero overlap by adjusting bottle offset
+4e6f19e fix: resolve hydration error by correcting Hero HTML nesting
+e3edd2a fix: recalibrate 3D bottle scroll map for scaled mobile heights
+6027b12 perf: refine mobile scroll pace and parallax mileage

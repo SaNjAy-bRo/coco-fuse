@@ -2,8 +2,8 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Environment, Float, ContactShadows } from "@react-three/drei";
-import { Suspense } from "react";
-import { MotionValue } from "framer-motion";
+import { Suspense, useRef } from "react";
+import { MotionValue, useInView } from "framer-motion";
 import Bottle from "./Bottle";
 
 export default function Scene({ 
@@ -21,9 +21,14 @@ export default function Scene({
     capColor?: string,
     isStaticMobile?: boolean
 }) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    // 200px margin ensures it starts rendering just before it enters the viewport to prevent delay
+    const isInView = useInView(containerRef, { margin: "200px" });
+
     return (
-        <div className="w-full h-full pointer-events-none">
+        <div ref={containerRef} className="w-full h-full pointer-events-none">
             <Canvas
+                frameloop={isInView ? "always" : "never"}
                 camera={{ position: [0, 0, 10], fov: 45 }}
                 gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
                 dpr={[1, 1.5]}
