@@ -7,28 +7,28 @@ import { motion, AnimatePresence } from "framer-motion";
 const RHYTHMS = [
   {
     phase: "THE WAKE-UP",
-    headline: "Prime your muscles & shock the system awake.",
+    headline: "Prime your body & hydrate the system awake.",
     copy: "Skip the heavy coffee crash. Pure, clean coconut hydration to start the engine.",
     image: "/watermelon/watermelon_monkey.png",
-    bg: "bg-[#FF66B2]", // Deep Pink
-    accent: "text-[#E23F72]",
+    bg: "bg-[#E8314A]",          // Watermelon reddish-pink — matches flavor palette
+    accent: "text-[#111111]",
     cardStyle: "rotate-[-1deg]"
   },
   {
     phase: "THE MIDDAY SURGE",
-    headline: "Recharge your battery with pure tropical goodness.",
-    copy: "That post-lunch fog? Obliterated. Blast through the rest of the day with unstoppable Mango energy.",
+    headline: "Recharge your body with pure tropical hydration.",
+    copy: "That post-lunch fog? Cleared. Blast through the rest of the day with CocoFuse. mango goodness.",
     image: "/mango/mango_monkey.png",
-    bg: "bg-[#FFD166]", // Mango Yellow
-    accent: "text-[#D97700]",
+    bg: "bg-[#FFD166]",          // Mango Yellow — matches flavor palette
+    accent: "text-[#111111]",
     cardStyle: "rotate-[1deg]"
   },
   {
     phase: "THE NIGHT MODE",
     headline: "Keep the vibe alive without the sugary hangover.",
-    copy: "The sun goes down, the shades come on. A spicy kick and laser focus to ignite the night.",
+    copy: "The sun goes down, the shades come on. A spicy kick and staying hydrated to ignite the night.",
     image: "/chilli/chilli_monkey.png",
-    bg: "bg-[#39FF14]", // Neon Green
+    bg: "bg-[#39FF14]",          // Basil Neon Green — matches flavor palette
     accent: "text-[#111111]",
     cardStyle: "rotate-[-1deg]"
   }
@@ -38,7 +38,7 @@ export default function DailyRhythmSection() {
     const [activeIndex, setActiveIndex] = useState(0);
 
     return (
-        <section className="relative w-full bg-[#0A2B14] py-24 md:py-32 font-body">
+        <section className="relative z-[1] w-full bg-[#111111] py-24 md:py-32 font-body">
             {/* Top Fade Edge */}
             <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-[#F7F7F7] to-transparent mix-blend-overlay opacity-30 pointer-events-none" />
 

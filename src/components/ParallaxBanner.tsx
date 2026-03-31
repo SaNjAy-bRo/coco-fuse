@@ -16,7 +16,7 @@ export default function ParallaxBanner() {
             )
         },
         {
-            title: "NATURAL ENERGY FORMULA",
+            title: "NATURAL HYDRATION FORMULA",
             desc: "Made with coconut electrolytes and essential B-vitamins to give you steady energy — without crashes",
             color: "bg-[#FF9F1C]", // Vibrant Orange
             icon: (
@@ -28,7 +28,7 @@ export default function ParallaxBanner() {
         {
             title: "ZERO ADDED SUGAR",
             desc: "No crash, no empty calories. Just pure, clean energy",
-            color: "bg-[#FF66B2]", // Vivid Pink
+            color: "bg-[#E8314A]",
             icon: (
                 <svg className="w-16 h-16 md:w-24 md:h-24 text-[#111111] drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -82,7 +82,7 @@ export default function ParallaxBanner() {
                         <h2 className="text-[12vw] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] font-heading font-black italic uppercase tracking-tighter leading-[0.8] text-white drop-shadow-lg relative z-10 w-full">
                             THE POWER OF <br /> 
                             <span className="inline-block transform -rotate-2 mt-4 drop-shadow-[4px_4px_0px_#FFD166]">
-                                <span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE</span>
+                                <span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span>
                             </span>
                         </h2>
                     </motion.div>

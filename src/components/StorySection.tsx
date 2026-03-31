@@ -134,7 +134,7 @@ export default function StorySection() {
                             <span className="text-accent-watermelon italic pr-2">Anti-Soda.</span>
                         </h2>
                         <p className="text-lg md:text-2xl lg:text-4xl font-body font-normal text-gray-200 max-w-4xl mx-auto leading-relaxed md:leading-snug">
-                            We didn't want another generic energy drink. <br className="hidden lg:block" />
+                            We didn't want another generic sugary drink. <br className="hidden lg:block" />
                             We demanded something real. Honest ingredients. <br className="hidden lg:block" />
                             <span className="text-white font-black italic">No compromises.</span>
                         </p>
@@ -192,7 +192,7 @@ export default function StorySection() {
                         </h2>
                         <p className="text-lg md:text-2xl lg:text-3xl font-body font-normal text-gray-200 max-w-3xl mx-auto leading-relaxed md:leading-snug mb-8">
                             No crash. No medical hype. <br className="hidden md:block" />
-                            Just pure, natural energy.
+                            Just pure, natural hydration.
                         </p>
                         <p className="text-primary-green font-heading font-black uppercase tracking-widest text-4xl md:text-6xl lg:text-7xl drop-shadow-[0_0_40px_rgba(126,217,86,0.3)]">
                             Electric Drive.

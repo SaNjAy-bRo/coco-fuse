@@ -25,7 +25,7 @@ const scriptFont = Pacifico({
 });
 
 export const metadata: Metadata = {
-  title: "CocoFuse | Fun, Clean Fuel for Real Life",
+  title: "CocoFuse. | Fun, Clean Fuel for Real Life",
   description: "Flavoured coconut water with zero nonsense. The anti-soda. The anti-sugar. The anti-boring.",
 };
 

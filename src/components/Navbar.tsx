@@ -64,7 +64,7 @@ export default function Navbar() {
             <a href="#" className="flex-shrink-0 relative z-[110] outline-none">
                 <Image
                     src="/assets/client_logo.png"
-                    alt="CocoFuse"
+                    alt="CocoFuse."
                     width={180}
                     height={64}
                     priority

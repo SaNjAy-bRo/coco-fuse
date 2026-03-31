@@ -36,7 +36,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         accent: "text-accent-mango",
         story: {
             morning: { title: "Fuse Your <br /> Mornings.", desc: "Mango Delight + Coconut Water. A fresh, hydrating wake-up call to start your day right." },
-            afternoon: { title: "Fuse Your <br /> Afternoons.", desc: "Tropical mango goodness for that post-lunch slump. Zero sugar, 100% natural energy." },
+            afternoon: { title: "Fuse Your <br /> Afternoons.", desc: "Tropical mango goodness for that post-lunch slump. Zero sugar, 100% natural hydration boost." },
             evening: { title: "Fuse Your <br /> Socials.", desc: "The perfect mixer for your evening vibes. Vibrant, fruity, and designed for the night." }
         },
         nutrition: [

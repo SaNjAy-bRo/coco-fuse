@@ -1,26 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Ultra-Vibrant Festival Palette (NH17 Weekender inspired) */
-  --color-primary-green: #7ED956;
-  /* Brand Green */
-  --color-primary-blue: #3AB6FD;
-  /* Brand Blue */
-  --color-primary-white: #F3F3F1;
-  /* Brand Off-White */
-  --color-primary-yellow: #FFE800;
-  /* Solar Yellow */
-  --color-primary-pink: #FF007F;
-  /* Hot Pink */
+  /* Brand Palette */
+  --color-primary-green: #7ED956;   /* Brand Logo Green */
+  --color-primary-blue: #3AB6FD;    /* Brand Logo Blue */
+  --color-primary-white: #F3F3F1;   /* Brand Off-White */
 
-  --color-accent-mango: #FFB300;
-  /* Deep Vibrant Orange/Mango */
-  --color-accent-watermelon: #FF3366;
-  /* Punchy Watermelon */
-  --color-accent-basil: #00E676;
-  /* Bright Leaf Green */
-  --color-accent-premium: #0A0A0A;
-  /* Ink Black */
+  /* Flavor Colors */
+  --color-accent-mango: #FFD166;        /* Mango Yellow */
+  --color-accent-watermelon: #E8314A;   /* Watermelon Reddish-Pink */
+  --color-accent-basil: #39FF14;        /* Basil Neon Green */
+
+  /* Neutrals */
+  --color-accent-premium: #0A0A0A;  /* Ink Black */
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
@@ -45,7 +37,6 @@
 }
 
 @keyframes gradient {
-
   0%,
   100% {
     background-position: 0% 50%;
@@ -56,13 +47,13 @@
   }
 }
 
-/* Custom Utilities for the vibrant festival gradients */
+/* Hero flavor background gradients — palette only */
 .bg-festival-gradient-1 {
-  background: linear-gradient(135deg, var(--color-primary-yellow) 0%, var(--color-accent-watermelon) 100%);
+  background: linear-gradient(135deg, var(--color-accent-mango) 0%, var(--color-primary-green) 100%);
 }
 
 .bg-festival-gradient-2 {
-  background: linear-gradient(135deg, var(--color-primary-blue) 0%, var(--color-primary-pink) 100%);
+  background: linear-gradient(135deg, var(--color-primary-blue) 0%, var(--color-accent-watermelon) 100%);
 }
 
 .bg-festival-gradient-3 {
@@ -70,9 +61,9 @@
 }
 
 .bg-watermelon-gradient {
-  background: linear-gradient(135deg, #F8DD59 0%, #5FADD8 50%, #E23F72 100%);
+  background: linear-gradient(135deg, var(--color-accent-mango) 0%, var(--color-primary-blue) 50%, var(--color-accent-watermelon) 100%);
 }
 
 .bg-basil-gradient {
-  background: linear-gradient(135deg, #56AFE1 0%, #89C260 50%, #049948 100%);
+  background: linear-gradient(135deg, var(--color-primary-blue) 0%, var(--color-primary-green) 50%, var(--color-accent-basil) 100%);
 }

@@ -12,37 +12,37 @@ const FLAVORS = [
         id: "mango",
         name: "Mango Refresh",
         label: "/assets/label_full.png",
-        liquid: "#f97316",
-        cap: "#39FF14",
-        bg: "bg-[#FFD166]",          // Vivid Yellow
+        liquid: "#FFD166",
+        cap: "#111111",
+        bg: "bg-[#FFD166]",
         accent: "text-[#111111]",
         sub: "Fuse of Coconut and Mango",
         stickers: ["ZERO SUGAR ⚡", "100% NATURAL 🥥"],
-        btnBg: "bg-[#f97316]"        // Orange CTA
+        btnBg: "bg-[#111111]"
     },
     {
         id: "watermelon",
         name: "Watermelon Mint Reset",
         label: "/assets/watermelon_label_extracted.png",
-        liquid: "#ff4d4d",
-        cap: "#ff1a1a",
-        bg: "bg-[#FF66B2]",          // Vivid Pink
-        accent: "text-[#111111]",
+        liquid: "#E8314A",
+        cap: "#111111",
+        bg: "bg-[#E8314A]",
+        accent: "text-[#FFFFFF]",
         sub: "Fuse of Coconut, Watermelon and Mint",
-        stickers: ["RECHARGE 💦", "CITRULLINE 💪"],
-        btnBg: "bg-[#E23F72]"        // Deep Pink CTA
+        stickers: ["RECHARGE 💦", "PURE HYDRATION 💧"],
+        btnBg: "bg-[#111111]"
     },
     {
         id: "basil",
         name: "Basil Chili Revive",
         label: "/assets/chili_label_extracted.png",
-        liquid: "#cc0000",
-        cap: "#cc0000",
-        bg: "bg-[#39FF14]",          // Neon Green
+        liquid: "#39FF14",
+        cap: "#111111",
+        bg: "bg-[#39FF14]",
         accent: "text-[#111111]",
         sub: "Fuse of Coconut, Basil and Chili",
-        stickers: ["SPICY KICK 🔥", "LASER FOCUS 🧠"],
-        btnBg: "bg-[#cc0000]"        // Red CTA
+        stickers: ["SPICY KICK 🔥", "STAY HYDRATED 💧"],
+        btnBg: "bg-[#111111]"
     }
 ];
 
@@ -149,7 +149,7 @@ export default function FlavorShowcase() {
     return (
         <section ref={targetRef} id="flavours" className="relative h-[300dvh] md:h-auto bg-[#F7F7F7]">
             {/* Mobile: Sticky 100dvh wrapper | Desktop: Standard relative block */}
-            <div className="sticky top-0 h-[100dvh] md:relative md:top-auto md:h-auto w-full overflow-hidden flex flex-col justify-center py-0 md:py-24">
+            <div className="sticky top-0 h-[100dvh] md:relative md:top-auto md:h-auto w-full overflow-hidden flex flex-col justify-center py-0 md:py-24 z-[20] bg-[#F7F7F7]">
                 
                 {/* Header Container */}
                 <div className="w-full text-center px-4 md:px-6 pt-12 md:pt-0 shrink-0 transition-all duration-300 mb-2 md:mb-16">
@@ -158,7 +158,7 @@ export default function FlavorShowcase() {
                         whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                         className="text-4xl min-[400px]:text-5xl md:text-8xl lg:text-8xl font-heading font-black italic tracking-tighter text-[#111111] uppercase max-w-4xl mx-auto drop-shadow-sm"
                     >
-                        CHOOSE YOUR <span className="text-primary-blue bg-white inline-block px-3 py-0.5 md:px-4 md:py-1 border-2 md:border-4 border-[#111111] shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] rounded-[1.5rem] md:rounded-3xl transform rotate-2 mx-1 md:mx-2 whitespace-nowrap mt-2 md:mt-0">FUSE</span>
+                        CHOOSE YOUR <span className="text-primary-blue bg-white inline-block px-3 py-0.5 md:px-4 md:py-1 border-2 md:border-4 border-[#111111] shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] rounded-[1.5rem] md:rounded-3xl transform rotate-2 mx-1 md:mx-2 whitespace-nowrap mt-2 md:mt-0">FUSE.</span>
                     </motion.h2>
                     <p className="text-sm min-[400px]:text-base md:text-2xl font-heading font-bold italic text-gray-500 mt-2 md:mt-8 max-w-xl mx-auto uppercase tracking-wide leading-tight">
                         Zero Sugar. 100% Fun. Grab your flavor.

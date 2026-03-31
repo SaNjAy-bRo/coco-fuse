@@ -84,6 +84,11 @@ export default function Hero() {
     const marqueeX1 = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
     const marqueeX2 = useTransform(scrollYProgress, [0, 1], ["-50%", "0%"]);
 
+    // Mobile sequential scroll reveals (raw scrollY pixel values)
+    // Only the description box is hidden initially and reveals on scroll
+    const mobileDescOpacity = useTransform(scrollY, [80, 180], [0, 1]);
+    const mobileDescY = useTransform(scrollY, [80, 180], [40, 0]);
+
     const palettes = {
         mango: {
             bg: "bg-festival-gradient-1",
@@ -105,33 +110,33 @@ export default function Hero() {
             bg: "bg-watermelon-gradient",
             marquee1: "text-[#FAFAFA]",
             marquee2Stroke: "#0A0A0A",
-            pillBg: "bg-[#E23F72]",
-            pillDot: "bg-[#F8DD59]",
+            pillBg: "bg-[#E8314A]",
+            pillDot: "bg-[#FFD166]",
             pillText: "text-[#FAFAFA]",
-            pillBorder: "border-[#E23F72]",
-            head1: "text-[#E23F72]",
+            pillBorder: "border-[#E8314A]",
+            head1: "text-[#E8314A]",
             head2: "text-[#0A0A0A]",
             head3: "text-[#FAFAFA]",
-            btnBg: "bg-[#E23F72]",
+            btnBg: "bg-[#E8314A]",
             btnText: "text-[#FAFAFA]",
             descText: "text-white",
-            descAccent: "text-[#F8DD59]"
+            descAccent: "text-[#FFD166]"
         },
         basil: {
             bg: "bg-basil-gradient",
             marquee1: "text-[#0A0A0A]",
             marquee2Stroke: "#FAFAFA",
-            pillBg: "bg-[#FF1A1A]",
+            pillBg: "bg-[#39FF14]",
             pillDot: "bg-[#FAFAFA]",
-            pillText: "text-[#FAFAFA]",
-            pillBorder: "border-[#FF1A1A]",
+            pillText: "text-[#111111]",
+            pillBorder: "border-[#39FF14]",
             head1: "text-[#FAFAFA]",
             head2: "text-[#0A0A0A]",
-            head3: "text-[#FF1A1A]",
-            btnBg: "bg-[#FF1A1A]",
-            btnText: "text-[#FAFAFA]",
+            head3: "text-[#39FF14]",
+            btnBg: "bg-[#39FF14]",
+            btnText: "text-[#111111]",
             descText: "text-[#0A0A0A]",
-            descAccent: "text-[#CC0000]"
+            descAccent: "text-[#7ED956]"
         }
     };
     const p = palettes[flavorData.id];
@@ -141,7 +146,7 @@ export default function Hero() {
             ref={containerRef}
             className={`relative w-full min-h-[100dvh] lg:h-[200vh] ${p.bg} transition-colors duration-1000 z-20 flex flex-col lg:block`}
         >
-            <div className="lg:sticky top-0 min-h-[100dvh] lg:min-h-[600px] lg:h-[100dvh] w-full lg:overflow-hidden flex flex-col justify-center pb-6 lg:pb-0">
+            <div className="lg:sticky top-0 min-h-[100dvh] lg:min-h-[600px] lg:h-[100dvh] w-full lg:overflow-hidden flex flex-col justify-start lg:justify-center pb-6 lg:pb-0">
 
                 {/* Parallax Background Gradient Blobs - Removed for cleaner look */}
                 {/* <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-color-burn">
@@ -173,9 +178,9 @@ export default function Hero() {
                 {/* Main Text Content */}
                 <motion.div
                     style={isMobile ? undefined : { y: textY, opacity: textOpacity, willChange: "transform, opacity" }}
-                    className="container mx-auto px-5 md:px-6 lg:px-12 relative z-20 w-full flex-grow lg:flex-grow-0 lg:h-[100dvh] lg:min-h-[600px] pt-[75px] pb-4 min-[400px]:pt-[90px] min-[400px]:pb-[24px] lg:pt-[20vh] lg:pb-[10vh] flex flex-col justify-between lg:justify-start pointer-events-none"
+                    className="container mx-auto px-5 md:px-6 lg:px-12 relative z-20 w-full flex-grow lg:flex-grow-0 lg:h-[100dvh] lg:min-h-[600px] pt-[100px] min-[375px]:pt-[110px] min-[400px]:pt-[115px] pb-4 min-[400px]:pb-[24px] lg:pt-[20vh] lg:pb-[10vh] flex flex-col justify-start lg:justify-start pointer-events-none"
                 >
-                    <div className="w-full h-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left pointer-events-auto justify-between lg:justify-start lg:gap-2">
+                    <div className="w-full h-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left pointer-events-auto justify-start gap-3 lg:justify-start lg:gap-2">
 
                         {/* 1. TOP STACK: Status Pill & Headline */}
                         <div className="flex flex-col w-full pointer-events-auto text-center lg:text-left">
@@ -196,12 +201,12 @@ export default function Hero() {
                                 </motion.div>
                             </motion.div>
 
-                            {/* Kinetic Headline */}
+                            {/* Kinetic Headline — always visible on mobile */}
                             <div className="flex flex-col mb-1 min-[400px]:mb-3 md:mb-8 w-full drop-shadow-2xl mt-1 text-center lg:text-left items-center lg:items-start">
                                 {[
-                                    { text: "Hydrate", delay: 0.1, color: p.head1 },
+                                    { text: "Upgrade", delay: 0.1, color: p.head1 },
                                     { text: "The", delay: 0.2, color: p.head2 },
-                                    { text: "Fun.", delay: 0.3, color: p.head3 }
+                                    { text: "Drink.", delay: 0.3, color: p.head3 }
                                 ].map((line, i) => (
                                     <div key={i} className="relative flex w-full justify-center lg:justify-start py-1 lg:py-2">
                                         <motion.h1
@@ -232,7 +237,7 @@ export default function Hero() {
                             </motion.div>
                         </div>
 
-                        {/* 2. MIDDLE STACK: The "Can Stage" (Dynamically expands) inline, no absolute positioning */}
+                        {/* 2. MIDDLE STACK: The "Can Stage" — always visible on mobile */}
                         <div className="w-full lg:hidden flex-1 min-h-[40vh] md:min-h-[50vh] flex items-center justify-center pointer-events-none z-10">
                             {isMobile && vh > 0 && (
                                 <div className="w-[45vw] h-[90vw] max-w-[200px] max-h-[400px]">
@@ -259,26 +264,22 @@ export default function Hero() {
                                     Not a hydration drink.<br/>Not a soda.<br/>Not a juice.
                                 </p>
                                 <p className={`mt-4 font-heading font-bold italic ${p.descAccent} text-lg lg:text-xl uppercase tracking-wider drop-shadow-sm leading-tight bg-[#F7F7F7] px-4 py-3 rounded-2xl border-2 border-[#111111]/10`}>
-                                    Cocofuse is a guilt-free fun drink that happens to hydrate.
+                                    Cocofuse. is a guilt-free fun drink that happens to hydrate.
                                 </p>
                                 <div className="flex gap-3 mt-5 flex-wrap">
-                                    <span className="bg-[#111111] text-white text-xs lg:text-sm font-heading font-black italic uppercase px-4 py-1.5 rounded-full whitespace-nowrap shadow-[3px_3px_0px_#CC0000]">Zero Sugar ⚡</span>
-                                    <span className="bg-[#111111] text-white text-xs lg:text-sm font-heading font-black italic uppercase px-4 py-1.5 rounded-full whitespace-nowrap shadow-[3px_3px_0px_#39FF14]">Natural Energy 🔥</span>
+                                    <span className="bg-[#111111] text-white text-xs lg:text-sm font-heading font-black italic uppercase px-4 py-1.5 rounded-full whitespace-nowrap shadow-[3px_3px_0px_#7ED956]">Zero Sugar ⚡</span>
+                                    <span className="bg-[#111111] text-white text-xs lg:text-sm font-heading font-black italic uppercase px-4 py-1.5 rounded-full whitespace-nowrap shadow-[3px_3px_0px_#3AB6FD]">Pure Hydration 💧</span>
                                 </div>
                             </div>
                             {/* Redundant Desktop CTAs Removed */}
                         </motion.div>
 
-                        {/* 3. BOTTOM STACK: Subheading & CTAs (Mobile - Static Normal) */}
-                        <div className="flex flex-col w-full pointer-events-auto text-center lg:hidden items-center justify-end pb-8">
-                            {/* Subheading - Seamless Presentation */}
-                            {/* Subheading - Seamless Mobile Neo Pop */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
-                                className={`mt-0 mb-6 p-5 bg-white/95 backdrop-blur-md border-[3px] border-[#111111] shadow-[6px_6px_0px_#111111] rounded-[2rem] max-w-[85vw] mx-auto transform -rotate-1 transition-all duration-300 text-left`}
-                            >
+                        {/* 3. BOTTOM STACK: Description (Mobile — scroll-reveal) */}
+                        <motion.div
+                            style={isMobile ? { opacity: mobileDescOpacity, y: mobileDescY } : undefined}
+                            className="flex flex-col w-full pointer-events-auto text-center lg:hidden items-center justify-end pb-8"
+                        >
+                            <div className={`mt-0 mb-6 p-5 bg-white/95 backdrop-blur-md border-[3px] border-[#111111] shadow-[6px_6px_0px_#111111] rounded-[2rem] max-w-[85vw] mx-auto transform -rotate-1 transition-all duration-300 text-left`}>
                                 <p className="font-heading font-black italic text-[#111111] text-xl min-[400px]:text-2xl uppercase tracking-tighter leading-[0.9] drop-shadow-sm">
                                     Not a hydration drink.<br/>Not a soda.<br/>Not a juice.
                                 </p>
@@ -287,11 +288,10 @@ export default function Hero() {
                                 </p>
                                 <div className="flex gap-2 mt-4 flex-wrap">
                                     <span className="bg-[#111111] text-white text-[10px] min-[400px]:text-xs font-heading font-black italic uppercase px-3 py-1 rounded-full whitespace-nowrap shadow-[2px_2px_0px_#CC0000]">Zero Sugar ⚡</span>
-                                    <span className="bg-[#111111] text-white text-[10px] min-[400px]:text-xs font-heading font-black italic uppercase px-3 py-1 rounded-full whitespace-nowrap shadow-[2px_2px_0px_#39FF14]">Natural Energy 🔥</span>
+                                    <span className="bg-[#111111] text-white text-[10px] min-[400px]:text-xs font-heading font-black italic uppercase px-3 py-1 rounded-full whitespace-nowrap shadow-[2px_2px_0px_#3AB6FD]">Pure Hydration 💧</span>
                                 </div>
-                            </motion.div>
-                            {/* Redundant Mobile CTAs Removed */}
-                        </div>
+                            </div>
+                        </motion.div>
 
                     </div>
                 </motion.div>

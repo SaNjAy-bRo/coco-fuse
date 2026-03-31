@@ -26,7 +26,7 @@ const founders = [
         name: "Joel",
         role: "The Alchemist",
         tag: "Flavor Heart",
-        desc: "The maestro behind the blend. He refused to let CocoFuse look, taste, or BE boring. Joel brings the bold experimentation and the jazzy personality to our functional chemistry.",
+        desc: "The maestro behind the blend. He refused to let CocoFuse. look, taste, or BE boring. Joel brings the bold experimentation and the jazzy personality to our functional chemistry.",
         color: "#3AB6FD", // primary-blue
         bg: "bg-primary-blue/10",
         border: "border-primary-blue/20",
@@ -300,7 +300,7 @@ export default function AboutPage() {
                                     VISION <span className="text-primary-green">+</span> VIBE
                                 </span>
                                 <span className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-                                    BALANCE <span className="text-accent-watermelon">=</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango via-accent-watermelon to-primary-blue pr-2 drop-shadow-sm">FUSE</span>
+                                    BALANCE <span className="text-accent-watermelon">=</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango via-accent-watermelon to-primary-blue pr-2 drop-shadow-sm">FUSE.</span>
                                 </span>
                             </h3>
                             

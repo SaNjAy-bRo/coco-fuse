@@ -54,7 +54,7 @@ export default function CTASection() {
                                     whileTap={{ scale: 0.95 }}
                                     className="w-full bg-[#FF9F1C] text-[#111111] border-4 border-transparent shadow-[6px_6px_0px_#FFD166] hover:shadow-[2px_2px_0px_#FFD166] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider flex items-center justify-center gap-3 transition-all cursor-pointer"
                                 >
-                                    Get Your Fuse
+                                    Get Your Fuse.
                                     <ArrowRight strokeWidth={4} className="w-6 h-6" />
                                 </motion.button>
                             </Link>
@@ -80,7 +80,7 @@ export default function CTASection() {
                         >
                             <span className="bg-[#FFD166] text-[#111111] border-2 border-[#111111] rounded-full px-5 py-2 font-heading font-black italic tracking-widest text-xs md:text-sm uppercase shadow-[3px_3px_0px_#111111]">0% Added Sugar</span>
                             <span className="bg-[#39FF14] text-[#111111] border-2 border-[#111111] rounded-full px-5 py-2 font-heading font-black italic tracking-widest text-xs md:text-sm uppercase shadow-[3px_3px_0px_#111111]">100% Natural</span>
-                            <span className="bg-[#FF66B2] text-[#111111] border-2 border-[#111111] rounded-full px-5 py-2 font-heading font-black italic tracking-widest text-xs md:text-sm uppercase shadow-[3px_3px_0px_#111111]">Peak Focus</span>
+                            <span className="bg-[#3AB6FD] text-[#111111] border-2 border-[#111111] rounded-full px-5 py-2 font-heading font-black italic tracking-widest text-xs md:text-sm uppercase shadow-[3px_3px_0px_#111111]">Peak Hydration</span>
                         </motion.div>
                     </div>
                 </div>

@@ -33,8 +33,8 @@ export default function MascotJourney() {
         scrollYProgress,
         [0, 0.3, 0.4, 0.65, 0.75, 1],
         [
-            "#FF66B2", // Watermelon Morning
-            "#FF66B2",
+            "#E8314A", // Watermelon Morning (reddish-pink)
+            "#E8314A",
             "#FFD166", // Mango Afternoon
             "#FFD166",
             "#39FF14", // Chili Evening
