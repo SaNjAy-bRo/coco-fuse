@@ -81,7 +81,9 @@ export default function ParallaxBanner() {
                     >
                         <h2 className="text-[12vw] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] font-heading font-black italic uppercase tracking-tighter leading-[0.8] text-white drop-shadow-lg relative z-10 w-full">
                             THE POWER OF <br /> 
-                            <span className="text-[#39FF14] inline-block transform -rotate-2 mt-4 drop-shadow-[4px_4px_0px_#FFD166]">COCOFUSE</span>
+                            <span className="inline-block transform -rotate-2 mt-4 drop-shadow-[4px_4px_0px_#FFD166]">
+                                <span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE</span>
+                            </span>
                         </h2>
                     </motion.div>
                 </div>

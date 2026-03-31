@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap } from "lucide-react";
 
@@ -47,22 +48,26 @@ export default function CTASection() {
                             transition={{ delay: 0.5 }}
                             className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto"
                         >
-                            <motion.button
-                                whileHover={{ scale: 1.05, y: -3, rotate: -2 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="bg-[#FF9F1C] text-[#111111] border-4 border-transparent shadow-[6px_6px_0px_#FFD166] hover:shadow-[2px_2px_0px_#FFD166] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider flex items-center justify-center gap-3 transition-all"
-                            >
-                                Get Your Fuse
-                                <ArrowRight strokeWidth={4} className="w-6 h-6" />
-                            </motion.button>
+                            <Link href="#flavours" className="w-full sm:w-auto">
+                                <motion.button
+                                    whileHover={{ scale: 1.05, y: -3, rotate: -2 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-full bg-[#FF9F1C] text-[#111111] border-4 border-transparent shadow-[6px_6px_0px_#FFD166] hover:shadow-[2px_2px_0px_#FFD166] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider flex items-center justify-center gap-3 transition-all cursor-pointer"
+                                >
+                                    Get Your Fuse
+                                    <ArrowRight strokeWidth={4} className="w-6 h-6" />
+                                </motion.button>
+                            </Link>
 
-                            <motion.button
-                                whileHover={{ scale: 1.05, y: -3, backgroundColor: "#222" }}
-                                whileTap={{ scale: 0.95 }}
-                                className="bg-[#111111] text-[#F7F7F7] border-4 border-[#3AB6FD] shadow-[6px_6px_0px_#3AB6FD] hover:shadow-[2px_2px_0px_#3AB6FD] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider transition-all"
-                            >
-                                View Flavours
-                            </motion.button>
+                            <Link href="#flavours" className="w-full sm:w-auto">
+                                <motion.button
+                                    whileHover={{ scale: 1.05, y: -3, backgroundColor: "#222" }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-full bg-[#111111] text-[#F7F7F7] border-4 border-[#3AB6FD] shadow-[6px_6px_0px_#3AB6FD] hover:shadow-[2px_2px_0px_#3AB6FD] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider transition-all cursor-pointer"
+                                >
+                                    View Flavours
+                                </motion.button>
+                            </Link>
                         </motion.div>
 
                         {/* Trust Badge */}

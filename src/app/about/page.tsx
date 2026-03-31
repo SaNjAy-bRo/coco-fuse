@@ -56,9 +56,6 @@ function LiquidBackground() {
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             {/* Base Light/Premium BG */}
             <div className="absolute inset-0 bg-[#F7F7F7]" />
-            
-            {/* Noise Grain Texture */}
-            <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
             {/* Glowing Orbs */}
             <motion.div 
@@ -123,51 +120,44 @@ function AboutHero() {
         offset: ["start start", "end start"]
     });
 
-    const mascotY = useTransform(scrollYProgress, [0, 1], [0, 100]);
     const textY = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
     return (
-        <section ref={sectionRef} className="relative min-h-[90dvh] md:min-h-screen flex flex-col justify-end overflow-hidden">
-            <LiquidBackground />
-            
-            {/* Mascot Peeking */}
-            <motion.div 
-                style={{ y: mascotY }}
-                className="absolute right-[-5%] bottom-[-5%] w-[60%] h-[60%] md:w-[45%] md:h-[75%] opacity-20 md:opacity-40 pointer-events-none select-none z-10"
-            >
-                <Image
-                    src="/assets/mascot_isolated.png"
-                    alt="CocoFuse Mascot"
-                    fill
-                    className="object-contain object-bottom scale-110"
-                    priority
-                />
-            </motion.div>
-
-            <div className="container mx-auto px-6 md:px-12 relative z-20 pb-20 md:pb-32">
+        <section ref={sectionRef} className="relative min-h-[90dvh] md:min-h-screen flex flex-col justify-center overflow-hidden bg-[#F3F3F1] pt-32 pb-20">
+            <div className="container mx-auto px-6 md:px-12 relative z-20">
                 <motion.div style={{ y: textY }}>
                     <motion.span 
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="inline-block px-4 py-1.5 rounded-full border-2 border-[#111111] bg-white text-[#111111] shadow-[2px_2px_0px_#111111] font-heading font-black italic text-xs tracking-[0.4em] uppercase mb-8"
+                        className="inline-block px-5 py-2 rounded-full border-2 border-[#111111] bg-white text-[#111111] shadow-[4px_4px_0px_#111111] font-heading font-black italic text-[10px] md:text-sm tracking-[0.4em] uppercase mb-8"
                     >
                         The Humans of Fuse
                     </motion.span>
                     
-                    <RevealTitle 
-                        text="THE ARCHITECTS OF REFRESH"
-                        className="text-5xl sm:text-[10vw] md:text-[8vw] lg:text-[10rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] text-[#111111] drop-shadow-sm w-full"
-                    />
+                    <h1 className="text-[3.5rem] sm:text-7xl md:text-8xl lg:text-[7rem] xl:text-[8.5rem] leading-[0.85] font-heading font-black italic uppercase tracking-tighter text-[#111111] max-w-[95vw] md:max-w-full drop-shadow-sm flex flex-wrap max-w-full">
+                        <motion.span initial={{ y: "100%", opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="inline-block pb-2 mr-[0.3em]">
+                            THE
+                        </motion.span>
+                        <motion.span initial={{ y: "100%", opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.1 }} className="inline-block pb-2 mr-[0.3em]">
+                            ARCHITECTS
+                        </motion.span>
+                        <motion.span initial={{ y: "100%", opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="inline-block pb-2 mr-[0.3em]">
+                            OF
+                        </motion.span>
+                        <motion.span initial={{ y: "100%", opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.3 }} className="inline-block pb-2 text-[#3AB6FD] drop-shadow-[4px_4px_0px_#111111]">
+                            REFRESH
+                        </motion.span>
+                    </h1>
 
                     <motion.p 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8, duration: 1 }}
-                        className="mt-8 text-[#111111]/70 font-body font-bold text-lg md:text-2xl max-w-2xl leading-relaxed"
+                        className="mt-8 md:mt-12 text-[#111111]/80 font-body font-bold text-lg md:text-2xl lg:text-3xl max-w-3xl leading-relaxed"
                     >
-                        We didn't set out to build a brand. We set out to find a better way to hydrate. 
-                        Met on the trail, stayed for the obsession.
+                        We didn't set out to build a brand. We set out to find a better way to hydrate. <br className="hidden md:block" />
+                        <span className="text-[#111111] italic font-black">Met on the trail, stayed for the obsession.</span>
                     </motion.p>
                 </motion.div>
             </div>

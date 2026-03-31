@@ -2,12 +2,12 @@
 
 @theme {
   /* Ultra-Vibrant Festival Palette (NH17 Weekender inspired) */
-  --color-primary-green: #39FF14;
-  /* Neon Green */
-  --color-primary-blue: #00F0FF;
-  /* Electric Cyan */
-  --color-primary-white: #FAFAFA;
-  /* Keeps things crisp, but we'll use backgrounds elsewhere */
+  --color-primary-green: #7ED956;
+  /* Brand Green */
+  --color-primary-blue: #3AB6FD;
+  /* Brand Blue */
+  --color-primary-white: #F3F3F1;
+  /* Brand Off-White */
   --color-primary-yellow: #FFE800;
   /* Solar Yellow */
   --color-primary-pink: #FF007F;

@@ -29,12 +29,22 @@ export default function Features() {
     return (
         <section className="relative py-32 bg-black border-t border-white/10 overflow-hidden">
             <div className="container mx-auto px-6 relative z-10">
-                <div className="text-center mb-20">
+                <div className="text-center mb-20 relative">
+                    {/* Decorative Background Coconut */}
+                    <motion.img
+                        src="/2.svg"
+                        alt="Coconut Decor"
+                        initial={{ opacity: 0, rotate: -30 }}
+                        whileInView={{ opacity: 0.15, rotate: 10, y: [0, -30, 0] }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute -top-16 lg:-top-24 left-4 lg:left-32 w-32 h-32 md:w-56 md:h-56 z-0 pointer-events-none drop-shadow-2xl"
+                    />
+
                     <motion.h2
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
-                        className="text-5xl md:text-7xl font-black text-white uppercase"
+                        className="text-5xl md:text-7xl font-black text-white uppercase relative z-10"
                     >
                         Sip <span className="text-brand-green">N</span> Chill
                     </motion.h2>

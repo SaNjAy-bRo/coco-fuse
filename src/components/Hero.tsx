@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 
 const Scene = dynamic(() => import("./Scene"), { ssr: false });
 
-function MiniCoconutIcon({ liquid, active, onClick, name, hideLabel = false }: { liquid: string, active: boolean, onClick: () => void, name: string, hideLabel?: boolean }) {
+function MiniFruitIcon({ iconUrl, active, onClick, name, hideLabel = false }: { iconUrl: string, active: boolean, onClick: () => void, name: string, hideLabel?: boolean }) {
     return (
         <button 
             type="button"
@@ -18,19 +18,9 @@ function MiniCoconutIcon({ liquid, active, onClick, name, hideLabel = false }: {
             className={`relative z-10 flex flex-col items-center gap-2 group transition-all duration-500 scale-75 sm:scale-100 ${active ? 'scale-100 sm:scale-110 opacity-100' : 'opacity-60 hover:opacity-100 hover:scale-95 sm:hover:scale-105'}`}
         >
             <div 
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-xl border-2 border-white/40 flex flex-col items-center justify-center overflow-hidden transition-all duration-700 relative"
+                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-xl border-2 flex flex-col items-center justify-center overflow-hidden transition-all duration-700 relative backdrop-blur-md ${active ? 'border-white bg-white/20' : 'border-white/10 bg-black/10 group-hover:border-white/40 group-hover:bg-white/5'}`}
             >
-                {/* Diagonal color split to simulate dual flavor/coconut body */}
-                <div className="absolute inset-0 w-full h-full transition-all duration-700"
-                     style={{ background: `linear-gradient(135deg, var(--color-primary-green) 50%, ${liquid} 50%)` }}>
-                </div>
-                
-                {/* Inner white "coconut meat" / Frosted core */}
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 backdrop-blur-md shadow-inner border border-white/50 relative z-10 flex items-center justify-center">
-                     <span className="text-[10px] sm:text-xs font-heading font-black text-white drop-shadow-md">
-                         {name.substring(0,2).toUpperCase()}
-                     </span>
-                </div>
+                <img src={iconUrl} alt={name} className="w-10 h-10 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
             </div>
             {!hideLabel && (
                 <span className={`text-[9px] sm:text-[10px] font-heading font-black uppercase tracking-widest absolute -bottom-5 sm:-bottom-6 whitespace-nowrap transition-all duration-300 ${active ? 'opacity-100 text-white drop-shadow-md' : 'opacity-0 group-hover:opacity-100 text-white/70'}`}>
@@ -67,10 +57,19 @@ export default function Hero() {
     const textYDesktop = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]);
     const textYMobile = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
     const textY = isMobile ? textYMobile : textYDesktop;
+    
+    // Main text and deco block visuals
     const textOpacity = useTransform(scrollYProgress, [0, 0.8, 0.95], [1, 1, 0]);
     
-    // Toggles interaction state dynamically so invisible buttons don't block layout when scrolling
-    const pointerEventsControls = useTransform(scrollYProgress, [0, 0.8, 0.95], ["auto", "auto", "none"]);
+    // FAB & Dock Opacity Control (Vanish abruptly on mobile scrolling to prevent bleed)
+    const fabOpacityDesktop = useTransform(scrollYProgress, [0, 0.8, 0.95], [1, 1, 0]);
+    const fabOpacityMobile = useTransform(scrollYProgress, [0, 0.02, 0.15], [1, 1, 0]);
+    const fabOpacity = isMobile ? fabOpacityMobile : fabOpacityDesktop;
+
+    // Interaction toggle so invisible buttons don't trap layout taps
+    const btnEventDesktop = useTransform(scrollYProgress, [0, 0.8, 0.95], ["auto", "auto", "none"]);
+    const btnEventMobile = useTransform(scrollYProgress, [0, 0.02, 0.15], ["auto", "auto", "none"]);
+    const pointerEventsControls = isMobile ? btnEventMobile : btnEventDesktop;
 
     // CTA Reveal Logic for Desktop (Hidden at top, appears on scroll)
     const ctaOpacityDesktop = useTransform(scrollYProgress, [0, 0.08], [0, 1]);
@@ -140,9 +139,9 @@ export default function Hero() {
     return (
         <section
             ref={containerRef}
-            className={`relative w-full h-[200vh] ${p.bg} transition-colors duration-1000 z-10`}
+            className={`relative w-full min-h-[100dvh] lg:h-[200vh] ${p.bg} transition-colors duration-1000 z-20 flex flex-col lg:block`}
         >
-            <div className="sticky top-0 h-[100dvh] min-h-[600px] w-full overflow-hidden flex flex-col justify-center">
+            <div className="lg:sticky top-0 min-h-[100dvh] lg:min-h-[600px] lg:h-[100dvh] w-full lg:overflow-hidden flex flex-col justify-center pb-6 lg:pb-0">
 
                 {/* Parallax Background Gradient Blobs - Removed for cleaner look */}
                 {/* <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-color-burn">
@@ -173,8 +172,8 @@ export default function Hero() {
 
                 {/* Main Text Content */}
                 <motion.div
-                    style={{ y: textY, opacity: textOpacity, willChange: "transform, opacity" }}
-                    className="container mx-auto px-5 md:px-6 lg:px-12 relative z-20 w-full h-[100dvh] min-h-[600px] pt-[75px] pb-3 min-[400px]:pt-[90px] min-[400px]:pb-[80px] lg:pt-[20vh] lg:pb-[10vh] flex flex-col justify-between lg:justify-start pointer-events-none"
+                    style={isMobile ? undefined : { y: textY, opacity: textOpacity, willChange: "transform, opacity" }}
+                    className="container mx-auto px-5 md:px-6 lg:px-12 relative z-20 w-full flex-grow lg:flex-grow-0 lg:h-[100dvh] lg:min-h-[600px] pt-[75px] pb-4 min-[400px]:pt-[90px] min-[400px]:pb-[24px] lg:pt-[20vh] lg:pb-[10vh] flex flex-col justify-between lg:justify-start pointer-events-none"
                 >
                     <div className="w-full h-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left pointer-events-auto justify-between lg:justify-start lg:gap-2">
 
@@ -316,7 +315,7 @@ export default function Hero() {
             </div >
 
             {/* DYNAMIC FIXED LAYER FOR SELECTORS */}
-            <motion.div style={{ opacity: textOpacity }} className="fixed inset-0 z-[100] pointer-events-none">
+            <motion.div style={{ opacity: fabOpacity }} className="fixed inset-0 z-[100] pointer-events-none">
                 {/* DESKTOP FLAVOR SELECTOR DOCK (Bottom Center) */}
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
@@ -325,13 +324,13 @@ export default function Hero() {
                     style={{ pointerEvents: pointerEventsControls as any }}
                     className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-3 mix-blend-difference xl:mix-blend-normal"
                 >
-                    <span className="text-[10px] sm:text-xs font-heading font-black uppercase tracking-[0.2em] text-white/50">Switch Flavor</span>
+                    <span className="text-[10px] sm:text-xs font-heading font-black uppercase tracking-[0.2em] text-white/50">Fuse Flavor</span>
                     <div className="flex gap-2 sm:gap-4 bg-black/20 backdrop-blur-md p-3 sm:p-4 rounded-3xl border border-white/10 shadow-2xl">
                         {(Object.keys(FLAVORS) as FlavorID[]).map((flavorKey) => (
-                            <MiniCoconutIcon 
+                            <MiniFruitIcon 
                                 key={flavorKey}
                                 name={FLAVORS[flavorKey].name.split(" ")[0]}
-                                liquid={FLAVORS[flavorKey].liquid}
+                                iconUrl={FLAVORS[flavorKey].icon}
                                 active={flavorData.id === flavorKey}
                                 onClick={() => setFlavor(flavorKey)}
                             />
@@ -379,16 +378,17 @@ export default function Hero() {
                     {/* The Main Dot / FAB */}
                     <button 
                         onClick={() => setIsMobileSelectorOpen(!isMobileSelectorOpen)}
-                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.4)] border border-white/30 flex items-center justify-center transition-transform active:scale-95 relative z-50 backdrop-blur-md"
-                        style={{ backgroundColor: isMobileSelectorOpen ? '#000000' : flavorData.liquid }}
+                        className="w-20 h-20 sm:w-24 sm:h-24 transition-transform active:scale-95 hover:scale-105 relative z-50 focus:outline-none flex items-center justify-center group"
                     >
                         {isMobileSelectorOpen ? (
-                            <span className="text-white font-body text-2xl font-light mb-1">&times;</span>
+                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/20 flex items-center justify-center">
+                                <span className="text-white font-body text-4xl font-light mb-1">&times;</span>
+                            </div>
                         ) : (
-                            <>
-                                <div className="w-5 h-5 rounded-full bg-white/30 backdrop-blur-sm shadow-inner" />
-                                <span className="absolute -top-2 -right-2 bg-white text-black text-[9px] font-heading font-black px-2 py-1 rounded-full uppercase tracking-widest shadow-xl">Switch</span>
-                            </>
+                            <div className="relative w-full h-full flex items-center justify-center">
+                                <img src="/1.svg" alt="Fuse Flavor" className="w-full h-full object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] group-hover:drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)] transition-all duration-300" />
+                                <span className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-black text-white text-[10px] sm:text-xs font-heading font-black px-3 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-xl border border-white/20">Fuse</span>
+                            </div>
                         )}
                     </button>
                 </motion.div>
