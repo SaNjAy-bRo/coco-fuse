@@ -4,6 +4,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/CustomCursor";
+import localFont from "next/font/local";
 import { FlavorProvider } from "@/context/FlavorContext";
 
 const bodyFont = Poppins({
@@ -24,6 +25,13 @@ const scriptFont = Pacifico({
   variable: "--font-script",
 });
 
+const wedgesFont = localFont({
+  src: "../../public/wedges.regular.ttf",
+  variable: "--font-wedges",
+  weight: "400",
+  style: "normal",
+});
+
 export const metadata: Metadata = {
   title: "CocoFuse. | Fun, Clean Fuel for Real Life",
   description: "Flavoured coconut water with zero nonsense. The anti-soda. The anti-sugar. The anti-boring.",
@@ -37,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${bodyFont.variable} ${headingFont.variable} ${scriptFont.variable} font-body antialiased bg-primary-white text-accent-premium ${"custom-cursor"}`}
+        className={`${bodyFont.variable} ${headingFont.variable} ${scriptFont.variable} ${wedgesFont.variable} font-body antialiased bg-primary-white text-accent-premium custom-cursor`}
       >
         <FlavorProvider>
           <CustomCursor />

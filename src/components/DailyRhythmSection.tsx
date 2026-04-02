@@ -8,7 +8,7 @@ const RHYTHMS = [
   {
     phase: "THE WAKE-UP",
     headline: "Prime your body & hydrate the system awake.",
-    copy: "Skip the heavy coffee crash. Pure, clean coconut hydration to start the engine.",
+    copy: <>Skip the heavy coffee crash. Pure, clean coconut hydration to start the engine.</>,
     image: "/watermelon/watermelon_monkey.png",
     bg: "bg-[#E8314A]",          // Watermelon reddish-pink — matches flavor palette
     accent: "text-[#111111]",
@@ -17,7 +17,7 @@ const RHYTHMS = [
   {
     phase: "THE MIDDAY SURGE",
     headline: "Recharge your body with pure tropical hydration.",
-    copy: "That post-lunch fog? Cleared. Blast through the rest of the day with CocoFuse. mango goodness.",
+    copy: <>That post-lunch fog? Cleared. Blast through the rest of the day with <span className="font-wedges whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span> mango goodness.</>,
     image: "/mango/mango_monkey.png",
     bg: "bg-[#FFD166]",          // Mango Yellow — matches flavor palette
     accent: "text-[#111111]",
@@ -26,7 +26,7 @@ const RHYTHMS = [
   {
     phase: "THE NIGHT MODE",
     headline: "Keep the vibe alive without the sugary hangover.",
-    copy: "The sun goes down, the shades come on. A spicy kick and staying hydrated to ignite the night.",
+    copy: <>The sun goes down, the shades come on. A spicy kick and staying hydrated to ignite the night.</>,
     image: "/chilli/chilli_monkey.png",
     bg: "bg-[#39FF14]",          // Basil Neon Green — matches flavor palette
     accent: "text-[#111111]",
@@ -110,7 +110,7 @@ export default function DailyRhythmSection() {
                                 initial={{ opacity: 0, y: 100 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 onViewportEnter={() => setActiveIndex(index)}
-                                viewport={{ margin: "-30% 0px -30% 0px" }}
+                                viewport={{ margin: "-45% 0px -45% 0px", once: false }}
                                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                                 className={`w-full group`}
                             >

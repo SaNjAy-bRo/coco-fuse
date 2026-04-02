@@ -88,16 +88,7 @@ export default function MascotJourney() {
                 className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center px-6 py-4 md:p-8"
                 style={{ backgroundColor: bgColor }}
             >
-                {/* Decorative Coconut on the side */}
-                <motion.img
-                    src="/2.svg"
-                    alt="Coconut Decor"
-                    className="absolute top-10 right-4 md:top-20 md:right-20 w-32 h-32 md:w-64 md:h-64 z-0 pointer-events-none opacity-80 md:opacity-100 drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
-                    style={{
-                        rotate: useTransform(scrollYProgress, [0, 1], [0, 180]),
-                        y: useTransform(scrollYProgress, [0, 1], [0, 150])
-                    }}
-                />
+
 
                 {scenes.map((scene, i) => (
                     <motion.div

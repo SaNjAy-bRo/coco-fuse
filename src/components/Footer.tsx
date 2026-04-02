@@ -17,8 +17,8 @@ export default function Footer() {
                     className="mb-16 md:mb-24 w-full"
                 >
                     <h2 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] mb-4 md:mb-6">
-                        <span className="text-[#7ED956] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF]">COCO</span>
-                        <span className="text-[#3AB6FD] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF]">FUSE.</span>
+                        <span className="font-wedges tracking-normal text-[#7ED956] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF]">COCO</span>
+                        <span className="font-wedges tracking-normal text-[#3AB6FD] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF]">FUSE.</span>
                     </h2>
                     <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-body font-medium text-white tracking-wide">
                         The anti-soda. The anti-sugar. <span className="text-[#E8314A] font-heading font-black italic uppercase drop-shadow-[2px_2px_0px_#FFD166]">The anti-boring.</span>
@@ -53,7 +53,7 @@ export default function Footer() {
                 </div>
 
                 <div className="w-full flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm border-t border-white/5 pt-8">
-                    <p>© {new Date().getFullYear()} CocoFuse. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} <span className="font-wedges whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span> All rights reserved.</p>
                     <p className="mt-4 md:mt-0">Clean hydration with attitude.</p>
                 </div>
             </div>

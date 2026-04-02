@@ -17,6 +17,7 @@
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
   --font-script: var(--font-script);
+  --font-wedges: var(--font-wedges);
 }
 
 @layer base {

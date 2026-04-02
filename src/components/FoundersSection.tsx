@@ -18,7 +18,7 @@ export default function FoundersSection() {
             name: "Joel",
             role: "The Engine. The Flavor Maestro. The Vibes Department.",
             agencyTag: "The Brand Heartbeat",
-            desc: "The guy who said CocoFuse. cannot look, taste, or BE boring. He brings the bold experimentation, insane combinations, and the jazzy personality.",
+            desc: "The guy who said <span className=\"font-wedges whitespace-nowrap\"><span className=\"text-[#7ED956]\">COCO</span><span className=\"text-[#3AB6FD]\">FUSE.</span></span> cannot look, taste, or BE boring. He brings the bold experimentation, insane combinations, and the jazzy personality.",
             bg: "bg-primary-blue/20",
             border: "border-primary-blue",
             image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=600&auto=format&fit=crop" // Cool, expressive vibes
@@ -125,7 +125,7 @@ export default function FoundersSection() {
                         <span className="text-accent-watermelon">+</span>
                         <span>Balance</span>
                         <span className="text-accent-watermelon">=</span>
-                        <span className="text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon">FUSE.</span>
+                        <span className="font-wedges tracking-normal text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon">FUSE.</span>
                     </h3>
                 </motion.div>
             </div>

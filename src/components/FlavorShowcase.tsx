@@ -158,7 +158,7 @@ export default function FlavorShowcase() {
                         whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                         className="text-4xl min-[400px]:text-5xl md:text-8xl lg:text-8xl font-heading font-black italic tracking-tighter text-[#111111] uppercase max-w-4xl mx-auto drop-shadow-sm"
                     >
-                        CHOOSE YOUR <span className="text-primary-blue bg-white inline-block px-3 py-0.5 md:px-4 md:py-1 border-2 md:border-4 border-[#111111] shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] rounded-[1.5rem] md:rounded-3xl transform rotate-2 mx-1 md:mx-2 whitespace-nowrap mt-2 md:mt-0">FUSE.</span>
+                        CHOOSE YOUR <span className="font-wedges tracking-normal text-primary-blue bg-white inline-block px-3 py-0.5 md:px-4 md:py-1 border-2 md:border-4 border-[#111111] shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] rounded-[1.5rem] md:rounded-3xl transform rotate-2 mx-1 md:mx-2 whitespace-nowrap mt-2 md:mt-0">FUSE.</span>
                     </motion.h2>
                     <p className="text-sm min-[400px]:text-base md:text-2xl font-heading font-bold italic text-gray-500 mt-2 md:mt-8 max-w-xl mx-auto uppercase tracking-wide leading-tight">
                         Zero Sugar. 100% Fun. Grab your flavor.
