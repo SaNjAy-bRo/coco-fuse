@@ -37,14 +37,14 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             pairingImage: "/assets/mango_pairing.jpg" // fallback aesthetic conceptually
         },
         watermelon: {
-            bg: "bg-gradient-to-br from-[#FFF2F6] via-[#FFD6E4] to-[#FF9EBB]",
-            blob: "bg-pink-400/20",
-            textMain: "text-[#E23F72]",
-            textSub: "text-[#C12555]",
-            btnBg: "bg-[#E23F72]",
+            bg: "bg-gradient-to-br from-[#FFF0F2] via-[#FDBAC5] to-[#E8314A]",
+            blob: "bg-[#E8314A]/20",
+            textMain: "text-[#E8314A]",
+            textSub: "text-[#C11833]",
+            btnBg: "bg-[#E8314A]",
             btnText: "text-white",
             accent: "text-[#F8DD59]",
-            iconBg: "bg-pink-100",
+            iconBg: "bg-[#E8314A]/10",
         },
         basil: {
             bg: "bg-gradient-to-br from-[#F2FFF5] via-[#D1EED5] to-[#A3DEAB]",

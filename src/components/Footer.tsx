@@ -17,11 +17,11 @@ export default function Footer() {
                     className="mb-16 md:mb-24 w-full"
                 >
                     <h2 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] mb-4 md:mb-6">
-                        <span className="font-wedges tracking-normal text-[#7ED956] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF]">COCO</span>
-                        <span className="font-wedges tracking-normal text-[#3AB6FD] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF]">FUSE.</span>
+                        <span className="font-wedges tracking-normal text-[#7ED956]">COCO</span>
+                        <span className="font-wedges tracking-normal text-[#3AB6FD]">FUSE.</span>
                     </h2>
                     <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-body font-medium text-white tracking-wide">
-                        The anti-soda. The anti-sugar. <span className="text-[#E8314A] font-heading font-black italic uppercase drop-shadow-[2px_2px_0px_#FFD166]">The anti-boring.</span>
+                        The anti-soda. The anti-sugar. <span className="text-[#E8314A] font-heading font-black italic uppercase">The anti-boring.</span>
                     </p>
                 </motion.div>
 

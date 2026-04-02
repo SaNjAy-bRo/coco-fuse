@@ -8,7 +8,7 @@ export default function ParallaxBanner() {
         {
             title: "A UNIQUE BLEND",
             desc: "The goodness of coconut water with refreshing fruit flavors — giving you the best of both worlds",
-            color: "bg-[#FFD166]", // Vibrant Yellow
+            color: "bg-[#FFD166]", // Mango Yellow
             icon: (
                 <svg className="w-16 h-16 md:w-24 md:h-24 text-[#111111] drop-shadow-md" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
@@ -18,7 +18,7 @@ export default function ParallaxBanner() {
         {
             title: "NATURAL HYDRATION FORMULA",
             desc: "Made with coconut electrolytes and essential B-vitamins to give you steady energy — without crashes",
-            color: "bg-[#FF9F1C]", // Vibrant Orange
+            color: "bg-[#7ED956]", // Primary Green
             icon: (
                 <svg className="w-16 h-16 md:w-24 md:h-24 text-[#111111] drop-shadow-md" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M13 2L3 14h9l-1 8 10-14h-8l2-8z" />
@@ -28,7 +28,7 @@ export default function ParallaxBanner() {
         {
             title: "ZERO ADDED SUGAR",
             desc: "No crash, no empty calories. Just pure, clean energy",
-            color: "bg-[#E8314A]",
+            color: "bg-[#E8314A]", // Watermelon
             icon: (
                 <svg className="w-16 h-16 md:w-24 md:h-24 text-[#111111] drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -38,7 +38,7 @@ export default function ParallaxBanner() {
         {
             title: "CLEAN HYDRATION",
             desc: "Rehydrates your body faster than plain water by restoring lost minerals",
-            color: "bg-[#3AB6FD]", // Electric Blue
+            color: "bg-[#3AB6FD]", // Primary Blue
             icon: (
                 <svg className="w-16 h-16 md:w-24 md:h-24 text-[#111111] drop-shadow-md" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
@@ -48,7 +48,7 @@ export default function ParallaxBanner() {
         {
             title: "NO ARTIFICIAL COLORS",
             desc: "What you see is what you get! 100% transparent ingredients!",
-            color: "bg-[#9D4EDD]", // Purple
+            color: "bg-[#F3F3F1]", // Brand Off-White
             icon: (
                 <svg className="w-16 h-16 md:w-24 md:h-24 text-[#111111] drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -58,7 +58,7 @@ export default function ParallaxBanner() {
         {
             title: "LIGHT & LOW-CALORIE",
             desc: "Only ~20 kcal per 100 ml — refreshes without weighing you down",
-            color: "bg-[#39FF14]", // Neon Green
+            color: "bg-[#39FF14]", // Basil Neon Green
             icon: (
                 <svg className="w-16 h-16 md:w-24 md:h-24 text-[#111111] drop-shadow-md" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2c0 0-5 6-5 11a5 5 0 0010 0c0-5-5-11-5-11z" />
@@ -81,7 +81,7 @@ export default function ParallaxBanner() {
                     >
                         <h2 className="text-[12vw] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] font-heading font-black italic uppercase tracking-tighter leading-[0.8] text-white drop-shadow-lg relative z-10 w-full">
                             THE POWER OF <br /> 
-                            <span className="inline-block transform -rotate-2 mt-4 drop-shadow-[4px_4px_0px_white]">
+                            <span className="inline-block transform -rotate-2 mt-4">
                                 <span className="font-wedges tracking-normal text-[#7ED956]">COCO</span><span className="font-wedges tracking-normal text-[#3AB6FD]">FUSE.</span>
                             </span>
                         </h2>

@@ -24,7 +24,7 @@ export default function CTASection() {
                             className="text-[11vw] sm:text-[4.5rem] lg:text-[6.5rem] font-heading font-black italic text-[#F7F7F7] uppercase tracking-tighter leading-[0.95] md:leading-[0.8] mb-8 relative z-20 drop-shadow-sm"
                         >
                             LEVEL UP YOUR <br className="hidden md:block" />
-                            DAILY <span className="text-[#3AB6FD] drop-shadow-[2px_2px_0px_#FFFFFF] md:drop-shadow-[4px_4px_0px_#FFFFFF] block md:inline-block mt-1 md:mt-0">HYDRATION</span>
+                            DAILY <span className="text-[#3AB6FD] block md:inline-block mt-1 md:mt-0">HYDRATION</span>
                         </motion.h2>
 
                         {/* Cleaned up Description */}
