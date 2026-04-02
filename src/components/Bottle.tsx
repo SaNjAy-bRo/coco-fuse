@@ -1,16 +1,22 @@
 "use client";
 
-import React, { useRef, useMemo, useEffect } from "react";
+import React, { useRef, useMemo, useEffect, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { useTexture, useGLTF } from "@react-three/drei";
 import { MotionValue } from "framer-motion";
 import * as THREE from "three";
+import { GLTF } from "three-stdlib";
+
+type GLTFResult = GLTF & {
+    nodes: { mesh_0: THREE.Mesh };
+    materials: {};
+};
 
 export default function Bottle({ 
     scrollY, 
     vh = 0, 
     labelPath = "/assets/label_full.png", 
-    liquidColor = "#f97316",
+    liquidColor = "#f97316", // kept for context of flavor changes, but we use it for cap
     capColor = "#39FF14"
 }: { 
     scrollY?: MotionValue<number>, 
@@ -20,12 +26,9 @@ export default function Bottle({
     capColor?: string
 }) {
     const groupRef = useRef<THREE.Group>(null);
-    const wrapperRef = useRef<THREE.Mesh>(null);
-    const liquidRef = useRef<THREE.Mesh>(null);
-    const capRef1 = useRef<THREE.Mesh>(null);
-    const capRef2 = useRef<THREE.Mesh>(null);
 
-    // Load all textures upfront for zero-latency switching
+    const { nodes } = useGLTF('/Meshy_AI_Clear_plastic_water_b_0402103114_texture.glb') as unknown as GLTFResult;
+
     const mangoTex = useTexture("/assets/label_full.png");
     const watermelonTex = useTexture("/assets/watermelon_label_extracted.png");
     const chiliTex = useTexture("/assets/chili_label_extracted.png");
@@ -36,13 +39,10 @@ export default function Bottle({
         "/assets/chili_label_extracted.png": chiliTex
     }), [mangoTex, watermelonTex, chiliTex]);
 
-    // Internal state for smoothing color and texture transitions
     const state = useRef({
         prevTexture: textureMap[labelPath as keyof typeof textureMap] || mangoTex,
         currTexture: textureMap[labelPath as keyof typeof textureMap] || mangoTex,
-        transition: 1, // 0 to 1
-        prevLiquid: new THREE.Color(liquidColor),
-        currLiquid: new THREE.Color(liquidColor),
+        transition: 1, 
         prevCap: new THREE.Color(capColor),
         currCap: new THREE.Color(capColor)
     });
@@ -54,158 +54,156 @@ export default function Bottle({
             state.current.currTexture = nextTex;
             state.current.transition = 0;
             
-            state.current.prevLiquid.copy(state.current.currLiquid);
-            state.current.currLiquid.set(liquidColor);
-            
             state.current.prevCap.copy(state.current.currCap);
             state.current.currCap.set(capColor);
         }
-    }, [labelPath, liquidColor, capColor, textureMap, mangoTex]);
+    }, [labelPath, capColor, textureMap, mangoTex]);
 
-    // Configure textures
     useMemo(() => {
         [mangoTex, watermelonTex, chiliTex].forEach(tex => {
-            tex.center.set(0.5, 0.5);
-            tex.rotation = Math.PI;
-            tex.repeat.set(-1, 1);
-            tex.flipY = false;
-            tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.wrapT = THREE.ClampToEdgeWrapping;
+            tex.flipY = true; // Use default three.js convention to fix upside down
         });
     }, [mangoTex, watermelonTex, chiliTex]);
 
-    // Custom Shader for Cross-Fade
+    const bounds = useMemo(() => {
+        if (!nodes.mesh_0) return { min: -1, max: 1 };
+        nodes.mesh_0.geometry.computeBoundingBox();
+        const box = nodes.mesh_0.geometry.boundingBox;
+        if (box) return { min: box.min.y, max: box.max.y };
+        return { min: -1, max: 1 };
+    }, [nodes]);
+
+    const totalHeight = bounds.max - bounds.min;
+    const labelYMin = bounds.min + totalHeight * 0.01; // LOWERED to increase label down
+    const labelYMax = bounds.min + totalHeight * 0.71;
+    const capThreshold = bounds.min + totalHeight * 0.86; // top 14% is cap
+
+    // Advanced Label Material using dynamic cylindrical unwrapping on the AI mesh
     const wrapperMaterial = useMemo(() => {
-        return new THREE.ShaderMaterial({
-            uniforms: {
-                tex1: { value: state.current.prevTexture },
-                tex2: { value: state.current.currTexture },
-                mixRatio: { value: 1.0 },
-            },
-            vertexShader: `
-                varying vec2 vUv;
-                void main() {
-                    vUv = vec2(uv.x, 1.0 - uv.y);
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-            `,
-            fragmentShader: `
+        const mat = new THREE.MeshStandardMaterial({
+            roughness: 0.2,
+            metalness: 0.1,
+            envMapIntensity: 1.5,
+            transparent: true,
+            side: THREE.DoubleSide
+        });
+        
+        mat.onBeforeCompile = (shader) => {
+            mat.userData.shader = shader;
+            shader.uniforms.tex1 = { value: state.current.prevTexture };
+            shader.uniforms.tex2 = { value: state.current.currTexture };
+            shader.uniforms.mixRatio = { value: 1.0 };
+            
+            shader.vertexShader = `
+                varying vec3 vLocalPos;
+            ` + shader.vertexShader;
+            
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <begin_vertex>',
+                `
+                #include <begin_vertex>
+                vLocalPos = position;
+                `
+            );
+            
+            shader.fragmentShader = `
                 uniform sampler2D tex1;
                 uniform sampler2D tex2;
                 uniform float mixRatio;
-                varying vec2 vUv;
-                void main() {
-                    vec4 c1 = texture2D(tex1, vUv);
-                    vec4 c2 = texture2D(tex2, vUv);
-                    gl_FragColor = mix(c1, c2, mixRatio);
-                }
-            `,
-            side: THREE.DoubleSide
+                varying vec3 vLocalPos;
+            ` + shader.fragmentShader;
+            
+            shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <map_fragment>',
+                `
+                float localY = vLocalPos.y; 
+                float yMin = ${labelYMin.toFixed(5)};
+                float yMax = ${labelYMax.toFixed(5)};
+                
+                // Perfectly clip exactly where the label ends top/bottom
+                if (localY < yMin || localY > yMax) discard;
+                
+                // Cylindrical Unwrapping of the raw AI Mesh
+                // atan returns values between -PI and PI
+                // Using (vLocalPos.x, vLocalPos.z) reads text normally left-to-right
+                float angle = atan(vLocalPos.x, vLocalPos.z); 
+                float u = angle / (2.0 * 3.14159265359) + 0.5;
+                float v = (localY - yMin) / (yMax - yMin);
+                
+                vec2 cylUv = vec2(u, v);
+                
+                vec4 c1 = texture2D(tex1, cylUv);
+                vec4 c2 = texture2D(tex2, cylUv);
+                vec4 texelColor = mix(c1, c2, mixRatio);
+                diffuseColor *= texelColor;
+                `
+            );
+        };
+        return mat;
+    }, [labelYMin, labelYMax]);
+
+    const capMaterial = useMemo(() => {
+        const mat = new THREE.MeshStandardMaterial({ 
+            roughness: 0.8, 
+            metalness: 0.1, 
+            envMapIntensity: 1.0, // crucial for it not to be completely black!
+            color: state.current.currCap
         });
-    }, []);
-
-    const { bottlePoints, wrapperPoints, liquidPoints } = useMemo(() => {
-        const getBottlePoints = () => {
-            const p: THREE.Vector2[] = [];
-            const pushP = (x: number, y: number) => p.push(new THREE.Vector2(x, y));
-            pushP(0, -2.6); pushP(0.8, -2.6);
-            for(let i=1; i<=10; i++) {
-                const angle = (i/10) * Math.PI/2;
-                pushP(0.8 + 0.3 * Math.sin(angle), -2.6 + 0.2 * (1 - Math.cos(angle)));
-            }
-            for(let i=1; i<=10; i++) {
-                const t = i/10;
-                pushP(1.1 - 0.08 * t, -2.4 + 1.9 * t);
-            }
-            for(let i=1; i<=10; i++) {
-                const t = i/10;
-                pushP(1.02 + 0.18 * t, -0.5 + 1.9 * t);
-            }
-            for(let i=1; i<=15; i++) {
-                const t = i/15;
-                pushP(0.65 + 0.55 * (0.5 + 0.5 * Math.cos(t * Math.PI)), 1.4 + 0.9 * t);
-            }
-            pushP(0.65, 2.5);
-            pushP(0.7, 2.5); pushP(0.7, 2.65); pushP(0.65, 2.65);
-            pushP(0.65, 3.0); pushP(0, 3.0);
-            return p;
+        mat.onBeforeCompile = (shader) => {
+            mat.userData.shader = shader;
+            
+            shader.vertexShader = `
+                varying vec3 vLocalPosCap;
+            ` + shader.vertexShader;
+            
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <begin_vertex>',
+                `
+                #include <begin_vertex>
+                vLocalPosCap = position;
+                `
+            );
+            
+            shader.fragmentShader = `
+                varying vec3 vLocalPosCap;
+            ` + shader.fragmentShader;
+            
+            shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <color_fragment>',
+                `
+                #include <color_fragment>
+                float cThresh = ${capThreshold.toFixed(5)};
+                if (vLocalPosCap.y < cThresh) discard;
+                `
+            );
         };
-
-        const getWrapperPoints = () => {
-            const p: THREE.Vector2[] = [];
-            const pushP = (x: number, y: number) => p.push(new THREE.Vector2(x + 0.015, y));
-            const STEPS = 30;
-            const startY = -2.1;
-            const endY = 1.45;
-            for(let i=0; i<=STEPS; i++) {
-                const t = i/STEPS;
-                const y = startY + (endY - startY) * t;
-                let x = 0;
-                if (y < -0.5) {
-                    const segT = (y + 2.4) / 1.9;
-                    x = 1.1 - 0.08 * Math.max(0, segT);
-                } else if (y < 1.4) {
-                    const segT = (y + 0.5) / 1.9;
-                    x = 1.02 + 0.18 * segT;
-                } else {
-                    const segT = (y - 1.4) / 0.9;
-                    x = 0.65 + 0.55 * (0.5 + 0.5 * Math.cos(segT * Math.PI));
-                }
-                pushP(x, y);
-            }
-            return p;
-        };
-
-        const getLiquidPoints = () => {
-            const p: THREE.Vector2[] = [];
-            const pushP = (x: number, y: number) => p.push(new THREE.Vector2(x * 0.96, y));
-            pushP(0, -2.55); pushP(0.8, -2.55);
-            for(let i=1; i<=10; i++) {
-                const angle = (i/10) * Math.PI/2;
-                pushP(0.8 + 0.3 * Math.sin(angle), -2.6 + 0.2 * (1 - Math.cos(angle)));
-            }
-            for(let i=1; i<=10; i++) {
-                pushP(1.1 - 0.08 * (i/10), -2.4 + 1.9 * (i/10));
-            }
-            for(let i=1; i<=10; i++) {
-                pushP(1.02 + 0.18 * (i/10), -0.5 + 1.9 * (i/10));
-            }
-            for(let i=1; i<=10; i++) {
-                const t = i/10;
-                pushP(0.65 + 0.55 * (0.5 + 0.5 * Math.cos(t * Math.PI)), 1.4 + 0.7 * t);
-            }
-            pushP(0, 2.1);
-            return p;
-        };
-
-        return { bottlePoints: getBottlePoints(), wrapperPoints: getWrapperPoints(), liquidPoints: getLiquidPoints() };
-    }, []);
+        return mat;
+    }, [capThreshold]);
 
     const idleAngle = useRef(0);
     const lockedTarget = useRef({ active: false, start: 0, target: 0 });
 
+    // Tweak this value if the front of the label is physically offset on the texture.
+    const FRONT_ANGLE_OFFSET = -Math.PI / 0.7;
+
     useFrame((_, delta) => {
-        // Handle Material Transitions
         if (state.current.transition < 1) {
-            state.current.transition = Math.min(state.current.transition + delta * 2, 1); // 0.5s transition
-            if (wrapperMaterial) {
-                wrapperMaterial.uniforms.tex1.value = state.current.prevTexture;
-                wrapperMaterial.uniforms.tex2.value = state.current.currTexture;
-                wrapperMaterial.uniforms.mixRatio.value = state.current.transition;
-            }
+            state.current.transition = Math.min(state.current.transition + delta * 2, 1); 
             
-            if (liquidRef.current) {
-                const mat = liquidRef.current.material as THREE.MeshStandardMaterial;
-                mat.color.copy(state.current.prevLiquid).lerp(state.current.currLiquid, state.current.transition);
+            if (wrapperMaterial && wrapperMaterial.userData.shader) {
+                const shader = wrapperMaterial.userData.shader;
+                shader.uniforms.tex1.value = state.current.prevTexture;
+                shader.uniforms.tex2.value = state.current.currTexture;
+                shader.uniforms.mixRatio.value = state.current.transition;
             }
-            if (capRef1.current) {
-                (capRef1.current.material as THREE.MeshStandardMaterial).color.copy(state.current.prevCap).lerp(state.current.currCap, state.current.transition);
-            }
-            if (capRef2.current) {
-                (capRef2.current.material as THREE.MeshBasicMaterial).color.copy(state.current.prevCap).lerp(state.current.currCap, state.current.transition);
+            if (capMaterial) {
+                capMaterial.color.copy(state.current.prevCap).lerp(state.current.currCap, state.current.transition);
             }
         }
 
-        // Handle Parallax & Rotation
         if (groupRef.current && scrollY && vh > 0) {
             const currentScroll = scrollY.get();
             const heroEnd = vh * 2;
@@ -226,22 +224,20 @@ export default function Bottle({
                     if (nextTarget - idleAngle.current < Math.PI) nextTarget += TWO_PI;
                     lockedTarget.current.target = nextTarget;
                 }
-                const baseTarget = THREE.MathUtils.lerp(lockedTarget.current.start, lockedTarget.current.target, heroProgress);
+                const baseTarget = THREE.MathUtils.lerp(lockedTarget.current.start, lockedTarget.current.target + FRONT_ANGLE_OFFSET, heroProgress);
                 
                 if (state.current.transition < 1) {
-                    // Inject a fast 360 spin during the fade, calculating an Ease-In-Out quadratic curve
-                    const t = state.current.transition; // 0 to 1 timeframe
-                    const easeT = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // Smoothed 0 to 1
+                    const t = state.current.transition; 
+                    const easeT = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; 
                     groupRef.current.rotation.y = baseTarget + (easeT * Math.PI * 2);
                 } else {
                     groupRef.current.rotation.y = baseTarget;
                 }
 
-                // Inject a continuous, elegant 3D tilt specifically across the Mascot Journey so it feels alive
                 if (heroProgress === 1) {
-                    const mascotScrollPhase = currentScroll * 0.0012;
-                    groupRef.current.rotation.x = Math.sin(mascotScrollPhase) * 0.15;
-                    groupRef.current.rotation.z = Math.cos(mascotScrollPhase * 0.8) * 0.1;
+                    // Lock the bottle to perfectly face straight forward. No wobbling around X and Z!
+                    groupRef.current.rotation.x = 0;
+                    groupRef.current.rotation.z = 0;
                 }
             }
 
@@ -249,43 +245,62 @@ export default function Bottle({
                 groupRef.current.rotation.x = (1 - heroProgress) * Math.sin(heroProgress * Math.PI) * 0.2;
                 groupRef.current.rotation.z = (1 - heroProgress) * Math.cos(heroProgress * Math.PI) * 0.1;
             }
+        } else if (groupRef.current) {
+            // Fallback for static sections (like Flavor Showcase) where no scrollY is passed!
+            // This locks them instantly to the same front-facing alignment you manually set.
+            groupRef.current.rotation.y = FRONT_ANGLE_OFFSET;
+            groupRef.current.rotation.x = 0;
+            groupRef.current.rotation.z = 0;
         }
     });
 
+    const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    // Bumped to 3.2 only for mobile screens
+    const baseScale = isMobile ? 3.2 : 2.6;
+
+    if (!nodes.mesh_0) return null;
+
     return (
-        <group ref={groupRef}>
-            <group position={[0, -0.725, 0]}>
-                {/* Clear Bottle */}
-                <mesh>
-                    <latheGeometry args={[bottlePoints, 64]} />
-                    <meshPhysicalMaterial 
-                        color="#ffffff" transparent opacity={0.2} roughness={0.08} 
-                        metalness={0.15} transmission={0.98} thickness={0.7} envMapIntensity={2.0} 
-                        clearcoat={1} clearcoatRoughness={0.1}
-                    />
-                </mesh>
+        <group ref={groupRef} scale={[baseScale, baseScale, baseScale]} position={[0, -0.5, 0]}>
+            {/* 1. Clear Plastic Base */}
+            <mesh geometry={nodes.mesh_0.geometry} renderOrder={1}>
+                {/* 
+                  Very clear transparent plastic.
+                  Pink tinting was removed. Liquid is removed.
+                */}
+                <meshPhysicalMaterial 
+                    color="#ffffff" 
+                    transparent 
+                    opacity={0.15} 
+                    roughness={0.15} 
+                    metalness={0.1} 
+                    transmission={0.99} 
+                    thickness={0.5} 
+                    envMapIntensity={2.0} 
+                    clearcoat={1.0} 
+                    clearcoatRoughness={0.1}
+                    ior={1.4} // index of refraction for plastic
+                />
+            </mesh>
 
-                {/* Internal Liquid */}
-                <mesh ref={liquidRef} position={[0, -0.05, 0]}>
-                    <latheGeometry args={[liquidPoints, 64]} />
-                    <meshStandardMaterial color={liquidColor} transparent opacity={0.88} roughness={0.05} metalness={0.1} />
-                </mesh>
+            {/* 2. Seamless Smooth Wrap directly hugging the bottle mesh */}
+            <mesh geometry={nodes.mesh_0.geometry} scale={[1.015, 1.0, 1.015]} renderOrder={2}>
+                <primitive object={wrapperMaterial} attach="material" />
+            </mesh>
 
-                {/* The Wrapper Shrink Sleeve */}
-                <mesh ref={wrapperRef} rotation={[0, -Math.PI / 2, 0]} material={wrapperMaterial}>
-                    <latheGeometry args={[wrapperPoints, 64]} />
-                </mesh>
-
-                {/* The Bottle Cap */}
-                <mesh ref={capRef1} position={[0, 3.0, 0]}>
-                    <cylinderGeometry args={[0.68, 0.68, 0.7, 50]} />
-                    <meshStandardMaterial color={capColor} roughness={0.5} metalness={0.1} />
-                </mesh>
-                <mesh ref={capRef2} position={[0, 3.35, 0]}>
-                    <cylinderGeometry args={[0.65, 0.68, 0.05, 50]} />
-                    <meshBasicMaterial color={capColor} />
-                </mesh>
-            </group>
+            {/* 3. The Cap Mask */}
+            <mesh geometry={nodes.mesh_0.geometry} scale={[1.002, 1.002, 1.002]} renderOrder={3}>
+                <primitive object={capMaterial} attach="material" />
+            </mesh>
         </group>
     );
 }
+
+useGLTF.preload('/Meshy_AI_Clear_plastic_water_b_0402103114_texture.glb');
