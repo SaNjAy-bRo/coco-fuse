@@ -79,7 +79,7 @@ export default function Bottle({
     const totalHeight = bounds.max - bounds.min;
     const labelYMin = bounds.min + totalHeight * 0.01; // LOWERED to increase label down
     const labelYMax = bounds.min + totalHeight * 0.71;
-    const capThreshold = bounds.min + totalHeight * 0.86; // top 14% is cap
+    const capThreshold = bounds.min + totalHeight * 0.917; // top 14% is cap
 
     // Advanced Label Material using dynamic cylindrical unwrapping on the AI mesh
     const wrapperMaterial = useMemo(() => {
@@ -276,17 +276,18 @@ export default function Bottle({
                   Pink tinting was removed. Liquid is removed.
                 */}
                 <meshPhysicalMaterial 
-                    color="#ffffff" 
-                    transparent 
-                    opacity={0.15} 
                     roughness={0.15} 
                     metalness={0.1} 
-                    transmission={0.99} 
-                    thickness={0.5} 
-                    envMapIntensity={2.0} 
-                    clearcoat={1.0} 
-                    clearcoatRoughness={0.1}
-                    ior={1.4} // index of refraction for plastic
+                    transmission={0.45} // Lowered so it doesn't completely disappear into the background
+                    clearcoat={1.0}
+                    clearcoatRoughness={0.15}
+                    color="#d6edff" // A subtle icy blue tint to help it separate from standard yellow/red backgrounds
+                    envMapIntensity={3.0} // Massive boost to environment reflections so the edges and curves pop!
+                    ior={1.52}
+                    thickness={1.5} 
+                    opacity={0.85}
+                    transparent={true} 
+                    side={THREE.DoubleSide} 
                 />
             </mesh>
 
