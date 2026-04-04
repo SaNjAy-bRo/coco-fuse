@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap } from "lucide-react";
+import { useFlavor } from "@/context/FlavorContext";
 
 export default function CTASection() {
+    const { flavor } = useFlavor();
+
     return (
         <section className="py-24 md:py-32 bg-[#F7F7F7] overflow-hidden relative border-t-4 border-[#111111]">
             <div className="container mx-auto px-4 md:px-6 relative z-10 w-full max-w-6xl">
@@ -27,7 +30,7 @@ export default function CTASection() {
                             DAILY <span className="text-[#3AB6FD] block md:inline-block mt-1 md:mt-0">HYDRATION</span>
                         </motion.h2>
 
-                        {/* Cleaned up Description */}
+                        {/* Description */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -46,9 +49,9 @@ export default function CTASection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.5 }}
-                            className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto"
+                            className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto relative z-30"
                         >
-                            <Link href="#flavours" className="w-full sm:w-auto">
+                            <Link href={`/products/${flavor}`} className="w-full sm:w-auto">
                                 <motion.button
                                     whileHover={{ scale: 1.05, y: -3, rotate: -2 }}
                                     whileTap={{ scale: 0.95 }}
@@ -59,7 +62,7 @@ export default function CTASection() {
                                 </motion.button>
                             </Link>
 
-                            <Link href="#flavours" className="w-full sm:w-auto">
+                            <Link href="/#flavours" className="w-full sm:w-auto">
                                 <motion.button
                                     whileHover={{ scale: 1.05, y: -3, backgroundColor: "#222" }}
                                     whileTap={{ scale: 0.95 }}

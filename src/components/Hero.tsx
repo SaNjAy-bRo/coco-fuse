@@ -40,7 +40,9 @@ export default function Hero() {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
         const checkMobileAndHeight = () => {
-            setIsMobile(window.innerWidth < 1024);
+            const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            const isNarrow = window.innerWidth < 1024;
+            setIsMobile(isNarrow || isTouch);
             setVh(window.innerHeight);
         };
         checkMobileAndHeight();
@@ -263,8 +265,8 @@ export default function Hero() {
                                 <p className="font-heading font-black italic text-[#111111] text-2xl lg:text-3xl uppercase tracking-tighter leading-[0.9] drop-shadow-sm">
                                     Not a hydration drink.<br/>Not a soda.<br/>Not a juice.
                                 </p>
-                                <p className={`mt-4 font-heading font-bold italic ${p.descAccent} text-lg lg:text-xl uppercase tracking-wider drop-shadow-sm leading-tight bg-[#F7F7F7] px-4 py-3 rounded-2xl border-2 border-[#111111]/10`}>
-                                    <span className="font-wedges whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span> is a guilt-free fun drink that happens to hydrate.
+                                <p className={`mt-4 font-heading font-bold italic text-[#333333] text-lg lg:text-xl uppercase tracking-wider drop-shadow-sm leading-tight bg-[#F7F7F7] px-4 py-3 rounded-2xl border-2 border-[#111111]/10`}>
+                                    <span className="font-wedges not-italic whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span> is a guilt-free fun drink that happens to hydrate.
                                 </p>
                                 <div className="flex gap-3 mt-5 flex-wrap">
                                     <span className="bg-[#111111] text-white text-xs lg:text-sm font-heading font-black italic uppercase px-4 py-1.5 rounded-full whitespace-nowrap shadow-[3px_3px_0px_#7ED956]">Zero Sugar ⚡</span>
@@ -283,7 +285,7 @@ export default function Hero() {
                                 <p className="font-heading font-black italic text-[#111111] text-xl min-[400px]:text-2xl uppercase tracking-tighter leading-[0.9] drop-shadow-sm">
                                     Not a hydration drink.<br/>Not a soda.<br/>Not a juice.
                                 </p>
-                                <p className={`mt-3 font-heading font-bold italic ${p.descAccent} text-sm min-[400px]:text-base uppercase tracking-wider drop-shadow-sm leading-tight bg-[#F7F7F7] px-3 py-2 rounded-xl border-2 border-[#111111]/10`}>
+                                <p className={`mt-3 font-heading font-bold italic text-[#333333] text-sm min-[400px]:text-base uppercase tracking-wider drop-shadow-sm leading-tight bg-[#F7F7F7] px-3 py-2 rounded-xl border-2 border-[#111111]/10`}>
                                     A guilt-free fun drink that happens to hydrate.
                                 </p>
                                 <div className="flex gap-2 mt-4 flex-wrap">

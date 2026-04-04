@@ -26,7 +26,7 @@ const founders = [
         name: "Joel",
         role: "The Alchemist",
         tag: "Flavor Heart",
-        desc: <>The maestro behind the blend. He refused to let <span className="font-wedges whitespace-nowrap"><span className="text-primary-green">COCO</span><span className="text-primary-blue">FUSE.</span></span> look, taste, or BE boring. Joel brings the bold experimentation and the jazzy personality to our functional chemistry.</>,
+        desc: <>The maestro behind the blend. He refused to let <span className="font-wedges not-italic whitespace-nowrap"><span className="text-primary-green">COCO</span><span className="text-primary-blue">FUSE.</span></span> look, taste, or BE boring. Joel brings the bold experimentation and the jazzy personality to our functional chemistry.</>,
         color: "var(--color-primary-blue)", // primary-blue
         bg: "bg-primary-blue/10",
         border: "border-primary-blue/20",
@@ -129,13 +129,13 @@ function AboutHero() {
                         className="inline-flex items-center gap-3 px-6 py-2 md:py-3 rounded-full border-2 border-accent-premium bg-white text-accent-premium shadow-[4px_4px_0px_#0A0A0A] mb-10 md:mb-16 hover:-translate-y-1 transition-transform duration-300"
                     >
                         <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-accent-watermelon animate-pulse" />
-                        <span className="font-heading font-black italic text-xs md:text-sm tracking-[0.25em] md:tracking-[0.3em] uppercase">
+                        <span className="font-heading font-black text-xs md:text-sm tracking-[0.25em] md:tracking-[0.3em] uppercase">
                             The Humans of Fuse
                         </span>
                     </motion.div>
                     
                     {/* Properly Structured Massive Typography */}
-                    <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[8.5rem] leading-[0.95] font-heading font-black italic uppercase tracking-tighter text-accent-premium flex flex-col items-center w-full drop-shadow-sm">
+                    <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[8.5rem] leading-[0.95] font-heading font-black uppercase tracking-tighter text-accent-premium flex flex-col items-center w-full drop-shadow-sm">
                         
                         <span className="flex flex-col items-center">
                             <motion.span initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, ease: "easeOut" }} className="inline-block relative z-10 w-full text-center">
@@ -154,7 +154,7 @@ function AboutHero() {
                                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }} 
                                 className="inline-block px-6 md:px-10 py-2 md:py-3 pb-3 md:pb-5 bg-primary-blue text-white border-4 border-accent-premium shadow-[6px_6px_0px_#0A0A0A] md:shadow-[10px_10px_0px_#0A0A0A] hover:rotate-0 transition-transform duration-300"
                             >
-                                REFRESH.
+                                <span className="font-wedges not-italic tracking-normal"><span className="text-[#7ED956]">COCO</span><span className="text-white">FUSE.</span></span>
                             </motion.span>
                         </span>
                     </h1>
@@ -236,10 +236,10 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3, duration: 0.8 }}
                 >
-                    <h2 className="text-6xl md:text-8xl lg:text-9xl font-heading font-black italic uppercase text-accent-premium tracking-tighter mb-4">
+                    <h2 className="text-6xl md:text-8xl lg:text-9xl font-heading font-black uppercase text-accent-premium tracking-tighter mb-4">
                         {founder.name}
                     </h2>
-                    <h3 className="text-xl md:text-2xl font-heading font-black italic uppercase tracking-widest mb-8" style={{ color: founder.color, textShadow: "1px 1px 0px rgba(17,17,17,0.2)" }}>
+                    <h3 className="text-xl md:text-2xl font-heading font-black uppercase tracking-widest mb-8" style={{ color: founder.color, textShadow: "1px 1px 0px rgba(17,17,17,0.2)" }}>
                         {founder.role}
                     </h3>
                     
@@ -272,26 +272,38 @@ export default function AboutPage() {
             <StorySection />
 
             {/* ——— CONTENT START ——— */}
-            <section className="relative py-24 md:py-32 z-20">
+            <section className="relative pt-24 md:pt-32 pb-12 md:pb-16 z-20 bg-[#F3F3F1]">
                 <div className="container mx-auto px-6 md:px-12">
                     
                     {/* Section Header */}
-                    <div className="mb-24 md:mb-48 flex flex-col md:flex-row items-end justify-between gap-8">
+                    <div className="mb-24 md:mb-32 flex flex-col items-center text-center gap-6">
+                        <motion.span
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            className="inline-block px-5 py-2 rounded-full border-2 border-[#111111] bg-white text-[#111111] shadow-[4px_4px_0px_#111111] font-heading font-black italic text-[10px] md:text-sm tracking-[0.4em] uppercase"
+                        >
+                            Meet The Founders
+                        </motion.span>
                         <motion.h2 
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            className="text-4xl md:text-6xl font-heading font-black italic uppercase text-accent-premium tracking-tight drop-shadow-sm"
+                            viewport={{ once: true }}
+                            className="text-5xl sm:text-6xl md:text-8xl lg:text-[8rem] font-heading font-black italic uppercase text-[#111111] tracking-tighter leading-[0.85] drop-shadow-sm"
                         >
                             THE FUSE <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon italic">COLLECTIVE</span>
+                            <span className="text-primary-green">COLLECTIVE</span>
                         </motion.h2>
                         <motion.p 
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            className="text-accent-premium/70 font-bold font-body text-lg md:text-xl max-w-sm text-right leading-relaxed"
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="text-[#111111]/60 font-bold font-body text-lg md:text-xl max-w-lg leading-relaxed"
                         >
                             Three distinct disciplines, one shared quest for the ultimate peak state.
                         </motion.p>
+                        <div className="w-20 md:w-32 h-2 md:h-3 bg-primary-green rounded-full shadow-lg mt-2" />
                     </div>
 
                     {/* Founders List */}
@@ -309,21 +321,21 @@ export default function AboutPage() {
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-full bg-primary-green/20 blur-[150px] opacity-60" />
                         
                         <div className="relative z-10">
-                            <span className="text-xs md:text-sm font-heading font-black italic text-accent-premium/50 uppercase tracking-[0.5em] mb-8 inline-block">THE FINAL EQUATION</span>
-                            <h3 className="text-5xl md:text-7xl lg:text-[7rem] font-heading font-black italic text-accent-premium uppercase tracking-tighter leading-none flex flex-col gap-4">
+                            <span className="text-xs md:text-sm font-heading font-black text-accent-premium/50 uppercase tracking-[0.5em] mb-8 inline-block">THE FINAL EQUATION</span>
+                            <h3 className="text-5xl md:text-7xl lg:text-[7rem] font-heading font-black text-accent-premium uppercase tracking-tighter leading-none flex flex-col gap-4">
                                 <span className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
                                     VISION <span className="text-primary-green">+</span> VIBE
                                 </span>
                                 <span className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-                                    BALANCE <span className="text-accent-watermelon">=</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango via-accent-watermelon to-primary-blue pr-2 drop-shadow-sm">FUSE.</span>
+                                    BALANCE <span className="text-primary-green">=</span> <span className="font-wedges not-italic tracking-normal pr-2"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span>
                                 </span>
                             </h3>
                             
-                            <Link href="/#flavors" passHref legacyBehavior>
+                            <Link href="/#flavours" passHref legacyBehavior>
                                 <motion.a
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="mt-16 inline-block px-12 py-5 bg-accent-basil text-accent-premium border-4 border-accent-premium shadow-[6px_6px_0px_#0A0A0A] rounded-full font-heading font-black italic uppercase tracking-widest text-sm transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_#0A0A0A] cursor-pointer"
+                                    className="mt-16 inline-block px-12 py-5 bg-accent-basil text-accent-premium border-4 border-accent-premium shadow-[6px_6px_0px_#0A0A0A] rounded-full font-heading font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_#0A0A0A] cursor-pointer"
                                 >
                                     Shop the Fuse
                                 </motion.a>

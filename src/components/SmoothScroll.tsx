@@ -5,16 +5,20 @@ import Lenis from "lenis";
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
     useEffect(() => {
+        // Detect touch devices — skip Lenis entirely for native smooth scroll
+        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
+        if (isTouchDevice) return;
+
         const lenis = new Lenis({
             duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: "vertical",
             gestureOrientation: "vertical",
             smoothWheel: true,
             wheelMultiplier: 1,
             touchMultiplier: 1.0,
             //@ts-ignore
-            syncTouch: true,
+            syncTouch: false,
         });
 
         // @ts-ignore

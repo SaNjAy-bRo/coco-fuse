@@ -15,7 +15,10 @@ export default function Transformation() {
 
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        const checkMobile = () => {
+            const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            setIsMobile(window.innerWidth < 768 || isTouch);
+        };
         checkMobile();
         window.addEventListener("resize", checkMobile);
         return () => window.removeEventListener("resize", checkMobile);
@@ -89,7 +92,7 @@ export default function Transformation() {
                                 The Moment of Impact
                             </span>
                             <h2 className="text-5xl md:text-8xl lg:text-[10rem] font-heading font-black italic text-white uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12">
-                                <span className="block italic text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon">VIBE</span> 
+                                <span className="block text-primary-green">VIBE</span> 
                                 SHIFTED
                             </h2>
                             <p className="text-lg md:text-3xl font-body text-gray-400 max-w-3xl leading-relaxed mx-auto px-4 md:px-0">

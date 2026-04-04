@@ -35,7 +35,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         icon: "/assets/deco/mango 1.png",
         accent: "text-accent-mango",
         story: {
-            morning: { title: "Fuse Your <br /> Mornings.", desc: "Mango Delight + Coconut Water. A fresh, hydrating wake-up call to start your day right." },
+            morning: { title: "Fuse Your <br /> Mornings.", desc: "Mango Delight + Coconut Water: A fresh, tasty, tropical hydration." },
             afternoon: { title: "Fuse Your <br /> Afternoons.", desc: "Tropical mango goodness for that post-lunch slump. Zero sugar, 100% natural hydration boost." },
             evening: { title: "Fuse Your <br /> Socials.", desc: "The perfect mixer for your evening vibes. Vibrant, fruity, and designed for the night." }
         },
@@ -58,7 +58,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         icon: "/assets/deco/Watermelon 1.png",
         accent: "text-[#ff4d4d]",
         story: {
-            morning: { title: "Fuse Your <br /> Workout.", desc: "Watermelon + Coconut Water. The ultimate pre-session hydration to prime your muscles." },
+            morning: { title: "Fuse Your <br /> Workout.", desc: "Watermelon-Mint + Coconut Water: The ultimate tasty hydration you ever needed." },
             afternoon: { title: "Fuse Your <br /> Recovery.", desc: "Rapid electrolyte replenishment for those long active afternoons. Stay cool, stay fueled." },
             evening: { title: "Fuse Your <br /> Power.", desc: "Recharge after a high-output day. Keep the momentum going without the crash." }
         },
@@ -81,7 +81,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         icon: "/assets/deco/Chili 1.png",
         accent: "text-[#cc0000]",
         story: {
-            morning: { title: "Fuse Your <br /> Focus.", desc: "Basil Chili + Coconut Water. A zingy neural spark to ignite your makers mindset." },
+            morning: { title: "Fuse Your <br /> Focus.", desc: "Basil-Chili + Coconut Water: Your perfect party starter." },
             afternoon: { title: "Fuse Your <br /> Flow.", desc: "Deep work companion. The perfect balance of hydration and a subtle spicy kick for clarity." },
             evening: { title: "Fuse Your <br /> Vision.", desc: "For the late-night creators. Stay sharp, stay hydrated, and keep the ideas firing." }
         },

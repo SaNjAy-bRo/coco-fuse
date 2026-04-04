@@ -31,7 +31,7 @@ export default function Lifestyle() {
                 >
                     <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4 md:mb-6">Built For The Hustle</h2>
                     <p className="text-xl text-gray-400 font-medium">
-                        Whether you're in the gym, on the field, or grinding late at the office, <span className="font-wedges whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span> provides the raw electrochemical fuel your body needs. No synthetic garbage. Just natural coconut water and essential vitamins.
+                        Whether you're in the gym, on the field, or grinding late at the office, <span className="font-wedges not-italic whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span> provides the raw electrochemical fuel your body needs. No synthetic garbage. Just natural coconut water and essential vitamins.
                     </p>
                 </motion.div>
             </div>

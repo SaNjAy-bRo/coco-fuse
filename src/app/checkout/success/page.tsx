@@ -50,7 +50,7 @@ function SuccessContent() {
                     transition={{ duration: 0.6, delay: 0.4 }}
                 >
                     <p className="text-xl md:text-2xl font-body text-gray-500 mb-12 max-w-xl mx-auto leading-relaxed">
-                        Hey there, legend. Your <strong className="text-accent-premium">{flavorData ? flavorData.name : <span className="font-wedges whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span>} ({packQuery}-Pack)</strong> order has been placed and is being prepped for shipment. Let's get hydrated!
+                        Hey there, legend. Your <strong className="text-accent-premium">{flavorData ? flavorData.name : <span className="font-wedges not-italic whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span>} ({packQuery}-Pack)</strong> order has been placed and is being prepped for shipment. Let's get hydrated!
                     </p>
 
                     <div className="bg-white/60 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/60 shadow-[0_20px_60px_rgba(0,0,0,0.05)] mx-auto mb-12 flex flex-col md:flex-row items-center justify-around gap-8 text-left">

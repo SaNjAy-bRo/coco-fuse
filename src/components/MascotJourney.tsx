@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { useFlavor, FLAVORS } from "@/context/FlavorContext";
 import dynamic from "next/dynamic";
 
@@ -15,7 +15,8 @@ export default function MascotJourney() {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
         const checkMobileAndHeight = () => {
-            setIsMobile(window.innerWidth < 1024);
+            const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            setIsMobile(window.innerWidth < 1024 || isTouch);
             setVh(window.innerHeight);
         };
         checkMobileAndHeight();
@@ -26,6 +27,18 @@ export default function MascotJourney() {
     const { scrollY, scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"]
+    });
+
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    useMotionValueEvent(scrollYProgress, "change", (latest) => {
+        if (latest < 0.33) {
+            setActiveIndex(0);
+        } else if (latest < 0.66) {
+            setActiveIndex(1);
+        } else {
+            setActiveIndex(2);
+        }
     });
 
     // Color mapping for transitions
@@ -88,6 +101,25 @@ export default function MascotJourney() {
                 className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center px-6 py-4 md:p-8"
                 style={{ backgroundColor: bgColor }}
             >
+                {isMobile && vh > 0 && (
+                    <motion.div 
+                        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 lg:hidden"
+                        animate={{ 
+                            y: activeIndex === 1 ? '-20vh' : '20vh'
+                        }}
+                        transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                    >
+                        <div className="w-[45vw] h-[90vw] max-w-[200px] max-h-[400px]">
+                            <Scene 
+                                scrollY={scrollY} 
+                                vh={vh} 
+                                labelPath={scenes[activeIndex].flavorInfo.label}
+                                liquidColor={scenes[activeIndex].flavorInfo.liquid}
+                                capColor={scenes[activeIndex].flavorInfo.cap}
+                            />
+                        </div>
+                    </motion.div>
+                )}
 
 
                 {scenes.map((scene, i) => (
@@ -97,14 +129,7 @@ export default function MascotJourney() {
                         style={{ opacity: scene.opacity }}
                     >
                         {isMobile && vh > 0 && (
-                            <div className={`w-[45vw] h-[90vw] max-w-[200px] max-h-[400px] lg:hidden pointer-events-none flex-shrink-0 ${i === 1 ? 'order-first' : 'order-last'}`}>
-                                <Scene 
-                                    scrollY={scrollY} 
-                                    vh={vh} 
-                                    labelPath={scene.flavorInfo.label}
-                                    liquidColor={scene.flavorInfo.liquid}
-                                    capColor={scene.flavorInfo.cap}
-                                />
+                            <div className={`w-[45vw] h-[90vw] max-w-[200px] max-h-[400px] lg:hidden pointer-events-none flex-shrink-0 opacity-0 ${i === 1 ? 'order-first' : 'order-last'}`}>
                             </div>
                         )}
                         <div className={scene.textOrderClass}>

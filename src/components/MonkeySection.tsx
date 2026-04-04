@@ -33,7 +33,10 @@ export default function MonkeySection() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => {
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsMobile(window.innerWidth < 768 || isTouch);
+    };
     checkMobile(); // Check immediately on mount (client-side)
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -86,7 +89,7 @@ function MonkeyCard({ item, isMobile, index }: { item: any; isMobile: boolean; i
       >
       {/* Inner Container for Background - This SHRINKS significantly and hides overflow */}
       <div 
-        className={`absolute inset-0 z-0 rounded-3xl overflow-hidden border-4 border-[#111111] transition-all duration-700 ease-out transform-gpu will-change-transform bg-black ${
+        className={`absolute inset-0 z-0 rounded-3xl overflow-hidden border-4 border-[#111111] transition-all duration-700 ease-out transform-gpu will-change-[transform] bg-black ${
           isMobile 
             ? isInView ? "scale-90 shadow-[6px_6px_0px_#111111]" : "scale-100 shadow-[10px_10px_0px_#111111]" 
             : "scale-100 shadow-[10px_10px_0px_#111111] group-hover:scale-90 group-hover:shadow-[6px_6px_0px_#111111]"
@@ -98,41 +101,41 @@ function MonkeyCard({ item, isMobile, index }: { item: any; isMobile: boolean; i
           alt={`${item.alt} Background`}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className={`object-cover object-center transition-all duration-700 ease-out transform-gpu will-change-transform ${
+          className={`object-cover object-center transition-all duration-700 ease-out transform-gpu will-change-[transform,opacity] ${
             isMobile
               ? isInView
-                ? "grayscale-0 opacity-100 scale-110"
-                : "opacity-60 grayscale-[0.8]"
+                ? "opacity-100 scale-110"
+                : "opacity-60"
               : "opacity-60 grayscale-[0.8] group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110"
           }`}
         />
 
         {/* Fog overlay */}
         <div
-          className={`absolute inset-0 z-0 bg-neutral-900/40 mix-blend-multiply transition-opacity duration-700 ease-out transform-gpu will-change-transform ${
+          className={`absolute inset-0 z-0 bg-neutral-900/40 transition-opacity duration-700 ease-out transform-gpu will-change-[opacity] ${
             isMobile
               ? isInView
                 ? "opacity-0"
                 : "opacity-100"
-              : "opacity-100 group-hover:opacity-0"
+              : "opacity-100 mix-blend-multiply group-hover:opacity-0"
           }`}
         />
 
         {/* Flavor Burst Glow */}
         <div
-          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] rounded-full blur-[80px] transition-all duration-700 ease-out transform-gpu will-change-transform mix-blend-color-dodge z-0 pointer-events-none ${item.glowColor} ${
+          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] rounded-full transition-all duration-700 ease-out transform-gpu will-change-[opacity] z-0 pointer-events-none ${item.glowColor} ${
             isMobile
               ? isInView
-                ? "opacity-100 scale-125"
+                ? "opacity-60 scale-125"
                 : "opacity-0 scale-100"
-              : "opacity-0 scale-100 group-hover:opacity-100 group-hover:scale-125"
+              : "opacity-0 scale-100 blur-[80px] mix-blend-color-dodge group-hover:opacity-100 group-hover:scale-125"
           }`}
         />
       </div>
 
       {/* Monkey Image - OUTSIDE the hidden overflow container so it POPS OUT */}
       <div
-        className={`absolute inset-0 z-10 flex items-center justify-center p-4 md:p-8 transition-all duration-700 ease-out transform-gpu will-change-transform ${
+        className={`absolute inset-0 z-10 flex items-center justify-center p-4 md:p-8 transition-all duration-700 ease-out transform-gpu will-change-[transform,filter] ${
           isMobile
             ? isInView
               ? "grayscale-0 sepia-0 -translate-y-12 scale-[1.2] md:scale-[1.15]"

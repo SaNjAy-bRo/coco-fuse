@@ -28,7 +28,8 @@ export default function GlobalCanOverlay() {
     // Page structure: Hero (200vh) → MascotJourney (400vh) → USP → Story → ...
     // Hero ends at scroll = 2vh. MascotJourney scroll range = 2vh to 5vh (sticky internal = 300vh)
     // MascotJourney ends after Hero (2vh) + Mascot (4vh desk / 6vh mobile)
-    const isMobile = mounted && window.innerWidth < 1024;
+    const isTouch = mounted && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    const isMobile = mounted && (window.innerWidth < 1024 || isTouch);
     const heroEnd = vh * 2;
     const transitionHeight = vh * 1.0; 
     const mascotStart = heroEnd + transitionHeight;
@@ -169,7 +170,7 @@ export default function GlobalCanOverlay() {
     return (
         <div className="hidden lg:block fixed inset-0 z-50 pointer-events-none">
             {/* Desktop */}
-            {mounted && window.innerWidth >= 1024 && (
+            {mounted && window.innerWidth >= 1024 && !('ontouchstart' in window) && navigator.maxTouchPoints === 0 && (
                 <motion.div
                     className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none"
                     style={{ x: xDesktop, y: yDesktop, scale: scaleDesktop, opacity: opacityDesktop }}

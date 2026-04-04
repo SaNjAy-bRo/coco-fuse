@@ -79,10 +79,10 @@ export default function ParallaxBanner() {
                         transition={{ duration: 0.6 }}
                         className="text-center relative"
                     >
-                        <h2 className="text-[12vw] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] font-heading font-black italic uppercase tracking-tighter leading-[0.8] text-white drop-shadow-lg relative z-10 w-full">
+                        <h2 className="text-[12vw] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] font-heading font-black uppercase tracking-tighter leading-[0.8] text-white drop-shadow-lg relative z-10 w-full">
                             THE POWER OF <br /> 
                             <span className="inline-block transform -rotate-2 mt-4">
-                                <span className="font-wedges tracking-normal text-[#7ED956]">COCO</span><span className="font-wedges tracking-normal text-[#3AB6FD]">FUSE.</span>
+                                <span className="font-wedges not-italic tracking-normal text-[#7ED956]">COCO</span><span className="font-wedges not-italic tracking-normal text-[#3AB6FD]">FUSE.</span>
                             </span>
                         </h2>
                     </motion.div>
@@ -101,7 +101,7 @@ export default function ParallaxBanner() {
                             className={`w-full group rounded-[2.5rem] ${card.color} border-4 border-white shadow-[8px_8px_0px_#FFFFFF] hover:shadow-[12px_12px_0px_#FFFFFF] transition-all p-6 md:p-10 flex flex-col items-center justify-center relative overflow-hidden`}
                         >
                             {/* Decorative Background Icon */}
-                            <div className="absolute opacity-10 blur-xl transform scale-150 right-[-10%] bottom-[-10%] pointer-events-none">
+                            <div className="absolute opacity-10 hidden lg:block lg:blur-xl transform scale-150 right-[-10%] bottom-[-10%] pointer-events-none">
                                 {card.icon}
                             </div>
                             

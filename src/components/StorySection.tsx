@@ -22,7 +22,10 @@ export default function StorySection() {
     // PARALLAX BACKGROUND LOGIC
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        const checkMobile = () => {
+            const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            setIsMobile(window.innerWidth < 768 || isTouch);
+        };
         checkMobile();
         window.addEventListener("resize", checkMobile);
         return () => window.removeEventListener("resize", checkMobile);
@@ -33,8 +36,8 @@ export default function StorySection() {
     const bgY = isMobile ? bgYMobile : bgYDesktop;
     const bgScale = useTransform(progress, [0, 1], [1.1, 1.4]);
 
-    // TRANSITION TO WHITE (For seamless blend with FoundersSection)
-    const bgOverlayOpacity = useTransform(progress, [0.93, 0.98], [0, 1]);
+
+
 
     // -------------------------------------------------------------
     // CHAPTER 1: THE ORIGIN [0% - 15%] -> Fade out at 18%
@@ -92,12 +95,8 @@ export default function StorySection() {
                     <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#111111]/90 to-transparent z-10" />
                 </motion.div>
 
-                {/* DYNAMIC BACKGROUND FADE OUT */}
-                <motion.div 
-                    style={{ opacity: bgOverlayOpacity }}
-                    className="absolute inset-0 z-40 bg-[#F7F7F7] pointer-events-none"
-                    aria-hidden="true"
-                />
+
+
 
                 {/* CONTENT LAYER */}
                 <div className="relative z-30 container mx-auto px-6 h-full flex flex-col items-center justify-center text-center pt-24 md:pt-32">
@@ -112,7 +111,7 @@ export default function StorySection() {
                         </span>
                         <h2 className="text-5xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-heading font-black italic tracking-tighter mb-4 md:mb-10 leading-[0.9] md:leading-[0.85] uppercase text-white drop-shadow-2xl">
                             Born on a <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mango to-accent-watermelon italic pr-2">Mountain.</span>
+                            <span className="text-primary-green pr-2">Mountain.</span>
                         </h2>
                         <div className="w-16 h-1 md:w-20 md:h-1.5 bg-primary-green mx-auto mb-6 md:mb-8 shadow-[0_0_20px_rgba(126,217,86,0.5)]" />
                         <p className="text-lg md:text-2xl lg:text-3xl font-body font-normal text-gray-200 max-w-3xl mx-auto leading-relaxed md:leading-snug">
@@ -194,8 +193,8 @@ export default function StorySection() {
                             No crash. No medical hype. <br className="hidden md:block" />
                             Just pure, natural hydration.
                         </p>
-                        <p className="text-primary-green font-heading font-black uppercase tracking-widest text-4xl md:text-6xl lg:text-7xl drop-shadow-[0_0_40px_rgba(126,217,86,0.3)]">
-                            Electric Drive.
+                        <p className="font-wedges not-italic tracking-normal uppercase text-4xl md:text-6xl lg:text-7xl">
+                            <span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span>
                         </p>
                     </motion.div>
 

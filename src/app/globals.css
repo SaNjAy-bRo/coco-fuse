@@ -23,18 +23,48 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
     background-color: var(--color-primary-white);
     color: var(--color-accent-premium);
     overflow-x: hidden;
+    min-width: 320px;
   }
 
   ::selection {
     background-color: var(--color-primary-green);
     color: var(--color-accent-premium);
   }
+
+  /* Ensure images never overflow their containers */
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Force native vertical scrolling on WebGL canvases on touch devices */
+@media (pointer: coarse) {
+  canvas {
+    touch-action: pan-y !important;
+    pointer-events: none !important;
+  }
+}
+
+/* ===== RESPONSIVE: Overflow Prevention ===== */
+/* Prevent horizontal scroll from absolute/fixed positioned blobs */
+section {
+  overflow-x: clip;
+}
+
+/* Fluid container safety net */
+.container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @keyframes gradient {
@@ -67,4 +97,11 @@
 
 .bg-basil-gradient {
   background: linear-gradient(135deg, var(--color-primary-blue) 0%, var(--color-primary-green) 50%, var(--color-accent-basil) 100%);
+}
+
+/* ===== RESPONSIVE: Fluid Typography for very small viewports ===== */
+@media screen and (max-width: 480px) {
+  h1 { font-size: clamp(2rem, 10vw, 5rem) !important; }
+  h2 { font-size: clamp(1.75rem, 8vw, 4rem) !important; }
+  h3 { font-size: clamp(1.25rem, 6vw, 2.5rem) !important; }
 }

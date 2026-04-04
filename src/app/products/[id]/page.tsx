@@ -73,6 +73,27 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                         <ArrowLeft className="w-5 h-5" /> HOME
                     </Link>
 
+                    {/* Flavor Navigation */}
+                    <div className="flex gap-3 mb-8 lg:mb-10 flex-wrap">
+                        {(Object.keys(FLAVORS) as FlavorID[]).map((fid) => {
+                            const f = FLAVORS[fid];
+                            const isActive = fid === product.id;
+                            return (
+                                <Link
+                                    key={fid}
+                                    href={`/products/${fid}`}
+                                    className={`px-5 py-2.5 rounded-full font-heading font-black italic uppercase tracking-wider text-xs md:text-sm border-2 border-[#111111] transition-all ${
+                                        isActive
+                                            ? `${palettes[fid]?.btnBg || 'bg-[#111111]'} text-white shadow-[3px_3px_0px_#111111]`
+                                            : 'bg-white/70 backdrop-blur-md text-[#111111] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#111111]'
+                                    }`}
+                                >
+                                    {f.name}
+                                </Link>
+                            );
+                        })}
+                    </div>
+
                     <div className="flex flex-col lg:grid lg:grid-cols-2 items-center gap-6 lg:gap-10">
                         
                         {/* 1. TITLE (Mobile: Order 1. Desktop: Col 2, Row 1) */}
@@ -209,7 +230,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             <div className={`absolute inset-0 opacity-40 mix-blend-multiply ${p.bg} transition-opacity group-hover:opacity-60 duration-500`} />
                             <div className={`absolute w-full h-full blur-[80px] ${p.blob} animate-pulse rounded-full opacity-50`} />
                             
-                            <h3 className={`relative z-10 text-4xl md:text-5xl lg:text-6xl font-heading font-black uppercase leading-tight ${p.textMain} mix-blend-color-burn drop-shadow-md mb-6`}>
+                            <h3 className={`relative z-10 text-4xl md:text-5xl lg:text-6xl font-heading font-black italic uppercase tracking-tighter leading-tight ${p.textMain} drop-shadow-md mb-6`}>
                                 LIVE<br/>YOUR<br/>MIX
                             </h3>
                             <p className="relative z-10 text-gray-800 font-body text-base lg:text-lg max-w-sm bg-white/60 backdrop-blur-sm p-4 rounded-2xl shadow-sm border border-white/50 font-bold">

@@ -82,7 +82,7 @@ export default function USPSection() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-4xl md:text-6xl font-heading font-black italic tracking-tighter text-accent-premium uppercase"
                     >
-                        Why <span className="font-wedges tracking-normal text-primary-blue">COCO</span><span className="font-wedges tracking-normal text-primary-green">FUSE.</span>?
+                        Why <span className="font-wedges not-italic tracking-normal text-primary-blue">COCO</span><span className="font-wedges not-italic tracking-normal text-primary-green">FUSE.</span>?
                     </motion.h2>
                 </div>
 

@@ -6,6 +6,14 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+function useIsTouch() {
+    const [isTouch, setIsTouch] = useState(false);
+    useEffect(() => {
+        setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    }, []);
+    return isTouch;
+}
+
 const DrinkMenuIcon = ({ isOpen }: { isOpen: boolean }) => (
     <div className="relative w-10 h-10 flex items-center justify-center bg-accent-premium/5 rounded-full border border-black/10 overflow-hidden group hover:bg-black/5 transition-colors">
         <AnimatePresence mode="wait">
@@ -40,6 +48,7 @@ const DrinkMenuIcon = ({ isOpen }: { isOpen: boolean }) => (
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const isTouch = useIsTouch();
     const { scrollY } = useScroll();
 
     // Dynamic width on scroll for the pill effect
@@ -61,19 +70,19 @@ export default function Navbar() {
             className="absolute left-1/2 -translate-x-1/2 z-[100] bg-white border-b-4 border-x-4 border-[#111111] shadow-[4px_4px_0px_rgba(17,17,17,1)] flex items-center justify-between px-6 lg:px-12 h-20 origin-top overflow-visible transition-colors"
         >
             {/* Logo */}
-            <a href="#" className="flex-shrink-0 relative z-[110] outline-none">
+            <a href="/" className="flex-shrink-0 relative z-[110] outline-none">
                 <Image
                     src="/assets/client_logo.png"
                     alt="CocoFuse."
-                    width={180}
-                    height={64}
+                    width={240}
+                    height={80}
                     priority
-                    className="h-14 md:h-16 w-auto object-contain transition-transform hover:scale-105"
+                    className="h-16 sm:h-18 md:h-20 w-auto object-contain transition-transform hover:scale-105"
                 />
             </a>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex flex-1 items-center justify-center gap-10">
+            {/* Desktop Nav — hide on touch devices even at desktop viewport */}
+            <div className={`${isTouch ? 'hidden' : 'hidden md:flex'} flex-1 items-center justify-center gap-10`}>
                 {navLinks.map((link) => (
                     <a
                         key={link.name}
@@ -87,13 +96,13 @@ export default function Navbar() {
 
             {/* CTA & Mobile Toggle */}
             <div className="flex items-center gap-4">
-                <Link href="/#flavours" className="hidden md:block px-6 py-2.5 bg-[#39FF14] text-[#111111] rounded-full font-heading font-black uppercase italic tracking-widest text-xs lg:text-sm border-2 border-[#111111] shadow-[2px_2px_0px_#111111] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#111111] transition-all">
+                <Link href="/#flavours" className={`${isTouch ? 'hidden' : 'hidden md:block'} px-6 py-2.5 bg-[#39FF14] text-[#111111] rounded-full font-heading font-black uppercase italic tracking-widest text-xs lg:text-sm border-2 border-[#111111] shadow-[2px_2px_0px_#111111] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#111111] transition-all`}>
                     <span className="relative z-10">Buy Now</span>
                 </Link>
 
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="md:hidden relative z-[110] focus:outline-none bg-transparent border-none p-0"
+                    className={`${isTouch ? '' : 'md:hidden'} relative z-[110] focus:outline-none bg-transparent border-none p-0`}
                     aria-label="Toggle Menu"
                 >
                     <DrinkMenuIcon isOpen={isOpen} />
@@ -108,7 +117,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -20, scale: 0.95 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute top-[110%] left-1/2 -translate-x-1/2 w-[95vw] bg-white border-4 border-[#111111] rounded-3xl p-6 shadow-[8px_8px_0px_#111111] md:hidden overflow-hidden flex flex-col gap-4 z-[200]"
+                        className={`absolute top-[110%] left-1/2 -translate-x-1/2 w-[95vw] max-w-[400px] bg-white border-4 border-[#111111] rounded-3xl p-6 shadow-[8px_8px_0px_#111111] ${isTouch ? '' : 'md:hidden'} overflow-hidden flex flex-col gap-4 z-[200]`}
                     >
                         {navLinks.map((link, i) => {
                             // On mobile, we want "THE STORY" to go to the full /#story section

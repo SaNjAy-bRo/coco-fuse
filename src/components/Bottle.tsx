@@ -254,10 +254,13 @@ export default function Bottle({
         }
     });
 
-    const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
+    const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? (window.innerWidth < 768 || 'ontouchstart' in window || navigator.maxTouchPoints > 0) : false);
 
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        const checkMobile = () => {
+            const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            setIsMobile(window.innerWidth < 768 || isTouch);
+        };
         window.addEventListener("resize", checkMobile);
         return () => window.removeEventListener("resize", checkMobile);
     }, []);

@@ -17,7 +17,7 @@ const RHYTHMS = [
   {
     phase: "THE MIDDAY SURGE",
     headline: "Recharge your body with pure tropical hydration.",
-    copy: <>That post-lunch fog? Cleared. Blast through the rest of the day with <span className="font-wedges whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span> mango goodness.</>,
+    copy: <>That post-lunch fog? Cleared. Blast through the rest of the day with <span className="font-wedges not-italic whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span> mango goodness.</>,
     image: "/mango/mango_monkey.png",
     bg: "bg-[#FFD166]",          // Mango Yellow — matches flavor palette
     accent: "text-[#111111]",
@@ -65,7 +65,7 @@ export default function DailyRhythmSection() {
                         transition={{ delay: 0.2 }}
                         className="text-lg md:text-xl lg:text-2xl font-bold font-body text-[#E8F5E9] max-w-2xl leading-relaxed"
                     >
-                        Hydration built for the 24/7 grind. See how Chikko rides the wave from dawn till dusk.
+                        Hydration built for the 24/7 grind. See how Chico rides the wave from dawn till dusk.
                     </motion.p>
                 </div>
 
@@ -126,8 +126,9 @@ export default function DailyRhythmSection() {
                                 
                                 {/* Image Panel */}
                                 <div className={`relative w-full aspect-[4/5] sm:aspect-square md:aspect-[4/3] lg:aspect-[3/4] xl:aspect-[4/5] rounded-[2.5rem] md:rounded-[3.5rem] border-4 border-[#111111] shadow-[8px_8px_0px_#FFD166] md:shadow-[14px_14px_0px_#FFD166] overflow-hidden flex items-center justify-center transition-all hover:scale-[1.02] hover:-translate-y-2 hover:shadow-[18px_18px_0px_white] duration-500 ease-out origin-bottom ${item.bg} ${item.cardStyle}`}>
-                                    <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-white/30 blur-2xl rounded-full z-0 pointer-events-none" />
+                                    <div className="hidden lg:block absolute inset-0 z-0 opacity-10 mix-blend-multiply bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+                                    <div className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-white/30 blur-2xl rounded-full z-0 pointer-events-none" />
+                                    <div className="lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-white/20 rounded-full z-0 pointer-events-none" />
 
                                     <motion.div 
                                         className="relative w-[110%] h-[110%] md:w-[100%] md:h-[100%] z-10"
@@ -146,7 +147,7 @@ export default function DailyRhythmSection() {
                                 </div>
 
                                 {/* Mobile-Only Description Block */}
-                                <div className="lg:hidden mt-8 bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl backdrop-blur-md hover:bg-white/10 transition-colors">
+                                <div className="lg:hidden mt-8 bg-[#1a1a1a] border border-white/10 p-6 md:p-8 rounded-3xl transition-colors">
                                     <p className="text-xl md:text-2xl font-body font-bold text-gray-200 leading-snug">
                                         {item.copy}
                                     </p>

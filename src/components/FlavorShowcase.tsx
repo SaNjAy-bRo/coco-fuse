@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { Environment, ContactShadows, OrbitControls } from "@react-three/drei";
@@ -46,7 +46,7 @@ const FLAVORS = [
     }
 ];
 
-function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
+function FlavorCard({ flavor, isMobile }: { flavor: typeof FLAVORS[0]; isMobile: boolean }) {
     const cardRef = useRef<HTMLDivElement>(null);
     const isInView = useInView(cardRef, { margin: "200px" });
 
@@ -71,26 +71,28 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
                     {flavor.name}
                 </h3>
                 <div className="mt-3">
-                    <p className="inline-block text-xs md:text-sm font-heading font-black italic text-black uppercase tracking-widest bg-white/70 px-4 py-1.5 rounded-full border-2 border-black/30 backdrop-blur-sm">
+                    <p className="inline-block text-xs md:text-sm font-heading font-black italic text-black uppercase tracking-widest bg-white/70 px-4 py-1.5 rounded-full border-2 border-black/30">
                         {flavor.sub}
                     </p>
                 </div>
             </div>
 
-            <div className="flex-1 w-full min-h-[220px] sm:min-h-[250px] md:min-h-[300px] relative z-10">
+            <div className={`flex-1 w-full min-h-[220px] sm:min-h-[250px] md:min-h-[300px] relative z-10 ${isMobile ? 'pointer-events-none' : ''}`}>
                 <Canvas 
-                    frameloop={isInView ? "always" : "never"}
+                    frameloop={isMobile ? "demand" : (isInView ? "always" : "never")}
                     camera={{ position: [0, 0, 7.5], fov: 45 }} 
                     gl={{ 
                         antialias: false, 
                         alpha: true,
                         powerPreference: "high-performance"
                     }}
-                    dpr={[1, 1.5]}
+                    dpr={isMobile ? 1 : [1, 1.5]}
+                    style={{ touchAction: "pan-y" }}
+                    eventSource={isMobile ? undefined : undefined}
                 >
                     <ambientLight intensity={1.5} />
                     <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} />
-                    <pointLight position={[-10, -10, -10]} intensity={1} />
+                    {!isMobile && <pointLight position={[-10, -10, -10]} intensity={1} />}
                     
                     <Bottle 
                         labelPath={flavor.label} 
@@ -98,17 +100,19 @@ function FlavorCard({ flavor }: { flavor: typeof FLAVORS[0] }) {
                         capColor={flavor.cap}
                     />
                     
-                    <OrbitControls 
-                        enableZoom={false} 
-                        enablePan={false}
-                        enableRotate={false}
-                        autoRotate={false}
-                        minPolarAngle={Math.PI / 2.2} 
-                        maxPolarAngle={Math.PI / 2.2}
-                        minAzimuthAngle={0}
-                        maxAzimuthAngle={0}
-                    />
-                    <ContactShadows position={[0, -3.5, 0]} opacity={0.6} scale={12} blur={2.5} far={4.5} />
+                    {!isMobile && (
+                        <OrbitControls 
+                            enableZoom={false} 
+                            enablePan={false}
+                            enableRotate={false}
+                            autoRotate={false}
+                            minPolarAngle={Math.PI / 2.2} 
+                            maxPolarAngle={Math.PI / 2.2}
+                            minAzimuthAngle={0}
+                            maxAzimuthAngle={0}
+                        />
+                    )}
+                    {!isMobile && <ContactShadows position={[0, -3.5, 0]} opacity={0.6} scale={12} blur={2.5} far={4.5} />}
                     <Environment preset="city" />
                 </Canvas>
             </div>
@@ -132,48 +136,70 @@ export default function FlavorShowcase() {
         target: targetRef,
     });
     
-    // We map 0 to 1 scroll progress to shift the whole row. 
-    // Card width: 85vw * 3 = 255vw. Padding/Gaps: 15vw * 4 = 60vw. Total = 315vw.
-    // To show the end of the track (last 100vw of 315vw), translation = -(315 - 100) = -215vw.
     const x = useTransform(scrollYProgress, [0, 1], ["0vw", "-215vw"]);
 
     const [isDesktop, setIsDesktop] = React.useState(true);
 
     React.useEffect(() => {
-        const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
+        const checkDesktop = () => {
+            const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            setIsDesktop(window.innerWidth >= 768 && !isTouch);
+        };
         checkDesktop();
         window.addEventListener("resize", checkDesktop);
         return () => window.removeEventListener("resize", checkDesktop);
     }, []);
 
     return (
-        <section ref={targetRef} id="flavours" className="relative h-[300dvh] md:h-auto bg-[#F7F7F7]">
+        <section ref={targetRef} id="flavours" className={`relative bg-[#F7F7F7] ${isDesktop ? 'h-auto' : 'h-[300dvh]'}`}>
             {/* Mobile: Sticky 100dvh wrapper | Desktop: Standard relative block */}
-            <div className="sticky top-0 h-[100dvh] md:relative md:top-auto md:h-auto w-full overflow-hidden flex flex-col justify-center py-0 md:py-24 z-[20] bg-[#F7F7F7]">
+            <div className={`w-full overflow-hidden flex flex-col justify-center z-[20] bg-[#F7F7F7] ${
+                isDesktop 
+                    ? 'relative py-24' 
+                    : 'sticky top-0 h-[100dvh] py-0'
+            }`}>
                 
                 {/* Header Container */}
-                <div className="w-full text-center px-4 md:px-6 pt-12 md:pt-0 shrink-0 transition-all duration-300 mb-2 md:mb-16">
+                <div className={`w-full text-center px-4 shrink-0 transition-all duration-300 ${
+                    isDesktop ? 'px-6 pt-0 mb-16' : 'pt-12 mb-2'
+                }`}>
                     <motion.h2 
                         initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
                         whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                        className="text-4xl min-[400px]:text-5xl md:text-8xl lg:text-8xl font-heading font-black italic tracking-tighter text-[#111111] uppercase max-w-4xl mx-auto drop-shadow-sm"
+                        className={`font-heading font-black italic tracking-tighter text-[#111111] uppercase max-w-4xl mx-auto drop-shadow-sm ${
+                            isDesktop ? 'text-8xl' : 'text-4xl min-[400px]:text-5xl'
+                        }`}
                     >
-                        CHOOSE YOUR <span className="font-wedges tracking-normal text-primary-blue bg-white inline-block px-3 py-0.5 md:px-4 md:py-1 border-2 md:border-4 border-[#111111] shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] rounded-[1.5rem] md:rounded-3xl transform rotate-2 mx-1 md:mx-2 whitespace-nowrap mt-2 md:mt-0">FUSE.</span>
+                        CHOOSE YOUR <span className={`font-wedges not-italic tracking-normal text-primary-blue bg-white inline-block border-[#111111] shadow-[4px_4px_0px_#111111] transform rotate-2 whitespace-nowrap ${
+                            isDesktop 
+                                ? 'px-4 py-1 border-4 shadow-[6px_6px_0px_#111111] rounded-3xl mx-2 mt-0' 
+                                : 'px-3 py-0.5 border-2 rounded-[1.5rem] mx-1 mt-2'
+                        }`}>FUSE.</span>
                     </motion.h2>
-                    <p className="text-sm min-[400px]:text-base md:text-2xl font-heading font-bold italic text-gray-500 mt-2 md:mt-8 max-w-xl mx-auto uppercase tracking-wide leading-tight">
+                    <p className={`font-heading font-bold italic text-gray-500 max-w-xl mx-auto uppercase tracking-wide leading-tight ${
+                        isDesktop ? 'text-2xl mt-8' : 'text-sm min-[400px]:text-base mt-2'
+                    }`}>
                         Zero Sugar. 100% Fun. Grab your flavor.
                     </p>
                 </div>
 
                 {/* Horizontal Sliding Track (Mobile) / Flex Row (Desktop) */}
-                <div className="flex-1 md:flex-none w-full flex items-center md:justify-center relative z-10 overflow-visible md:overflow-visible">
+                <div className={`w-full flex items-center relative z-10 overflow-visible ${
+                    isDesktop ? 'flex-none justify-center' : 'flex-1'
+                }`}>
                     <motion.div 
-                        style={isDesktop ? undefined : { x }} 
-                        className="flex w-max md:w-full md:flex-wrap md:justify-center items-center h-full md:h-auto px-[15vw] md:px-6 gap-[15vw] md:gap-12"
+                        style={isDesktop ? undefined : { x, willChange: "transform" }} 
+                        className={`flex items-center transform-gpu ${
+                            isDesktop 
+                                ? 'w-full flex-wrap justify-center h-auto px-6 gap-12' 
+                                : 'w-max h-full px-[15vw] gap-[15vw]'
+                        }`}
                     >
                         {FLAVORS.map((flavor, index) => (
-                            <div key={index} className="shrink-0 flex justify-center items-center h-full md:h-auto pb-4 pt-4 md:pt-12 md:p-8">
-                                <FlavorCard flavor={flavor} />
+                            <div key={index} className={`shrink-0 flex justify-center items-center ${
+                                isDesktop ? 'h-auto pt-12 p-8' : 'h-full pb-4 pt-4'
+                            }`}>
+                                <FlavorCard flavor={flavor} isMobile={!isDesktop} />
                             </div>
                         ))}
                     </motion.div>
@@ -183,3 +209,4 @@ export default function FlavorShowcase() {
         </section>
     );
 }
+

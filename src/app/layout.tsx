@@ -35,6 +35,13 @@ const wedgesFont = localFont({
 export const metadata: Metadata = {
   title: "CocoFuse. | Fun, Clean Fuel for Real Life",
   description: "Flavoured coconut water with zero nonsense. The anti-soda. The anti-sugar. The anti-boring.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    minimumScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
 };
 
 export default function RootLayout({
