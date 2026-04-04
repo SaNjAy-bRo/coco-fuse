@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/CustomCursor";
 import localFont from "next/font/local";
 import { FlavorProvider } from "@/context/FlavorContext";
+import SubscribePopup from "@/components/SubscribePopup";
 
 const bodyFont = Poppins({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default function RootLayout({
             <Navbar />
             {children}
           </SmoothScroll>
+          <SubscribePopup />
         </FlavorProvider>
       </body>
     </html>

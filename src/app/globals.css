@@ -54,12 +54,6 @@
   }
 }
 
-/* ===== RESPONSIVE: Overflow Prevention ===== */
-/* Prevent horizontal scroll from absolute/fixed positioned blobs */
-section {
-  overflow-x: clip;
-}
-
 /* Fluid container safety net */
 .container {
   width: 100%;
