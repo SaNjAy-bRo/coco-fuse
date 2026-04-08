@@ -32,7 +32,7 @@ export default function TransitionBanner() {
     return (
         <section 
             ref={containerRef} 
-            className="w-full h-[60vh] md:min-h-screen flex items-center justify-center md:justify-start bg-[#FFD166] overflow-hidden relative z-10"
+            className="w-full min-h-[35vh] md:min-h-screen py-12 md:py-0 flex items-center justify-center md:justify-start bg-[#FFD166] overflow-hidden relative z-10"
         >
             <div className="absolute inset-0 bg-white/90 backdrop-blur-md" />
             
@@ -41,7 +41,7 @@ export default function TransitionBanner() {
                 className="relative z-20 flex flex-col items-center md:items-start justify-center text-center md:text-left px-4 md:pl-16 lg:pl-[12vw] xl:pl-[15vw] max-w-full md:max-w-[90vw] lg:max-w-[65vw]"
             >
                 <h2 className="text-[2.75rem] sm:text-5xl md:text-8xl lg:text-[7.5rem] font-heading font-black text-[#111111] tracking-tighter uppercase leading-[0.85]">
-                    FUSE YOUR DAY WITH <span className="block mt-2 drop-shadow-md pr-0 md:pr-4"><span className="font-wedges not-italic tracking-normal text-[#39FF14]">COCO</span><span className="font-wedges not-italic tracking-normal text-[#3AB6FD]">FUSE.</span></span>
+                    FUSE YOUR DAY WITH <span className="block mt-2 drop-shadow-md pr-0 md:pr-4 text-[1.3em] md:text-[1em]"><span className="font-wedges not-italic tracking-normal text-[#39FF14]">COCO</span><span className="font-wedges not-italic tracking-normal text-[#3AB6FD]">FUSE.</span></span>
                 </h2>
                 <div className="w-20 md:w-32 h-2 md:h-3 bg-[#39FF14] mt-6 md:mt-8 rounded-full shadow-lg" />
             </motion.div>
