@@ -7,15 +7,6 @@ import Link from "next/link";
 export default function ProductRange() {
     const products = [
         {
-            id: "mango",
-            name: "Mango Refresh",
-            tagline: "Tropical energy burst",
-            color: "bg-accent-mango",
-            textColor: "text-accent-mango",
-            shadow: "shadow-[0_20px_50px_rgba(255,209,102,0.3)]",
-            gradient: "from-accent-mango/80 to-accent-mango/20"
-        },
-        {
             id: "watermelon",
             name: "Watermelon Cool",
             tagline: "Ultra refreshing cool",
@@ -23,6 +14,15 @@ export default function ProductRange() {
             textColor: "text-[#FF3366]",
             shadow: "shadow-[0_20px_50px_rgba(255,51,102,0.3)]",
             gradient: "from-[#FF3366]/80 to-[#FF3366]/20"
+        },
+        {
+            id: "mango",
+            name: "Mango Refresh",
+            tagline: "Tropical energy burst",
+            color: "bg-accent-mango",
+            textColor: "text-accent-mango",
+            shadow: "shadow-[0_20px_50px_rgba(255,209,102,0.3)]",
+            gradient: "from-accent-mango/80 to-accent-mango/20"
         },
         {
             id: "basil",

@@ -7,18 +7,18 @@ import { useRef, useState, useEffect } from "react";
 
 const monkeys = [
   {
-    id: "mango",
-    bg: "/assets/background_mango.jpeg",
-    monkey: "/mango/mango_monkey.png",
-    alt: "Mango Monkey",
-    glowColor: "bg-[#FFD166]/40", // Yellow-orange glow base
-  },
-  {
     id: "watermelon",
     bg: "/assets/background_watermelon.jpeg",
     monkey: "/watermelon/watermelon_monkey.png",
     alt: "Watermelon Monkey",
     glowColor: "bg-[#FF3366]/40", // Pink-red glow base
+  },
+  {
+    id: "mango",
+    bg: "/assets/background_mango.jpeg",
+    monkey: "/mango/mango_monkey.png",
+    alt: "Mango Monkey",
+    glowColor: "bg-[#FFD166]/40", // Yellow-orange glow base
   },
   {
     id: "basil",

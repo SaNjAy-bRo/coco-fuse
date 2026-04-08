@@ -26,29 +26,6 @@ export interface FlavorData {
 }
 
 export const FLAVORS: Record<FlavorID, FlavorData> = {
-    mango: {
-        id: "mango",
-        name: "Mango Refresh",
-        label: "/assets/label_full.png",
-        liquid: "#f97316",
-        cap: "#111111",
-        icon: "/assets/deco/mango 1.png",
-        accent: "text-accent-mango",
-        story: {
-            morning: { title: "Fuse Your <br /> Mornings.", desc: "Mango Delight + Coconut Water: A fresh, tasty, tropical hydration." },
-            afternoon: { title: "Fuse Your <br /> Afternoons.", desc: "Tropical mango goodness for that post-lunch slump. Zero sugar, 100% natural hydration boost." },
-            evening: { title: "Fuse Your <br /> Socials.", desc: "The perfect mixer for your evening vibes. Vibrant, fruity, and designed for the night." }
-        },
-        nutrition: [
-            { label: "Energy", value: "19.78 kcal", rda: "-" },
-            { label: "Total Sugars", value: "4.0 g", rda: "-" },
-            { label: "Vitamin C", value: "0.2 mg", rda: "21%" },
-            { label: "Vitamin B3", value: "3 mg", rda: "41%" },
-            { label: "Potassium", value: "150 mg", rda: "3%" },
-            { label: "Sodium", value: "20 mg", rda: "1%" },
-        ],
-        ingredients: "Water, Coconut Powder (6%), Acidity Regulator (E330), Minerals (Potassium Chloride, Magnesium Sulphate), Natural Sweetener (INS960), Natural Mango Flavour, Vitamins (B3, B5, B6 and C)."
-    },
     watermelon: {
         id: "watermelon",
         name: "Watermelon Mint Reset",
@@ -71,6 +48,29 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
             { label: "Vitamin B6", value: "0.5 mg", rda: "80%" },
         ],
         ingredients: "Water, Coconut Powder (6%), Watermelon Extract, Acidity Regulator (E330), Minerals (Potassium Chloride), Amino Acids (L-Citrulline), Natural Sweetener, Vitamins (B6, B12)."
+    },
+    mango: {
+        id: "mango",
+        name: "Mango Refresh",
+        label: "/assets/label_full.png",
+        liquid: "#f97316",
+        cap: "#111111",
+        icon: "/assets/deco/mango 1.png",
+        accent: "text-accent-mango",
+        story: {
+            morning: { title: "Fuse Your <br /> Mornings.", desc: "Mango Delight + Coconut Water: A fresh, tasty, tropical hydration." },
+            afternoon: { title: "Fuse Your <br /> Afternoons.", desc: "Tropical mango goodness for that post-lunch slump. Zero sugar, 100% natural hydration boost." },
+            evening: { title: "Fuse Your <br /> Socials.", desc: "The perfect mixer for your evening vibes. Vibrant, fruity, and designed for the night." }
+        },
+        nutrition: [
+            { label: "Energy", value: "19.78 kcal", rda: "-" },
+            { label: "Total Sugars", value: "4.0 g", rda: "-" },
+            { label: "Vitamin C", value: "0.2 mg", rda: "21%" },
+            { label: "Vitamin B3", value: "3 mg", rda: "41%" },
+            { label: "Potassium", value: "150 mg", rda: "3%" },
+            { label: "Sodium", value: "20 mg", rda: "1%" },
+        ],
+        ingredients: "Water, Coconut Powder (6%), Acidity Regulator (E330), Minerals (Potassium Chloride, Magnesium Sulphate), Natural Sweetener (INS960), Natural Mango Flavour, Vitamins (B3, B5, B6 and C)."
     },
     basil: {
         id: "basil",

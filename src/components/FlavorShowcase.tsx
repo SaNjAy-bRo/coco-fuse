@@ -9,18 +9,6 @@ import Link from "next/link";
 
 const FLAVORS = [
     {
-        id: "mango",
-        name: "Mango Refresh",
-        label: "/assets/label_full.png",
-        liquid: "#FFD166",
-        cap: "#111111",
-        bg: "bg-[#FFD166]",
-        accent: "text-[#111111]",
-        sub: "Fuse of Coconut and Mango",
-        stickers: ["ZERO SUGAR ⚡", "100% NATURAL 🥥"],
-        btnBg: "bg-[#111111]"
-    },
-    {
         id: "watermelon",
         name: "Watermelon Mint Reset",
         label: "/assets/watermelon_label_extracted.png",
@@ -30,6 +18,18 @@ const FLAVORS = [
         accent: "text-[#FFFFFF]",
         sub: "Fuse of Coconut, Watermelon and Mint",
         stickers: ["RECHARGE 💦", "PURE HYDRATION 💧"],
+        btnBg: "bg-[#111111]"
+    },
+    {
+        id: "mango",
+        name: "Mango Refresh",
+        label: "/assets/label_full.png",
+        liquid: "#FFD166",
+        cap: "#111111",
+        bg: "bg-[#FFD166]",
+        accent: "text-[#111111]",
+        sub: "Fuse of Coconut and Mango",
+        stickers: ["ZERO SUGAR ⚡", "100% NATURAL 🥥"],
         btnBg: "bg-[#111111]"
     },
     {
