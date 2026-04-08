@@ -46,6 +46,17 @@ const founders = [
     }
 ];
 
+const DECO_ELEMENTS = [
+    { src: "/assets/deco/mango 1.svg", size: "w-20 md:w-32", top: "15%", left: "5%", delay: 0, rotate: 15 },
+    { src: "/assets/deco/Watermelon 2.svg", size: "w-16 md:w-24", top: "10%", right: "8%", delay: 0.2, rotate: -20 },
+    { src: "/assets/deco/Chili 1.svg", size: "w-12 md:w-20", bottom: "15%", left: "12%", delay: 0.4, rotate: 45 },
+    { src: "/assets/deco/leaf 1.svg", size: "w-24 md:w-36", top: "40%", right: "5%", delay: 0.6, rotate: -10 },
+    { src: "/assets/deco/mango 2.svg", size: "w-16 md:w-28", bottom: "25%", right: "15%", delay: 0.8, rotate: -30 },
+    { src: "/assets/deco/Watermelon 1.svg", size: "w-14 md:w-20", top: "50%", left: "8%", delay: 1, rotate: 25 },
+    { src: "/assets/deco/Chili 2.svg", size: "w-10 md:w-16", top: "35%", left: "20%", delay: 1.2, rotate: -15 },
+    { src: "/assets/deco/leaf 3.svg", size: "w-20 md:w-32", bottom: "35%", left: "25%", delay: 1.4, rotate: 35 },
+];
+
 // ——— COMPONENTS ————————————————————————————————————————————
 
 /**
@@ -103,6 +114,33 @@ function RevealTitle({ text, className }: { text: string, className?: string }) 
 }
 
 /**
+ * Floating decorative elements using SVGs
+ */
+function FloatingDeco() {
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-10 hidden md:block">
+            {DECO_ELEMENTS.map((el, i) => (
+                <motion.div
+                    key={i}
+                    className={`absolute ${el.size} opacity-40`}
+                    style={{ top: el.top, left: el.left, right: el.right, bottom: el.bottom }}
+                    initial={{ y: 50, opacity: 0, rotate: el.rotate - 20 }}
+                    animate={{ y: [0, -15, 0], opacity: 0.4, rotate: [el.rotate, el.rotate + 10, el.rotate] }}
+                    transition={{
+                        y: { duration: 4 + i, repeat: Infinity, ease: "easeInOut" },
+                        rotate: { duration: 6 + i, repeat: Infinity, ease: "easeInOut" },
+                        opacity: { duration: 1, delay: el.delay }
+                    }}
+                >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={el.src} alt="" className="w-full h-auto drop-shadow-sm" />
+                </motion.div>
+            ))}
+        </div>
+    );
+}
+
+/**
  * About Hero Section
  */
 function AboutHero() {
@@ -117,6 +155,7 @@ function AboutHero() {
     return (
         <section ref={sectionRef} className="relative min-h-[90dvh] md:min-h-screen flex items-center justify-center overflow-hidden bg-primary-white pt-32 pb-20 border-b-4 border-accent-premium">
             <LiquidBackground />
+            <FloatingDeco />
             
             <div className="container mx-auto px-6 relative z-20 flex flex-col items-center justify-center text-center">
                 <motion.div style={{ y: textY }} className="flex flex-col items-center w-full max-w-6xl mx-auto">
@@ -169,7 +208,7 @@ function AboutHero() {
                         <p className="text-accent-premium/80 font-body font-semibold text-xl md:text-3xl leading-relaxed">
                             We didn't set out to build a brand. We set out to find a better way to hydrate.
                             <br className="hidden md:block" />
-                            <span className="text-accent-premium italic font-black text-2xl md:text-4xl mt-4 md:mt-6 block">
+                            <span className="text-accent-premium font-black text-2xl md:text-4xl mt-4 md:mt-6 block">
                                 <span className="text-primary-green drop-shadow-sm">Met on the trail,</span> stayed for the obsession.
                             </span>
                         </p>
@@ -214,7 +253,7 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
                     
                     {/* Glassy Tag */}
                     <div className="absolute top-8 left-8 p-1.5 px-4 bg-white border-2 border-accent-premium shadow-[2px_2px_0px_#0A0A0A] rounded-full">
-                        <span className="text-[10px] font-heading font-black italic text-accent-premium uppercase tracking-widest">{founder.tag}</span>
+                        <span className="text-[10px] font-heading font-black text-accent-premium uppercase tracking-widest">{founder.tag}</span>
                     </div>
 
                     {/* Corner Accent */}
@@ -224,7 +263,7 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
                 </div>
                 
                 {/* Floating Background Text */}
-                <span className={`absolute ${isEven ? '-left-8 md:-left-20' : '-right-8 md:-right-20'} top-1/2 -translate-y-1/2 text-[20vw] font-heading font-black italic opacity-[0.03] text-accent-premium pointer-events-none select-none uppercase -rotate-90`}>
+                <span className={`absolute ${isEven ? '-left-8 md:-left-20' : '-right-8 md:-right-20'} top-1/2 -translate-y-1/2 text-[20vw] font-heading font-black opacity-[0.03] text-accent-premium pointer-events-none select-none uppercase -rotate-90`}>
                     {founder.name}
                 </span>
             </div>
@@ -250,7 +289,7 @@ function FounderCard({ founder, index }: { founder: typeof founders[0], index: n
                     </p>
 
                     <div className="relative p-8 rounded-[2rem] bg-white border-4 border-accent-premium" style={{ boxShadow: `6px 6px 0px ${founder.color}` }}>
-                        <p className="text-lg md:text-xl font-body font-bold italic text-accent-premium leading-snug">
+                        <p className="text-lg md:text-xl font-body font-bold text-accent-premium leading-snug">
                             &ldquo;{founder.quote}&rdquo;
                         </p>
                     </div>
@@ -281,7 +320,7 @@ export default function AboutPage() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="inline-block px-5 py-2 rounded-full border-2 border-[#111111] bg-white text-[#111111] shadow-[4px_4px_0px_#111111] font-heading font-black italic text-[10px] md:text-sm tracking-[0.4em] uppercase"
+                            className="inline-block px-5 py-2 rounded-full border-2 border-[#111111] bg-white text-[#111111] shadow-[4px_4px_0px_#111111] font-heading font-black text-[10px] md:text-sm tracking-[0.4em] uppercase"
                         >
                             Meet The Founders
                         </motion.span>
@@ -289,7 +328,7 @@ export default function AboutPage() {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="text-5xl sm:text-6xl md:text-8xl lg:text-[8rem] font-heading font-black italic uppercase text-[#111111] tracking-tighter leading-[0.85] drop-shadow-sm"
+                            className="text-5xl sm:text-6xl md:text-8xl lg:text-[8rem] font-heading font-black uppercase text-[#111111] tracking-tighter leading-[0.85] drop-shadow-sm"
                         >
                             THE FUSE <br />
                             <span className="text-primary-green">COLLECTIVE</span>
