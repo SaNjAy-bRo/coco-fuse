@@ -73,8 +73,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                         <ArrowLeft className="w-5 h-5" /> HOME
                     </Link>
 
-                    {/* Flavor Navigation */}
-                    <div className="flex gap-3 mb-8 lg:mb-10 flex-wrap">
+                    {/* Compact Flavor Navigation */}
+                    <div className="flex gap-2 lg:gap-3 mb-6 lg:mb-10 overflow-x-auto pb-2 -mx-6 px-6 lg:mx-0 lg:px-0 lg:pb-0 lg:flex-wrap snap-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                         {(Object.keys(FLAVORS) as FlavorID[]).map((fid) => {
                             const f = FLAVORS[fid];
                             const isActive = fid === product.id;
@@ -82,7 +82,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                                 <Link
                                     key={fid}
                                     href={`/products/${fid}`}
-                                    className={`px-5 py-2.5 rounded-full font-heading font-black italic uppercase tracking-wider text-xs md:text-sm border-2 border-[#111111] transition-all ${
+                                    className={`shrink-0 snap-center px-4 py-2 lg:px-5 lg:py-2.5 rounded-full font-heading font-black italic uppercase tracking-wider text-[10px] min-[400px]:text-xs md:text-sm border-2 border-[#111111] transition-all ${
                                         isActive
                                             ? `${palettes[fid]?.btnBg || 'bg-[#111111]'} text-white shadow-[3px_3px_0px_#111111]`
                                             : 'bg-white/70 backdrop-blur-md text-[#111111] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#111111]'
