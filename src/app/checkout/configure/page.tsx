@@ -40,8 +40,8 @@ function ConfigureContent() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     
                     {/* Left: 3D Render Big */}
-                    <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] bg-white rounded-[3rem] relative flex items-center justify-center border border-gray-100 shadow-[inset_0_2px_15px_rgba(0,0,0,0.02)] overflow-hidden">
-                        <div className="absolute w-[180%] h-[180%] top-[0%] lg:top-[-10%] pointer-events-none drop-shadow-2xl">
+                    <div className="w-full h-[450px] md:h-[550px] lg:h-[650px] bg-white rounded-[3rem] relative flex items-center justify-center border border-gray-100 shadow-[inset_0_2px_15px_rgba(0,0,0,0.02)]">
+                        <div className="absolute inset-0 pointer-events-none drop-shadow-2xl">
                             <Scene labelPath={flavorData.label} liquidColor={flavorData.liquid} capColor={flavorData.cap} />
                         </div>
                     </div>

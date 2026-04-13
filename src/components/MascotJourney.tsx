@@ -34,17 +34,17 @@ export default function MascotJourney() {
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
         if (latest < 0.33) {
             setActiveIndex(0);
-        } else if (latest < 0.66) {
+        } else if (latest < 0.67) {
             setActiveIndex(1);
         } else {
             setActiveIndex(2);
         }
     });
 
-    // Color mapping for transitions
+    // Color mapping for transitions — clean sequential, no overlap
     const bgColor = useTransform(
         scrollYProgress,
-        [0, 0.3, 0.4, 0.65, 0.75, 1],
+        [0, 0.30, 0.35, 0.65, 0.70, 1],
         [
             "#E8314A", // Watermelon Morning (reddish-pink)
             "#E8314A",
@@ -55,9 +55,11 @@ export default function MascotJourney() {
         ]
     );
 
-    const scene1Opacity = useTransform(scrollYProgress, [0, 0.25, 0.35], [1, 1, 0]);
-    const scene2Opacity = useTransform(scrollYProgress, [0.3, 0.4, 0.6, 0.7], [0, 1, 1, 0]);
-    const scene3Opacity = useTransform(scrollYProgress, [0.65, 0.75, 1], [0, 1, 1]);
+    // Scene opacities — razor-thin transitions so each scene HOLDS and requires a new swipe
+    // Mobile: 300vh section, 200vh scroll range → each scene ~66vh hold, transition = ~4vh
+    const scene1Opacity = useTransform(scrollYProgress, [0, 0.30, 0.33], [1, 1, 0]);
+    const scene2Opacity = useTransform(scrollYProgress, [0.33, 0.36, 0.64, 0.67], [0, 1, 1, 0]);
+    const scene3Opacity = useTransform(scrollYProgress, [0.67, 0.70, 1], [0, 1, 1]);
 
     const sharedTitleClass = "text-5xl md:text-8xl lg:text-9xl font-heading font-black italic uppercase tracking-tighter leading-[0.9] mb-3 md:mb-6";
     const sharedDescClass = "text-xl md:text-3xl lg:text-4xl font-heading font-bold italic uppercase tracking-wider";
@@ -96,7 +98,7 @@ export default function MascotJourney() {
     ];
 
     return (
-        <section ref={containerRef} className="relative w-full h-[250vh] lg:h-[400vh]">
+        <section ref={containerRef} className="relative w-full h-[300vh] lg:h-[400vh]">
             <motion.div
                 className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center px-6 py-4 md:p-8"
                 style={{ backgroundColor: bgColor }}

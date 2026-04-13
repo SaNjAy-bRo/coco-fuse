@@ -23,6 +23,7 @@ export interface FlavorData {
         rda: string;
     }[];
     ingredients: string;
+    heroDesc: string;
 }
 
 export const FLAVORS: Record<FlavorID, FlavorData> = {
@@ -35,7 +36,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         icon: "/assets/deco/Watermelon 1.png",
         accent: "text-[#ff4d4d]",
         story: {
-            morning: { title: "Fuse Your <br /> Workout.", desc: "Watermelon-Mint + Coconut Water: The ultimate tasty hydration you ever needed." },
+            morning: { title: "Fuse Your <br /> Workout.", desc: "Prime your body before hitting the gym. Clean, rapid hydration to start the engine and push harder." },
             afternoon: { title: "Fuse Your <br /> Recovery.", desc: "Rapid electrolyte replenishment for those long active afternoons. Stay cool, stay fueled." },
             evening: { title: "Fuse Your <br /> Power.", desc: "Recharge after a high-output day. Keep the momentum going without the crash." }
         },
@@ -47,7 +48,8 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
             { label: "Sodium", value: "45 mg", rda: "2%" },
             { label: "Vitamin B6", value: "0.5 mg", rda: "80%" },
         ],
-        ingredients: "Water, Coconut Powder (6%), Watermelon Extract, Acidity Regulator (E330), Minerals (Potassium Chloride), Amino Acids (L-Citrulline), Natural Sweetener, Vitamins (B6, B12)."
+        ingredients: "Water, Coconut Powder (6%), Watermelon Extract, Acidity Regulator (E330), Minerals (Potassium Chloride), Amino Acids (L-Citrulline), Natural Sweetener, Vitamins (B6, B12).",
+        heroDesc: "A crisp, refreshing blend of juicy watermelon and cooling mint, supercharged with natural electrolytes. Built to reset your system and quench your deepest thirst."
     },
     mango: {
         id: "mango",
@@ -58,7 +60,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         icon: "/assets/deco/mango 1.png",
         accent: "text-accent-mango",
         story: {
-            morning: { title: "Fuse Your <br /> Mornings.", desc: "Mango Delight + Coconut Water: A fresh, tasty, tropical hydration." },
+            morning: { title: "Fuse Your <br /> Mornings.", desc: "Rise and shine with a tropical blast. Skip the heavy coffee crash and start your day vibrant and hydrated." },
             afternoon: { title: "Fuse Your <br /> Afternoons.", desc: "Tropical mango goodness for that post-lunch slump. Zero sugar, 100% natural hydration boost." },
             evening: { title: "Fuse Your <br /> Socials.", desc: "The perfect mixer for your evening vibes. Vibrant, fruity, and designed for the night." }
         },
@@ -70,7 +72,8 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
             { label: "Potassium", value: "150 mg", rda: "3%" },
             { label: "Sodium", value: "20 mg", rda: "1%" },
         ],
-        ingredients: "Water, Coconut Powder (6%), Acidity Regulator (E330), Minerals (Potassium Chloride, Magnesium Sulphate), Natural Sweetener (INS960), Natural Mango Flavour, Vitamins (B3, B5, B6 and C)."
+        ingredients: "Water, Coconut Powder (6%), Acidity Regulator (E330), Minerals (Potassium Chloride, Magnesium Sulphate), Natural Sweetener (INS960), Natural Mango Flavour, Vitamins (B3, B5, B6 and C).",
+        heroDesc: "Sweet, rich, and tropical. We captured the essence of ripe alfonsos and fused it with coconut hydration to bring you sunshine in a bottle."
     },
     basil: {
         id: "basil",
@@ -81,7 +84,7 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
         icon: "/assets/deco/Chili 1.png",
         accent: "text-[#cc0000]",
         story: {
-            morning: { title: "Fuse Your <br /> Focus.", desc: "Basil-Chili + Coconut Water: Your perfect party starter." },
+            morning: { title: "Fuse Your <br /> Focus.", desc: "A sharp, fiery kick of chili to awaken your senses and lock in your deep morning focus right from the start." },
             afternoon: { title: "Fuse Your <br /> Flow.", desc: "Deep work companion. The perfect balance of hydration and a subtle spicy kick for clarity." },
             evening: { title: "Fuse Your <br /> Vision.", desc: "For the late-night creators. Stay sharp, stay hydrated, and keep the ideas firing." }
         },
@@ -93,7 +96,8 @@ export const FLAVORS: Record<FlavorID, FlavorData> = {
             { label: "Vitamin B12", value: "1.2 µg", rda: "50%" },
             { label: "Potassium", value: "140 mg", rda: "3%" },
         ],
-        ingredients: "Water, Coconut Powder (6%), Basil Extract, Chili Oleoresin, Acidity Regulator (E330), Minerals (Magnesium Sulphate), Natural Sweetener, Vitamins (B3, B5, B12)."
+        ingredients: "Water, Coconut Powder (6%), Basil Extract, Chili Oleoresin, Acidity Regulator (E330), Minerals (Magnesium Sulphate), Natural Sweetener, Vitamins (B3, B5, B12).",
+        heroDesc: "An unexpected thrill. Sweet basil leaves meet a surprising kick of chili, grounded in hydrating coconut water. It's the ultimate conversation starter."
     }
 };
 

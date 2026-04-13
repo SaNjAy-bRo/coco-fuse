@@ -29,6 +29,9 @@ export default function TransitionBanner() {
     const yText = isMobile ? yTextMobile : yTextDesktop;
     const opacityText = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0, 1, 1, 0]);
 
+    const coconutX = useTransform(scrollYProgress, [0, 1], ["-20vw", "120vw"]);
+    const coconutRotate = useTransform(scrollYProgress, [0, 1], [0, 720]);
+
     return (
         <section 
             ref={containerRef} 
@@ -46,19 +49,14 @@ export default function TransitionBanner() {
                 <div className="w-20 md:w-32 h-2 md:h-3 bg-[#39FF14] mt-6 md:mt-8 rounded-full shadow-lg" />
             </motion.div>
 
-            {/* The Rolling Coconut */}
+            {/* The Rolling Coconut — Scroll-driven */}
             <motion.img 
-                src="/2.svg" 
+                src="/1.svg" 
                 alt="Rolling Coconut" 
                 className="absolute bottom-4 left-0 w-24 h-24 md:w-40 md:h-40 z-30 drop-shadow-xl pointer-events-none"
-                animate={{ 
-                    x: ["-20vw", "120vw"],
-                    rotate: [0, 720] 
-                }}
-                transition={{ 
-                    duration: 12, 
-                    repeat: Infinity, 
-                    ease: "linear" 
+                style={{ 
+                    x: coconutX,
+                    rotate: coconutRotate
                 }}
             />
         </section>

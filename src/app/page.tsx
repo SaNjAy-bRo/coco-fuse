@@ -8,10 +8,12 @@ import FlavorShowcase from "@/components/FlavorShowcase";
 import MonkeySection from "@/components/MonkeySection";
 import DailyRhythmSection from "@/components/DailyRhythmSection";
 import Footer from "@/components/Footer";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-primary-white text-accent-premium font-body relative">
+      <LoadingScreen />
       <GlobalCanOverlay />
       <Hero />
       <TransitionBanner />

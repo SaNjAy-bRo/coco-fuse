@@ -103,8 +103,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             transition={{ duration: 0.8, delay: 0.1 }}
                             className="w-full flex flex-col items-center lg:items-start text-center lg:text-left order-1 lg:col-start-2 lg:row-start-1 lg:self-end pt-4 lg:pt-0"
                         >
-                            <div className="inline-block px-4 py-2 bg-white/80 backdrop-blur-md rounded-full font-heading font-black italic uppercase tracking-widest text-[10px] md:text-xs mb-4 md:mb-6 shadow-[2px_2px_0px_#111111] border-2 border-[#111111] text-[#111111]">
-                                100% Core Hydration
+                            <div className={`inline-flex items-center gap-2 px-4 py-1.5 bg-white/50 backdrop-blur-md rounded-full font-heading font-bold uppercase tracking-widest text-[10px] md:text-xs mb-4 md:mb-6 ${p.textMain} border border-white/60 shadow-sm`}>
+                                <Droplets className="w-3.5 h-3.5" /> 100% Pure Hydration
                             </div>
                             
                             <h1 className={`text-[11vw] min-[400px]:text-[12vw] sm:text-[10vw] md:text-7xl lg:text-[7vw] xl:text-[6.5rem] font-heading font-black italic uppercase tracking-tighter leading-[0.85] ${p.textMain} drop-shadow-[2px_2px_0px_#111111] md:drop-shadow-[4px_4px_0px_#111111] max-w-full w-full`}>
@@ -139,7 +139,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                             className="w-full flex flex-col items-center lg:items-start text-center lg:text-left order-3 lg:col-start-2 lg:row-start-2 pt-2 lg:pt-0"
                         >
                             <p className="text-lg md:text-xl lg:text-2xl font-body font-medium bg-white/70 backdrop-blur-xl px-6 py-4 md:px-8 md:py-6 rounded-2xl mb-8 border border-white/60 shadow-lg leading-relaxed text-gray-800 lg:max-w-xl">
-                                {product.story.morning.desc}
+                                {product.heroDesc}
                             </p>
 
                             <ul className="flex flex-col gap-4 w-full max-w-md text-left bg-white/50 backdrop-blur-md p-6 lg:p-8 rounded-3xl border border-white/60 shadow-xl">
@@ -207,35 +207,24 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             {/* 3. NEW FEATURE: THE PERFECT PAIRING / LIFESTYLE SECTION */}
             <section className={`py-20 md:py-28 relative overflow-hidden ${p.bg}`}>
                 <div className="container mx-auto px-6 max-w-6xl">
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-20">
-                        <div className="w-full md:w-1/2">
-                            <h2 className={`text-4xl md:text-6xl font-heading font-black italic uppercase tracking-tighter ${p.textMain} leading-tight mb-6 drop-shadow-md`}>
-                                Perfect<br/>Pairing
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="w-full max-w-3xl flex flex-col items-center">
+                            <h2 className={`text-center text-4xl md:text-6xl font-heading font-black italic uppercase tracking-tighter ${p.textMain} leading-tight mb-6 drop-shadow-md`}>
+                                Perfect<br className="md:hidden lg:block"/>Pairing
                             </h2>
-                            <p className="text-lg md:text-xl font-body leading-relaxed text-gray-800 mb-8 bg-white/60 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-white/60 shadow-lg">
+                            <p className="text-lg md:text-xl font-body leading-relaxed text-gray-800 mb-8 bg-white/60 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-white/60 shadow-lg text-center w-full">
                                 This isn't just a drink. It's an enhancer for your daily grind, your hardest workouts, and your longest nights out. Pair <strong className={p.textMain}>{product.name}</strong> with your favorite high-energy activities and let the natural electrolytes carry you through.
                             </p>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-4 w-full">
                                 <div className="bg-white/80 backdrop-blur-md p-5 rounded-[1.5rem] text-center shadow-md border border-white/50">
                                     <h4 className="font-heading font-black uppercase text-lg mb-1 text-accent-premium">Pre-Workout</h4>
-                                    <p className="text-xs md:text-sm text-gray-600">Pure organic energy boost.</p>
+                                    <p className="text-xs md:text-sm text-gray-600">Pure organic energy boost</p>
                                 </div>
                                 <div className="bg-white/80 backdrop-blur-md p-5 rounded-[1.5rem] text-center shadow-md border border-white/50">
                                     <h4 className="font-heading font-black uppercase text-lg mb-1 text-accent-premium">Post-Party</h4>
-                                    <p className="text-xs md:text-sm text-gray-600">Immediate hydration fix.</p>
+                                    <p className="text-xs md:text-sm text-gray-600">Immediate hydration fix</p>
                                 </div>
                             </div>
-                        </div>
-                        <div className="w-full md:w-1/2 min-h-[400px] md:min-h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl relative bg-white/30 backdrop-blur-md border border-white/60 flex flex-col items-center justify-center group p-10 text-center">
-                            <div className={`absolute inset-0 opacity-40 mix-blend-multiply ${p.bg} transition-opacity group-hover:opacity-60 duration-500`} />
-                            <div className={`absolute w-full h-full blur-[80px] ${p.blob} animate-pulse rounded-full opacity-50`} />
-                            
-                            <h3 className={`relative z-10 text-4xl md:text-5xl lg:text-6xl font-heading font-black italic uppercase tracking-tighter leading-tight ${p.textMain} drop-shadow-md mb-6`}>
-                                LIVE<br/>YOUR<br/>MIX
-                            </h3>
-                            <p className="relative z-10 text-gray-800 font-body text-base lg:text-lg max-w-sm bg-white/60 backdrop-blur-sm p-4 rounded-2xl shadow-sm border border-white/50 font-bold">
-                                Crafted specifically to replenish your mind and body without the crash. Hydration tailored to your intensity.
-                            </p>
                         </div>
                     </div>
                 </div>

@@ -230,12 +230,10 @@ export default function Hero() {
                                 transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                                 className="mt-2 md:mt-4 w-full md:flex justify-center lg:justify-start hidden"
                             >
-                                <Link href={`/products/${flavorData.id}`}>
-                                    <button className={`px-10 py-3 md:py-4 ${p.btnBg} ${p.btnText} font-heading font-black italic uppercase tracking-widest text-base md:text-xl rounded-full border-4 border-[#111111] shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] hover:-translate-y-1 hover:shadow-[6px_6px_0px_#111111] md:hover:shadow-[8px_8px_0px_#111111] transition-all flex items-center justify-center gap-2 group`}>
-                                        <ShoppingBag size={20} className="group-hover:-rotate-12 transition-transform md:w-6 md:h-6" />
-                                        <span>Buy Now</span>
-                                    </button>
-                                </Link>
+                                <button onClick={() => { window.location.href = `/products/${flavorData.id}`; }} className={`px-10 py-3 md:py-4 ${p.btnBg} ${p.btnText} font-heading font-black italic uppercase tracking-widest text-base md:text-xl rounded-full border-4 border-[#111111] shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] hover:-translate-y-1 hover:shadow-[6px_6px_0px_#111111] md:hover:shadow-[8px_8px_0px_#111111] transition-all flex items-center justify-center gap-2 group cursor-pointer`}>
+                                    <ShoppingBag size={20} className="group-hover:-rotate-12 transition-transform md:w-6 md:h-6" />
+                                    <span>Buy Now</span>
+                                </button>
                             </motion.div>
                         </div>
 
@@ -389,7 +387,9 @@ export default function Hero() {
                         ) : (
                             <div className="relative w-full h-full flex items-center justify-center">
                                 <img src="/1.svg" alt="Fuse Flavor" className="w-full h-full object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] group-hover:drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)] transition-all duration-300" />
-                                <span className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-black text-white text-[10px] sm:text-xs font-heading font-black px-3 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-xl border border-white/20">Fuse</span>
+                                <div className="absolute -top-4 sm:-top-6 right-0 bg-[#39FF14] text-black text-[10px] sm:text-xs font-heading font-black px-3 py-1.5 rounded-2xl rounded-br-sm border-2 border-black shadow-[2px_2px_0px_#000] uppercase tracking-wider whitespace-nowrap z-10 animate-bounce pointer-events-none">
+                                    Explore your Fuse
+                                </div>
                             </div>
                         )}
                     </button>

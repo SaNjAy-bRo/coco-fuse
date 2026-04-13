@@ -117,15 +117,15 @@ function FlavorCard({ flavor, isMobile }: { flavor: typeof FLAVORS[0]; isMobile:
                 </Canvas>
             </div>
 
-            <Link href={`/products/${flavor.id}`} className="z-20 w-full mt-4 flex justify-center">
-                <motion.button 
-                    whileHover={{ scale: 1.05, rotate: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`w-[90%] md:w-[80%] ${flavor.btnBg} text-white font-heading text-xl md:text-2xl font-black italic uppercase tracking-wider py-4 rounded-full border-4 border-[#111111] shadow-[6px_6px_0px_#111111] active:shadow-[0px_0px_0px_#111111] active:translate-y-[6px] active:translate-x-[6px] transition-all`}
-                >
-                    Grab It!
-                </motion.button>
-            </Link>
+            <motion.a
+                href={`/products/${flavor.id}`}
+                whileHover={{ scale: 1.05, rotate: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={(e) => { e.preventDefault(); window.location.href = `/products/${flavor.id}`; }}
+                className={`z-20 w-[90%] md:w-[80%] ${flavor.btnBg} text-white font-heading text-xl md:text-2xl font-black italic uppercase tracking-wider py-4 rounded-full border-4 border-[#111111] shadow-[6px_6px_0px_#111111] active:shadow-[0px_0px_0px_#111111] active:translate-y-[6px] active:translate-x-[6px] transition-all text-center cursor-pointer no-underline mt-4 block`}
+            >
+                Grab It!
+            </motion.a>
         </motion.div>
     );
 }

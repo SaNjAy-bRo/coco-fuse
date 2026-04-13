@@ -19,9 +19,9 @@ const SCENES = [
     },
     {
         image: "/assets/story/rebellion.png",
-        overlayColor: "bg-[#0a0000]/40",        // Dark red-black tint for urban night
-        gradientTop: "from-[#050505]/70",
-        gradientBottom: "from-[#111111]/85",
+        overlayColor: "bg-[#0a0000]/65",        // Stronger dark overlay for readability over bright soda cans
+        gradientTop: "from-[#050505]/80",
+        gradientBottom: "from-[#111111]/90",
     },
     {
         image: "/assets/story/base.png",
@@ -71,31 +71,34 @@ export default function StorySection() {
 
     const bgScale = useTransform(progress, [0, 1], [1.0, 1.05]);
 
-    // ─── BACKGROUND SCENE CROSS-FADE OPACITIES ───
-    // Each scene fades in as its chapter appears and fades out when leaving
-    const bg1Opacity = useTransform(progress, [0, 0.14, 0.18, 0.22], [1, 1, 0.4, 0]);
-    const bg2Opacity = useTransform(progress, [0.16, 0.22, 0.35, 0.40], [0, 1, 1, 0]);
-    const bg3Opacity = useTransform(progress, [0.36, 0.42, 0.55, 0.60], [0, 1, 1, 0]);
-    const bg4Opacity = useTransform(progress, [0.56, 0.62, 0.75, 0.80], [0, 1, 1, 0]);
-    const bg5Opacity = useTransform(progress, [0.76, 0.82, 1], [0, 1, 1]);
+    // ─── BACKGROUND SCENE SNAP TRANSITIONS ───
+    // Pure snap: each background switches in 0.01 scroll (≈5vh = instant)
+    // 5 chapters evenly split across scroll: each = 0.20 range
+    // NO crossfade — only one background visible at any time
+    const bg1Opacity = useTransform(progress, [0, 0.19, 0.20], [1, 1, 0]);
+    const bg2Opacity = useTransform(progress, [0.19, 0.20, 0.39, 0.40], [0, 1, 1, 0]);
+    const bg3Opacity = useTransform(progress, [0.39, 0.40, 0.59, 0.60], [0, 1, 1, 0]);
+    const bg4Opacity = useTransform(progress, [0.59, 0.60, 0.79, 0.80], [0, 1, 1, 0]);
+    const bg5Opacity = useTransform(progress, [0.79, 0.80, 1.0], [0, 1, 1]);
 
     const bgOpacities = [bg1Opacity, bg2Opacity, bg3Opacity, bg4Opacity, bg5Opacity];
 
-    // ─── CHAPTER TEXT OPACITIES & POSITIONS ───
-    const opacity1 = useTransform(progress, [0, 0.05, 0.15, 0.18], [0, 1, 1, 0]);
-    const y1 = useTransform(progress, [0, 0.05, 0.15, 0.18], [50, 0, 0, -50]);
+    // ─── CHAPTER TEXT — INSTANT SNAP ───
+    // Text appears immediately with chapter, exits at boundary. No y-shift for clean snap.
+    const opacity1 = useTransform(progress, [0, 0.005, 0.19, 0.20], [0, 1, 1, 0]);
+    const y1 = useTransform(progress, [0, 0.005], [15, 0]);
 
-    const opacity2 = useTransform(progress, [0.18, 0.23, 0.35, 0.38], [0, 1, 1, 0]);
-    const y2 = useTransform(progress, [0.18, 0.23, 0.35, 0.38], [50, 0, 0, -50]);
+    const opacity2 = useTransform(progress, [0.19, 0.20, 0.39, 0.40], [0, 1, 1, 0]);
+    const y2 = useTransform(progress, [0.19, 0.20], [15, 0]);
 
-    const opacity3 = useTransform(progress, [0.38, 0.43, 0.55, 0.58], [0, 1, 1, 0]);
-    const y3 = useTransform(progress, [0.38, 0.43, 0.55, 0.58], [50, 0, 0, -50]);
+    const opacity3 = useTransform(progress, [0.39, 0.40, 0.59, 0.60], [0, 1, 1, 0]);
+    const y3 = useTransform(progress, [0.39, 0.40], [15, 0]);
 
-    const opacity4 = useTransform(progress, [0.58, 0.63, 0.75, 0.78], [0, 1, 1, 0]);
-    const y4 = useTransform(progress, [0.58, 0.63, 0.75, 0.78], [50, 0, 0, -50]);
+    const opacity4 = useTransform(progress, [0.59, 0.60, 0.79, 0.80], [0, 1, 1, 0]);
+    const y4 = useTransform(progress, [0.59, 0.60], [15, 0]);
 
-    const opacity5 = useTransform(progress, [0.77, 0.82, 0.92, 0.95], [0, 1, 1, 0]);
-    const y5 = useTransform(progress, [0.77, 0.82, 0.92, 0.95], [50, 0, 0, -50]);
+    const opacity5 = useTransform(progress, [0.79, 0.80, 1.0], [0, 1, 1]);
+    const y5 = useTransform(progress, [0.79, 0.80], [15, 0]);
 
     return (
         <section
@@ -174,14 +177,14 @@ export default function StorySection() {
                         style={{ opacity: opacity2, y: y2, willChange: "transform, opacity" }}
                         className="absolute flex flex-col items-center max-w-6xl w-full px-4 md:px-0 pointer-events-none"
                     >
-                        <span className="inline-block px-5 py-2 md:px-6 md:py-2 bg-accent-watermelon/20 border border-accent-watermelon/30 text-accent-watermelon text-[10px] md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-6 md:mb-8 backdrop-blur-md shadow-[0_0_20px_rgba(255,51,102,0.2)]">
+                        <span className="inline-block px-5 py-2 md:px-6 md:py-2 bg-black/40 border border-white/30 text-white text-[10px] md:text-sm font-black uppercase tracking-[0.3em] rounded-full mb-6 md:mb-8 backdrop-blur-lg">
                             Chapter 02 : The Rebellion
                         </span>
-                        <h2 className="text-5xl md:text-7xl lg:text-[7rem] xl:text-[8rem] font-heading font-black italic tracking-tighter mb-4 md:mb-8 leading-[0.9] md:leading-[0.85] uppercase text-white drop-shadow-2xl">
+                        <h2 className="text-5xl md:text-7xl lg:text-[7rem] xl:text-[8rem] font-heading font-black italic tracking-tighter mb-4 md:mb-8 leading-[0.9] md:leading-[0.85] uppercase text-white [text-shadow:_0_2px_20px_rgba(0,0,0,0.8),_0_4px_40px_rgba(0,0,0,0.5)]">
                             The <br />
-                            <span className="text-accent-watermelon italic pr-2">Anti-Soda.</span>
+                            <span className="text-white italic pr-2" style={{ textShadow: '0 0 30px rgba(255,51,102,0.6), 0 0 60px rgba(255,51,102,0.3), 0 4px_8px rgba(0,0,0,0.9)' }}>Anti-Soda.</span>
                         </h2>
-                        <p className="text-lg md:text-2xl lg:text-4xl font-body font-normal text-gray-200 max-w-4xl mx-auto leading-relaxed md:leading-snug">
+                        <p className="text-lg md:text-2xl lg:text-4xl font-body font-normal text-gray-200 max-w-4xl mx-auto leading-relaxed md:leading-snug [text-shadow:_0_2px_10px_rgba(0,0,0,0.8)]">
                             We didn&apos;t want another generic sugary drink. <br className="hidden lg:block" />
                             We demanded something real. Honest ingredients. <br className="hidden lg:block" />
                             <span className="text-white font-black italic">No compromises.</span>
