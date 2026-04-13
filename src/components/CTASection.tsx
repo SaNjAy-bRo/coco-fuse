@@ -56,7 +56,7 @@ export default function CTASection() {
                                 whileHover={{ scale: 1.05, y: -3, rotate: -2 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={(e) => { e.preventDefault(); window.location.href = `/products/${flavor}`; }}
-                                className="w-full sm:w-auto bg-[#FF9F1C] text-[#111111] border-4 border-transparent shadow-[6px_6px_0px_#FFD166] hover:shadow-[2px_2px_0px_#FFD166] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider flex items-center justify-center gap-3 transition-all cursor-pointer no-underline"
+                                className="w-full sm:w-auto bg-[#FF9F1C] text-[#111111] border-4 border-transparent shadow-[6px_6px_0px_#FFD166] hover:shadow-[2px_2px_0px_#FFD166] font-heading font-black px-6 md:px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider flex items-center justify-center gap-3 transition-all cursor-pointer no-underline whitespace-nowrap"
                             >
                                 Get Your Fuse.
                                 <ArrowRight strokeWidth={4} className="w-6 h-6" />
@@ -66,7 +66,7 @@ export default function CTASection() {
                                 <motion.div
                                     whileHover={{ scale: 1.05, y: -3, backgroundColor: "#222" }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="w-full bg-[#111111] text-[#F7F7F7] border-4 border-[#3AB6FD] shadow-[6px_6px_0px_#3AB6FD] hover:shadow-[2px_2px_0px_#3AB6FD] font-heading font-black px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider transition-all cursor-pointer text-center"
+                                    className="w-full bg-[#111111] text-[#F7F7F7] border-4 border-[#3AB6FD] shadow-[6px_6px_0px_#3AB6FD] hover:shadow-[2px_2px_0px_#3AB6FD] font-heading font-black px-6 md:px-10 py-4 md:py-5 rounded-full text-xl md:text-2xl italic uppercase tracking-wider transition-all cursor-pointer text-center whitespace-nowrap"
                                 >
                                     View Flavours
                                 </motion.div>
