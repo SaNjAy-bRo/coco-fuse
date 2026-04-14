@@ -82,11 +82,11 @@ function FlavorCard({ flavor, isMobile }: { flavor: typeof FLAVORS[0]; isMobile:
                     frameloop={isMobile ? "demand" : (isInView ? "always" : "never")}
                     camera={{ position: [0, 0, 7.5], fov: 45 }} 
                     gl={{ 
-                        antialias: false, 
+                        antialias: true, 
                         alpha: true,
                         powerPreference: "high-performance"
                     }}
-                    dpr={isMobile ? 1 : [1, 1.5]}
+                    dpr={[1, 2]}
                     style={{ touchAction: "pan-y" }}
                     eventSource={isMobile ? undefined : undefined}
                 >

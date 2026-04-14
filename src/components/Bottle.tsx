@@ -65,6 +65,11 @@ export default function Bottle({
             tex.wrapS = THREE.RepeatWrapping;
             tex.wrapT = THREE.ClampToEdgeWrapping;
             tex.flipY = true; // Use default three.js convention to fix upside down
+            tex.minFilter = THREE.LinearMipmapLinearFilter;
+            tex.magFilter = THREE.LinearFilter;
+            tex.anisotropy = 16; // Max anisotropic filtering for crisp labels at all angles
+            tex.generateMipmaps = true;
+            tex.needsUpdate = true;
         });
     }, [mangoTex, watermelonTex, chiliTex]);
 
