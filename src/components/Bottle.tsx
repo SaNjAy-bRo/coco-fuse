@@ -17,13 +17,15 @@ export default function Bottle({
     vh = 0, 
     labelPath = "/assets/label_full.png", 
     liquidColor = "#f97316", // kept for context of flavor changes, but we use it for cap
-    capColor = "#39FF14"
+    capColor = "#39FF14",
+    scaleMultiplier = 1
 }: { 
     scrollY?: MotionValue<number>, 
     vh?: number,
     labelPath?: string,
     liquidColor?: string,
-    capColor?: string
+    capColor?: string,
+    scaleMultiplier?: number
 }) {
     const groupRef = useRef<THREE.Group>(null);
 
@@ -270,8 +272,8 @@ export default function Bottle({
         return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
-    // Bumped to 3.2 only for mobile screens
-    const baseScale = isMobile ? 3.2 : 2.6;
+    // The default mobile scale is 3.2 for the Hero section. We multiply by scaleMultiplier for other sections.
+    const baseScale = (isMobile ? 3.2 : 2.6) * scaleMultiplier;
 
     if (!nodes.mesh_0) return null;
 

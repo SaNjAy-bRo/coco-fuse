@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+
 import { Poppins, Nunito, Pacifico } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -33,16 +33,19 @@ const wedgesFont = localFont({
   style: "normal",
 });
 
+import type { Metadata, Viewport } from "next";
+
 export const metadata: Metadata = {
   title: "CocoFuse. | Fun, Clean Fuel for Real Life",
   description: "Flavoured coconut water with zero nonsense. The anti-soda. The anti-sugar. The anti-boring.",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    minimumScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({

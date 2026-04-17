@@ -72,27 +72,12 @@ function CheckoutContent() {
         city: "Mumbai",
         state: "Maharashtra",
         zip: "",
-        cardNumber: "",
-        expiry: "",
-        cvc: ""
     });
     const [pincodeError, setPincodeError] = useState("");
-    const [cardError, setCardError] = useState("");
-    const [expiryError, setExpiryError] = useState("");
-    const [cvcError, setCvcError] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let { name, value } = e.target;
-        
-        if (name === "expiry") {
-            // Only keep digits and allow maximum 4 digits format MM/YY
-            const raw = value.replace(/\D/g, '');
-            if (raw.length > 2) {
-                value = `${raw.slice(0, 2)}/${raw.slice(2, 4)}`;
-            } else {
-                value = raw;
-            }
-        }
         
         setFormData({ ...formData, [name]: value });
 
@@ -104,14 +89,11 @@ function CheckoutContent() {
                 setPincodeError("");
             }
         }
-        if (name === "cardNumber") setCardError("");
-        if (name === "expiry") setExpiryError("");
-        if (name === "cvc") setCvcError("");
     };
 
 
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
         let hasError = false;
@@ -122,26 +104,51 @@ function CheckoutContent() {
             hasError = true;
         }
 
-        const cleanedCard = formData.cardNumber.replace(/\s+/g, '');
-        if (cleanedCard.length !== 16 || !/^\d+$/.test(cleanedCard)) {
-            setCardError("Please enter a valid 16-digit card number");
-            hasError = true;
-        }
-
-        if (!/^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(formData.expiry)) {
-            setExpiryError("Enter a valid expiry date (MM/YY)");
-            hasError = true;
-        }
-
-        if (!/^[0-9]{3,4}$/.test(formData.cvc)) {
-            setCvcError("Enter a valid 3 or 4 digit CVC");
-            hasError = true;
-        }
-
         if (hasError) return;
 
-        // Redirect to success route carrying the flavor id and pack size forward
-        router.push(`/checkout/success?flavor=${flavorData.id}&pack=${quantity}`);
+        setSubmitting(true);
+        try {
+            // Create proper order payload
+            const orderPayload = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: formData.phone,
+                address: formData.address,
+                city: formData.city,
+                state: formData.state,
+                zip: formData.zip,
+                flavor: flavorData.id,
+                flavorName: flavorData.name,
+                quantity: quantity,
+                subtotal: subtotal,
+                shipping: shipping,
+                paymentMethod: "cod" // Razorpay integration point for future
+            };
+
+            const res = await fetch("/api/orders", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(orderPayload)
+            });
+
+            const data = await res.json();
+            
+            if (data.success && data.orderId) {
+                // Future Razorpay logic goes here:
+                // const options = { key: process.env.RAZORPAY_KEY, ... }
+                // const rzp = new window.Razorpay(options); rzp.open();
+                
+                // For now, redirect to success route carrying the real order id forward
+                router.push(`/checkout/success?id=${data.orderId}`);
+            } else {
+                console.error("Failed to create order", data);
+                setSubmitting(false);
+            }
+        } catch (err) {
+            console.error("Order error", err);
+            setSubmitting(false);
+        }
     };
 
     if (!mounted) return null;
@@ -221,21 +228,29 @@ function CheckoutContent() {
                                     <div className="p-3 bg-accent-premium rounded-full text-white">
                                         <CreditCard className="w-5 h-5" />
                                     </div>
-                                    <h2 className="text-2xl font-heading font-black uppercase tracking-tight">Payment</h2>
-                                </div>
-                                <div className="flex gap-2 opacity-60">
-                                    {/* Mock payment icons */}
-                                    <div className="w-10 h-6 bg-gray-300 rounded" />
-                                    <div className="w-10 h-6 bg-gray-300 rounded" />
+                                    <h2 className="text-2xl font-heading font-black uppercase tracking-tight">Payment Method</h2>
                                 </div>
                             </div>
                             
-                            <div className="flex flex-col gap-6">
-                                <InputField label="Card Number" name="cardNumber" placeholder="0000 0000 0000 0000" value={formData.cardNumber} onChange={handleInputChange} error={cardError} />
-                                <div className="grid grid-cols-2 gap-6">
-                                    <InputField label="Expiration Date" name="expiry" placeholder="MM/YY" value={formData.expiry} onChange={handleInputChange} error={expiryError} />
-                                    <InputField label="Security Code" name="cvc" placeholder="CVC" value={formData.cvc} onChange={handleInputChange} error={cvcError} />
-                                </div>
+                            <div className="flex flex-col gap-4">
+                                <label className="flex items-center p-5 border-2 border-[#39FF14] bg-[#39FF14]/5 rounded-2xl cursor-pointer transition-all">
+                                    <input type="radio" name="payment" defaultChecked className="w-5 h-5 text-[#39FF14] accent-[#39FF14] focus:ring-[#39FF14]" />
+                                    <div className="ml-4 flex flex-col">
+                                        <span className="font-heading font-black uppercase tracking-widest text-lg">Cash on Delivery</span>
+                                        <span className="font-body text-gray-500 text-sm">Pay when you receive your order</span>
+                                    </div>
+                                </label>
+                                
+                                <label className="flex items-center p-5 border-2 border-gray-200 bg-gray-50 rounded-2xl cursor-not-allowed opacity-60">
+                                    <input type="radio" name="payment" disabled className="w-5 h-5" />
+                                    <div className="ml-4 flex flex-col">
+                                        <span className="font-heading font-black uppercase tracking-widest text-lg flex gap-2 items-center">
+                                            Online Payment 
+                                            <span className="bg-gray-200 text-gray-500 rounded text-[10px] px-2 py-0.5">Coming Soon</span>
+                                        </span>
+                                        <span className="font-body text-gray-400 text-sm">Razorpay integration in progress</span>
+                                    </div>
+                                </label>
                             </div>
                         </div>
                     </motion.div>
@@ -293,8 +308,8 @@ function CheckoutContent() {
                             </div>
 
                             {/* Checkout Button */}
-                            <button type="submit" className="w-full bg-[#39FF14] text-[#0A0A0A] py-6 rounded-full font-heading font-black uppercase tracking-widest text-lg md:text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_10px_30px_rgba(57,255,20,0.3)] flex items-center justify-center gap-3">
-                                Complete Order
+                            <button type="submit" disabled={submitting} className="w-full bg-[#39FF14] text-[#0A0A0A] py-6 rounded-full font-heading font-black uppercase tracking-widest text-lg md:text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_10px_30px_rgba(57,255,20,0.3)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed">
+                                {submitting ? "Processing..." : "Place Order"}
                             </button>
 
                             <div className="mt-8 flex items-start gap-4 text-white/40 text-xs font-body leading-relaxed justify-center text-center">

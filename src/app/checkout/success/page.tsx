@@ -9,11 +9,36 @@ import { FLAVORS, FlavorID } from "@/context/FlavorContext";
 
 function SuccessContent() {
     const searchParams = useSearchParams();
-    const flavorQuery = searchParams.get("flavor") as FlavorID;
-    const packQuery = searchParams.get("pack") || "12";
+    const orderId = searchParams.get("id");
     
-    // Default to a verified successful state if no specific flavor, but try to load dynamic info
-    const flavorData = (flavorQuery && FLAVORS[flavorQuery]) ? FLAVORS[flavorQuery] : null;
+    // We fetch the real order info
+    const [orderData, setOrderData] = React.useState<any>(null);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        if (!orderId) {
+            setLoading(false);
+            return;
+        }
+        const fetchOrder = async () => {
+            try {
+                const res = await fetch(`/api/orders/${orderId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setOrderData(data.order);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchOrder();
+    }, [orderId]);
+    
+    const flavorData = orderData ? FLAVORS[orderData.flavor as FlavorID] : null;
+
+    if (loading) return <div className="min-h-screen bg-primary-white flex items-center justify-center">Loading...</div>;
 
     return (
         <main className="min-h-screen bg-primary-white py-24 md:py-32 font-body flex items-center justify-center overflow-hidden relative text-accent-premium">
@@ -50,7 +75,7 @@ function SuccessContent() {
                     transition={{ duration: 0.6, delay: 0.4 }}
                 >
                     <p className="text-xl md:text-2xl font-body text-gray-500 mb-12 max-w-xl mx-auto leading-relaxed">
-                        Hey there, legend. Your <strong className="text-accent-premium">{flavorData ? flavorData.name : <span className="font-wedges not-italic whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span>} ({packQuery}-Pack)</strong> order has been placed and is being prepped for shipment. Let's get hydrated!
+                        Hey there, {orderData ? orderData.firstName : 'legend'}. Your <strong className="text-accent-premium">{flavorData ? flavorData.name : <span className="font-wedges not-italic whitespace-nowrap"><span className="text-[#7ED956]">COCO</span><span className="text-[#3AB6FD]">FUSE.</span></span>} ({orderData ? orderData.quantity * 6 : 6}-Pack)</strong> order has been placed and is being prepped for shipment. Let's get hydrated!
                     </p>
 
                     <div className="bg-white/60 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/60 shadow-[0_20px_60px_rgba(0,0,0,0.05)] mx-auto mb-12 flex flex-col md:flex-row items-center justify-around gap-8 text-left">
@@ -60,7 +85,7 @@ function SuccessContent() {
                             </div>
                             <div>
                                 <h4 className="font-heading font-black uppercase text-xs tracking-widest text-gray-400 mb-1">Order Number</h4>
-                                <p className="text-2xl font-heading font-black">#CF-{Math.floor(Math.random() * 900000) + 100000}</p>
+                                <p className="text-2xl font-heading font-black">{orderData ? orderData.orderNumber : '#CF-000000'}</p>
                             </div>
                         </div>
                         <div className="hidden md:block w-px h-16 bg-gray-200" />

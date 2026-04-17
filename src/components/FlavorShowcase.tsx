@@ -98,6 +98,7 @@ function FlavorCard({ flavor, isMobile }: { flavor: typeof FLAVORS[0]; isMobile:
                         labelPath={flavor.label} 
                         liquidColor={flavor.liquid} 
                         capColor={flavor.cap}
+                        scaleMultiplier={isMobile ? 0.75 : 1}
                     />
                     
                     {!isMobile && (

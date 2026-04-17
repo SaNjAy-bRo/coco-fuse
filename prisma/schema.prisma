@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Order {
+  id             String   @id @default(cuid())
+  orderNumber    String   @unique
+  status         String   @default("pending") // pending, confirmed, shipped, delivered, cancelled
+  
+  // Customer Info
+  firstName      String
+  lastName       String
+  email          String
+  phone          String
+  
+  // Shipping Address
+  address        String
+  city           String
+  state          String
+  zip            String
+  
+  // Order Details
+  flavor         String
+  flavorName     String
+  quantity       Int
+  subtotal       Float
+  shipping       Float
+  total          Float
+  
+  // Payment (Razorpay-ready)
+  paymentMethod  String   @default("cod") // cod, razorpay
+  paymentId      String?  // Razorpay payment ID (future)
+  paymentStatus  String   @default("pending") // pending, paid, failed, refunded
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Subscriber {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  subscribedAt   DateTime @default(now())
+}

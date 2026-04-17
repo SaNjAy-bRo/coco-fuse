@@ -41,7 +41,7 @@ export default function Navbar() {
                     <a
                         key={link.name}
                         href={link.href}
-                        className={`${link.name === 'Home' ? 'hidden lg:block' : 'block'} text-[11px] sm:text-xs md:text-sm font-heading font-black italic tracking-widest text-[#111111] uppercase hover:text-accent-watermelon transition-all hover:-translate-y-0.5 whitespace-nowrap`}
+                        className={`block text-[11px] sm:text-xs md:text-sm font-heading font-black italic tracking-widest text-[#111111] uppercase hover:text-accent-watermelon transition-all hover:-translate-y-0.5 whitespace-nowrap`}
                     >
                         {link.name === 'About Us' ? (
                             <><span className="md:hidden">About</span><span className="hidden md:inline">About Us</span></>

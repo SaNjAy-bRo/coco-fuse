@@ -11,6 +11,8 @@ export default function SubscribePopup() {
     const [subscribed, setSubscribed] = useState(false);
     const [dismissed, setDismissed] = useState(false);
 
+    const [submitting, setSubmitting] = useState(false);
+
     useEffect(() => {
         // Check if user already dismissed or subscribed in this session
         const alreadyDismissed = sessionStorage.getItem("cocofuse_popup_dismissed");
@@ -29,14 +31,29 @@ export default function SubscribePopup() {
         sessionStorage.setItem("cocofuse_popup_dismissed", "true");
     };
 
-    const handleSubscribe = (e: React.FormEvent) => {
+    const handleSubscribe = async (e: React.FormEvent) => {
         e.preventDefault();
         if (name.trim() && email.trim()) {
-            setSubscribed(true);
-            sessionStorage.setItem("cocofuse_popup_dismissed", "true");
-            setTimeout(() => {
-                setIsVisible(false);
-            }, 3000);
+            setSubmitting(true);
+            try {
+                const res = await fetch("/api/subscribe", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email }),
+                });
+
+                if (res.ok) {
+                    setSubscribed(true);
+                    sessionStorage.setItem("cocofuse_popup_dismissed", "true");
+                    setTimeout(() => {
+                        setIsVisible(false);
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error("Subscription failed:", error);
+            } finally {
+                setSubmitting(false);
+            }
         }
     };
 
@@ -136,10 +153,11 @@ export default function SubscribePopup() {
                                             />
                                             <button
                                                 type="submit"
-                                                className="w-full mt-1 px-6 py-3.5 bg-[#39FF14] text-[#111111] rounded-xl font-heading font-black italic uppercase tracking-widest text-sm border-2 border-[#111111] shadow-[3px_3px_0px_#111111] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#111111] active:translate-y-0 active:shadow-[0px_0px_0px_#111111] transition-all flex items-center justify-center gap-2 group"
+                                                disabled={submitting}
+                                                className="w-full mt-1 px-6 py-3.5 bg-[#39FF14] text-[#111111] rounded-xl font-heading font-black italic uppercase tracking-widest text-sm border-2 border-[#111111] shadow-[3px_3px_0px_#111111] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#111111] active:translate-y-0 active:shadow-[0px_0px_0px_#111111] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group"
                                             >
-                                                Get Better Deals
-                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                {submitting ? "Subscribing..." : "Get Better Deals"}
+                                                {!submitting && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
                                             </button>
                                         </form>
 
