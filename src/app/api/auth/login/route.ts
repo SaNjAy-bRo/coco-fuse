@@ -10,7 +10,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
         }
 
-        const isValid = validateAdminCredentials(email, password);
+        const isValid = await validateAdminCredentials(email, password);
 
         if (!isValid) {
             return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });

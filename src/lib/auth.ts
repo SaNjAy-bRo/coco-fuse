@@ -1,6 +1,7 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
+import { prisma } from "./prisma";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "fallback-secret");
 const COOKIE_NAME = "cocofuse-admin-token";
@@ -53,8 +54,12 @@ export async function clearSessionCookie() {
     cookieStore.delete(COOKIE_NAME);
 }
 
-export function validateAdminCredentials(email: string, password: string): boolean {
-    const adminEmail = process.env.ADMIN_EMAIL || "admin@cocofuse.in";
-    const adminPassword = process.env.ADMIN_PASSWORD || "cocofuse2026";
-    return email === adminEmail && password === adminPassword;
+export async function validateAdminCredentials(email: string, password: string): Promise<boolean> {
+    const admin = await prisma.admin.findUnique({
+        where: { email }
+    });
+
+    if (!admin) return false;
+
+    return verifyPassword(password, admin.password);
 }
