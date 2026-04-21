@@ -3,9 +3,13 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+    const pathname = usePathname();
     const { scrollY } = useScroll();
+
+    if (pathname?.startsWith("/admin")) return null;
 
     // Dynamic width on scroll for the pill effect
     const width = useTransform(scrollY, [0, 100], ["100%", "90%"]);

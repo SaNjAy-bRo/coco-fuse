@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model Order {
-  id             String   @id @default(cuid())
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
   orderNumber    String   @unique
   status         String   @default("pending") // pending, confirmed, shipped, delivered, cancelled
   
@@ -42,7 +42,7 @@ model Order {
 }
 
 model Subscriber {
-  id             String   @id @default(cuid())
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
   name           String
   email          String   @unique
   subscribedAt   DateTime @default(now())

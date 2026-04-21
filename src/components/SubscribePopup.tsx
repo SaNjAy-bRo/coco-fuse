@@ -3,9 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function SubscribePopup() {
+    const pathname = usePathname();
     const [isVisible, setIsVisible] = useState(false);
+
+    if (pathname?.startsWith("/admin")) return null;
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [subscribed, setSubscribed] = useState(false);
